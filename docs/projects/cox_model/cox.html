@@ -241,12 +241,11 @@ window.Quarto = {
 </header>
 
 
-<p>Analyzing prostate cancer dataset using a Cox model.</p>
+<p>Analyzing prostate cancer dataset using a Cox model. The primary goal is to discover patterns in survival, and to do an analysis of covariance to assess the effect of treatment while adjusting for patient heterogeneity. Prediction is a secondary goal.</p>
 <!--more-->
 <section id="data" class="level1">
 <h1>Data</h1>
 <p>We consider the 506-patient prostate cancer dataset from Byar and Green. These data were from a randomized trial comparing four treatments for stage 3 and 4 prostate cancer, with almost equal numbers of patients on placebo and each of three doses of estrogen. Four patients had missing values on all of the following variables: wt, pf, hx, sbp, dbp, ekg, hg, bm; two of these patients were also missing sz. These patients are excluded from consideration.</p>
-<p>The primary goal is to discover patterns in survival, and to do an analysis of covariance to assess the effect of treatment while adjusting for patient heterogeneity. Prediction is a secondary goal.</p>
 <p>We will follow guidelines given in the book Regression Modeling Strategies by Frank Harrell and his general approach to this dataset in Chapter 21. The analysis is expanded compared to what was done in the book.</p>
 <p>There are 354 deaths among the 502 patients and we will use a multivariate survival model to explain the time until death (of any cause).</p>
 <section id="loading-data" class="level2">
@@ -306,22 +305,22 @@ prostate[2:17] Descriptives
 <hr class="thinhr">
 <span style="font-weight:bold">stage</span>: Stage
 <style>
- .hmisctable659838 {
+ .hmisctable822509 {
  border: none;
  font-size: 85%;
  }
- .hmisctable659838 td {
+ .hmisctable822509 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable659838 th {
+ .hmisctable822509 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable659838">
+<table data-quarto-disable-processing="true" class="hmisctable822509">
 <tbody><tr>
 <th>
 n
@@ -373,22 +372,22 @@ Gmd
 iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAMAAABFNRROAAAACVBMVEUAAADMzMz////1iUV5AAAAGElEQVQImWNgYGRkgGMGBiYmBCafR2szATIJAItKdysKAAAAAElFTkSuQmCC" alt="image">
 </div>
 <style>
- .hmisctable610300 {
+ .hmisctable762392 {
  border: none;
  font-size: 85%;
  }
- .hmisctable610300 td {
+ .hmisctable762392 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable610300 th {
+ .hmisctable762392 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable610300">
+<table data-quarto-disable-processing="true" class="hmisctable762392">
 <tbody><tr>
 <th>
 n
@@ -422,22 +421,22 @@ distinct
 iVBORw0KGgoAAAANSUhEUgAAAJcAAAANCAMAAACTvAxuAAAACVBMVEUAAADMzMz////1iUV5AAAAvklEQVQ4jd2TUQ7EIAhE0fsfurVVOgOoaaM/JdltQGGekyApiaS98UVAcpbztzW+CPS51uH+jquEG+CmQaGrFB7o/PB6fGi4rm8ASQV+xvgxhstAOC5NpKxLiXtxBBOzVFrmG3QvXD2xClyXaySrJOeXSfDJzZ6WgF+PHz2/WEGdgpT9yiADXOGA2kdJA3VcKBVxYWQ8H3CZjknJTNXEcYUKE65VUblQ6F3vJi4QGFrUb+N9XBq6eC/b6v+5jwdOEgevXeprNwAAAABJRU5ErkJggg==" alt="image">
 </div>
 <style>
- .hmisctable245690 {
+ .hmisctable444228 {
  border: none;
  font-size: 85%;
  }
- .hmisctable245690 td {
+ .hmisctable444228 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable245690 th {
+ .hmisctable444228 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable245690">
+<table data-quarto-disable-processing="true" class="hmisctable444228">
 <tbody><tr>
 <th>
 n
@@ -529,22 +528,22 @@ Gmd
 iVBORw0KGgoAAAANSUhEUgAAAB8AAAANCAMAAABmbkWbAAAACVBMVEUAAADMzMz////1iUV5AAAAOElEQVQYlWNgYMQLGBiYmEAYF6CSPE4lhOVBbgQhvO6nwHxi5aFKIBRcPYo8hmJk90N9gcQCOR8A8TUCOwBlw/UAAAAASUVORK5CYII=" alt="image">
 </div>
 <style>
- .hmisctable138283 {
+ .hmisctable210498 {
  border: none;
  font-size: 85%;
  }
- .hmisctable138283 td {
+ .hmisctable210498 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable138283 th {
+ .hmisctable210498 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable138283">
+<table data-quarto-disable-processing="true" class="hmisctable210498">
 <tbody><tr>
 <th>
 n
@@ -569,22 +568,22 @@ distinct
 </tr>
 </tbody></table>
 <style>
- .hmisctable323989 {
+ .hmisctable944004 {
  border: none;
  font-size: 85%;
  }
- .hmisctable323989 td {
+ .hmisctable944004 td {
  text-align: right;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable323989 th {
+ .hmisctable944004 th {
  color: Black;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: bold;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable323989">
+<table data-quarto-disable-processing="true" class="hmisctable944004">
 <tbody><tr>
 <td>
 <font color="MidnightBlue">lowest</font>&nbsp;:
@@ -633,22 +632,22 @@ dead - unknown cause
 iVBORw0KGgoAAAANSUhEUgAAAHwAAAANCAMAAABcvvroAAAACVBMVEUAAADMzMz////1iUV5AAAAhElEQVQ4jc2UgQ6AIAhE0f//6AiDTMUoyIU3czrvad2CFFMA3D3ZlGMKsLArQ/OmYLgcYRmciH+CW47ghzPxDTwi5yR+nlqQ9tHNjV/eA5f3q8Bv+U54pU/gnZd4GuBz/nWx8W39y4pC0aezln36JWMrgmqwq8vvONZK2nm6NqaQH8i0AT7eCR8ok+jnAAAAAElFTkSuQmCC" alt="image">
 </div>
 <style>
- .hmisctable337345 {
+ .hmisctable781378 {
  border: none;
  font-size: 85%;
  }
- .hmisctable337345 td {
+ .hmisctable781378 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable337345 th {
+ .hmisctable781378 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable337345">
+<table data-quarto-disable-processing="true" class="hmisctable781378">
 <tbody><tr>
 <th>
 n
@@ -740,22 +739,22 @@ Gmd
 iVBORw0KGgoAAAANSUhEUgAAAJcAAAANCAMAAACTvAxuAAAACVBMVEUAAADMzMz////1iUV5AAAAmElEQVQ4jc2UjQ7AEAyEj/d/6A0tOvuprhK36JpgvpWDYBJgm6dfIM4K4LBS6u9XkjMBtuBKEOi4SCuxJrko25srb6gcNaZmLpX53pS72aLFpw5uffozKgYd8k9FUUCPeg04G3PxOnouwejNVW8mC82Fq6HZIMGT23bEP1AXwttrBQrUbKJquVCDi6SXQ3rI36E5Fl0s79QOmtwJ1iA1y4IAAAAASUVORK5CYII=" alt="image">
 </div>
 <style>
- .hmisctable966449 {
+ .hmisctable150286 {
  border: none;
  font-size: 74%;
  }
- .hmisctable966449 td {
+ .hmisctable150286 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable966449 th {
+ .hmisctable150286 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable966449">
+<table data-quarto-disable-processing="true" class="hmisctable150286">
 <tbody><tr>
 <th>
 n
@@ -847,22 +846,22 @@ Gmd
 iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAMAAABFNRROAAAACVBMVEUAAADMzMz////1iUV5AAAAHUlEQVQImWNgYEQCDAxMSIB8HrXMRIiAzASbC8YAYdEBDX3AJfYAAAAASUVORK5CYII=" alt="image">
 </div>
 <style>
- .hmisctable260736 {
+ .hmisctable292672 {
  border: none;
  font-size: 85%;
  }
- .hmisctable260736 td {
+ .hmisctable292672 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable260736 th {
+ .hmisctable292672 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable260736">
+<table data-quarto-disable-processing="true" class="hmisctable292672">
 <tbody><tr>
 <th>
 n
@@ -896,22 +895,22 @@ distinct
 <hr class="thinhr">
 <span style="font-weight:bold">hx</span>: History of Cardiovascular Disease
 <style>
- .hmisctable109177 {
+ .hmisctable140239 {
  border: none;
  font-size: 85%;
  }
- .hmisctable109177 td {
+ .hmisctable140239 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable109177 th {
+ .hmisctable140239 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable109177">
+<table data-quarto-disable-processing="true" class="hmisctable140239">
 <tbody><tr>
 <th>
 n
@@ -966,22 +965,22 @@ Gmd
 iVBORw0KGgoAAAANSUhEUgAAADcAAAANCAMAAAA65Aa/AAAACVBMVEUAAADMzMz////1iUV5AAAAUElEQVQokbXQ2w4AEAwD0Nb/f7T7GMES9MEidhIpqALQFjgVDPdlnjikmHBbSeC/66vMzlTq23+eZV0QcOsOFKImt5WhPXZFyigH83Mcqk16CdcD+l/9r4QAAAAASUVORK5CYII=" alt="image">
 </div>
 <style>
- .hmisctable730569 {
+ .hmisctable535204 {
  border: none;
  font-size: 85%;
  }
- .hmisctable730569 td {
+ .hmisctable535204 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable730569 th {
+ .hmisctable535204 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable730569">
+<table data-quarto-disable-processing="true" class="hmisctable535204">
 <tbody><tr>
 <th>
 n
@@ -1080,22 +1079,22 @@ For the frequency table, variable is rounded to the nearest 0
 iVBORw0KGgoAAAANSUhEUgAAACUAAAANCAMAAAAZv1dqAAAACVBMVEUAAADMzMz////1iUV5AAAAQUlEQVQYlWNghAEGBkacgIEJBhgQTAxAC1UMDESrwqmQAe5DoB9xehPNLBymkaAKpoA+qhjA/oP5EcwFIQgN8yIAz7gCv9fQk/wAAAAASUVORK5CYII=" alt="image">
 </div>
 <style>
- .hmisctable323553 {
+ .hmisctable221360 {
  border: none;
  font-size: 85%;
  }
- .hmisctable323553 td {
+ .hmisctable221360 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable323553 th {
+ .hmisctable221360 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable323553">
+<table data-quarto-disable-processing="true" class="hmisctable221360">
 <tbody><tr>
 <th>
 n
@@ -1190,22 +1189,22 @@ For the frequency table, variable is rounded to the nearest 0
 iVBORw0KGgoAAAANSUhEUgAAABYAAAANCAMAAACae25RAAAACVBMVEUAAADMzMz////1iUV5AAAAMElEQVQYlWNgYMQGGBiYkACcR1thVAfgcglEAL8wgkIXBrFQhCEcNGGw/RAEoxgZAPb1AYOWRYEtAAAAAElFTkSuQmCC" alt="image">
 </div>
 <style>
- .hmisctable893327 {
+ .hmisctable344526 {
  border: none;
  font-size: 85%;
  }
- .hmisctable893327 td {
+ .hmisctable344526 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable893327 th {
+ .hmisctable344526 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable893327">
+<table data-quarto-disable-processing="true" class="hmisctable344526">
 <tbody><tr>
 <th>
 n
@@ -1230,22 +1229,22 @@ distinct
 </tr>
 </tbody></table>
 <style>
- .hmisctable999854 {
+ .hmisctable948801 {
  border: none;
  font-size: 85%;
  }
- .hmisctable999854 td {
+ .hmisctable948801 td {
  text-align: right;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable999854 th {
+ .hmisctable948801 th {
  color: Black;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: bold;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable999854">
+<table data-quarto-disable-processing="true" class="hmisctable948801">
 <tbody><tr>
 <td>
 <font color="MidnightBlue">lowest</font>&nbsp;:
@@ -1294,22 +1293,22 @@ recent MI
 iVBORw0KGgoAAAANSUhEUgAAAJcAAAANCAMAAACTvAxuAAAACVBMVEUAAADMzMz////1iUV5AAAAm0lEQVQ4jdWVgQ6AIAhEL///oxNxIkYthdy6Na2l9Dy9hSNKQL5yE1QtrQvQT0WOeqqaZ+6fuILAYrjoDk1J4a2ROrnKRxkDo3xc3gSWnroLl4zalcdqAfvV7d3FL/ZxxbOpCei2LVWae662tzu45FQbICNXx/cFF1c1rZiSm0svEQbXkmSNL7jo7KuI1bZGzMiZQ/IHfQopvTsBlzcKWUC1wQUAAAAASUVORK5CYII=" alt="image">
 </div>
 <style>
- .hmisctable461454 {
+ .hmisctable917171 {
  border: none;
  font-size: 85%;
  }
- .hmisctable461454 td {
+ .hmisctable917171 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable461454 th {
+ .hmisctable917171 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable461454">
+<table data-quarto-disable-processing="true" class="hmisctable917171">
 <tbody><tr>
 <th>
 n
@@ -1401,22 +1400,22 @@ Gmd
 iVBORw0KGgoAAAANSUhEUgAAAJcAAAANCAMAAACTvAxuAAAACVBMVEUAAADMzMz////1iUV5AAAAkklEQVQ4je2TUQ6AIAxDO+5/aMGNDYYSiQH8sEQQMeGlW0EmgD4jBBPKzWb9XGMSlIiEUyHwvFueK2svVQSS9gfBSZOxJaVgtxq/zLHzbbmB91ywEvNUs00m7XEpX4m6qAX1pmdcV4UOM8x7wSVsZmJVbtegw1wkQWzyaOodUXFO+qTBi/zAGZMvecnRI5f4tD0A+WALCJtNK28AAAAASUVORK5CYII=" alt="image">
 </div>
 <style>
- .hmisctable593095 {
+ .hmisctable155074 {
  border: none;
  font-size: 85%;
  }
- .hmisctable593095 td {
+ .hmisctable155074 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable593095 th {
+ .hmisctable155074 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable593095">
+<table data-quarto-disable-processing="true" class="hmisctable155074">
 <tbody><tr>
 <th>
 n
@@ -1508,22 +1507,22 @@ Gmd
 iVBORw0KGgoAAAANSUhEUgAAACIAAAANCAMAAAD7Y0wTAAAACVBMVEUAAADMzMz////1iUV5AAAAR0lEQVQYlbWPWwoAIAgEx+5/6LCHbVFQHy1CasPiYiKwjUgipim2G2QhfyMBonFaovpEPNTi4PKO+McdMiwvECh340Uv7XzITnQCY4XI7dUAAAAASUVORK5CYII=" alt="image">
 </div>
 <style>
- .hmisctable830746 {
+ .hmisctable359072 {
  border: none;
  font-size: 85%;
  }
- .hmisctable830746 td {
+ .hmisctable359072 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable830746 th {
+ .hmisctable359072 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable830746">
+<table data-quarto-disable-processing="true" class="hmisctable359072">
 <tbody><tr>
 <th>
 n
@@ -1618,22 +1617,22 @@ For the frequency table, variable is rounded to the nearest 0
 iVBORw0KGgoAAAANSUhEUgAAAHMAAAANCAMAAACttaFlAAAACVBMVEUAAADMzMz////1iUV5AAAAOklEQVQ4jWNgZGBgpDNgYGJgYKIzGLVzmNk5mm5H7aSCnfS2FJRuoYARBMEImpQRJBjjTt+kpHygWgDbrgoS6TJ9QAAAAABJRU5ErkJggg==" alt="image">
 </div>
 <style>
- .hmisctable682933 {
+ .hmisctable455269 {
  border: none;
  font-size: 74%;
  }
- .hmisctable682933 td {
+ .hmisctable455269 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable682933 th {
+ .hmisctable455269 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable682933">
+<table data-quarto-disable-processing="true" class="hmisctable455269">
 <tbody><tr>
 <th>
 n
@@ -1718,22 +1717,22 @@ Gmd
 </tr>
 </tbody></table>
 <style>
- .hmisctable189290 {
+ .hmisctable286590 {
  border: none;
  font-size: 85%;
  }
- .hmisctable189290 td {
+ .hmisctable286590 td {
  text-align: right;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable189290 th {
+ .hmisctable286590 th {
  color: Black;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: bold;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable189290">
+<table data-quarto-disable-processing="true" class="hmisctable286590">
 <tbody><tr>
 <td>
 <font color="MidnightBlue">lowest</font>&nbsp;:
@@ -1778,22 +1777,22 @@ Gmd
 <hr class="thinhr">
 <span style="font-weight:bold">bm</span>: Bone Metastases
 <style>
- .hmisctable883722 {
+ .hmisctable870737 {
  border: none;
  font-size: 85%;
  }
- .hmisctable883722 td {
+ .hmisctable870737 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable883722 th {
+ .hmisctable870737 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable883722">
+<table data-quarto-disable-processing="true" class="hmisctable870737">
 <tbody><tr>
 <th>
 n
@@ -2229,37 +2228,37 @@ Resamples</th>
 <tr class="odd">
 <td style="text-align: left;"><em>D<sub>xy</sub></em></td>
 <td style="text-align: center;">0.3228</td>
-<td style="text-align: center;">0.3504</td>
+<td style="text-align: center;">0.3513</td>
 <td style="text-align: center;">0.298</td>
-<td style="text-align: center;">0.0524</td>
-<td style="text-align: center;">0.2704</td>
+<td style="text-align: center;">0.0533</td>
+<td style="text-align: center;">0.2695</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><em>R<sup>2</sup></em></td>
 <td style="text-align: center;">0.2125</td>
-<td style="text-align: center;">0.2506</td>
-<td style="text-align: center;">0.1783</td>
-<td style="text-align: center;">0.0723</td>
-<td style="text-align: center;">0.1402</td>
+<td style="text-align: center;">0.251</td>
+<td style="text-align: center;">0.178</td>
+<td style="text-align: center;">0.073</td>
+<td style="text-align: center;">0.1395</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Slope</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: center;">1</td>
-<td style="text-align: center;">0.789</td>
-<td style="text-align: center;">0.211</td>
-<td style="text-align: center;">0.789</td>
+<td style="text-align: center;">0.7877</td>
+<td style="text-align: center;">0.2123</td>
+<td style="text-align: center;">0.7877</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><em>D</em></td>
 <td style="text-align: center;">0.0296</td>
-<td style="text-align: center;">0.0359</td>
-<td style="text-align: center;">0.0243</td>
-<td style="text-align: center;">0.0116</td>
-<td style="text-align: center;">0.0179</td>
+<td style="text-align: center;">0.036</td>
+<td style="text-align: center;">0.0242</td>
+<td style="text-align: center;">0.0117</td>
+<td style="text-align: center;">0.0178</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="odd">
@@ -2274,19 +2273,19 @@ Resamples</th>
 <tr class="even">
 <td style="text-align: left;"><em>Q</em></td>
 <td style="text-align: center;">0.0301</td>
-<td style="text-align: center;">0.0364</td>
-<td style="text-align: center;">0.0219</td>
-<td style="text-align: center;">0.0145</td>
-<td style="text-align: center;">0.0156</td>
+<td style="text-align: center;">0.0365</td>
+<td style="text-align: center;">0.0218</td>
+<td style="text-align: center;">0.0147</td>
+<td style="text-align: center;">0.0154</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; border-bottom: 2px solid grey;"><em>g</em></td>
 <td style="text-align: center; border-bottom: 2px solid grey;">0.7245</td>
-<td style="text-align: center; border-bottom: 2px solid grey;">0.8087</td>
-<td style="text-align: center; border-bottom: 2px solid grey;">0.6359</td>
-<td style="text-align: center; border-bottom: 2px solid grey;">0.1728</td>
-<td style="text-align: center; border-bottom: 2px solid grey;">0.5517</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">0.8091</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">0.6349</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">0.1742</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">0.5503</td>
 <td style="text-align: center; border-bottom: 2px solid grey;">1000</td>
 </tr>
 </tbody>
@@ -2300,10 +2299,7 @@ Resamples</th>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>cal <span class="ot">&lt;-</span> <span class="fu">calibrate</span>(f, <span class="at">B =</span> <span class="dv">1000</span>, <span class="at">u=</span><span class="dv">5</span><span class="sc">*</span><span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Using Cox survival estimates at 60 Months
-Convergence problems.... stopping addition
-Convergence problems.... stopping addition
-Convergence problems.... stopping addition</code></pre>
+<pre><code>Using Cox survival estimates at 60 Months</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cal, <span class="at">subtitles=</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -2353,37 +2349,37 @@ Resamples</th>
 <tr class="odd">
 <td style="text-align: left;"><em>D<sub>xy</sub></em></td>
 <td style="text-align: center;">0.3228</td>
-<td style="text-align: center;">0.3504</td>
+<td style="text-align: center;">0.3513</td>
 <td style="text-align: center;">0.298</td>
-<td style="text-align: center;">0.0524</td>
-<td style="text-align: center;">0.2704</td>
+<td style="text-align: center;">0.0533</td>
+<td style="text-align: center;">0.2695</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><em>R<sup>2</sup></em></td>
 <td style="text-align: center;">0.2125</td>
-<td style="text-align: center;">0.2506</td>
-<td style="text-align: center;">0.1783</td>
-<td style="text-align: center;">0.0723</td>
-<td style="text-align: center;">0.1402</td>
+<td style="text-align: center;">0.251</td>
+<td style="text-align: center;">0.178</td>
+<td style="text-align: center;">0.073</td>
+<td style="text-align: center;">0.1395</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Slope</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: center;">1</td>
-<td style="text-align: center;">0.789</td>
-<td style="text-align: center;">0.211</td>
-<td style="text-align: center;">0.789</td>
+<td style="text-align: center;">0.7877</td>
+<td style="text-align: center;">0.2123</td>
+<td style="text-align: center;">0.7877</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><em>D</em></td>
 <td style="text-align: center;">0.0296</td>
-<td style="text-align: center;">0.0359</td>
-<td style="text-align: center;">0.0243</td>
-<td style="text-align: center;">0.0116</td>
-<td style="text-align: center;">0.0179</td>
+<td style="text-align: center;">0.036</td>
+<td style="text-align: center;">0.0242</td>
+<td style="text-align: center;">0.0117</td>
+<td style="text-align: center;">0.0178</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="odd">
@@ -2398,19 +2394,19 @@ Resamples</th>
 <tr class="even">
 <td style="text-align: left;"><em>Q</em></td>
 <td style="text-align: center;">0.0301</td>
-<td style="text-align: center;">0.0364</td>
-<td style="text-align: center;">0.0219</td>
-<td style="text-align: center;">0.0145</td>
-<td style="text-align: center;">0.0156</td>
+<td style="text-align: center;">0.0365</td>
+<td style="text-align: center;">0.0218</td>
+<td style="text-align: center;">0.0147</td>
+<td style="text-align: center;">0.0154</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; border-bottom: 2px solid grey;"><em>g</em></td>
 <td style="text-align: center; border-bottom: 2px solid grey;">0.7245</td>
-<td style="text-align: center; border-bottom: 2px solid grey;">0.8087</td>
-<td style="text-align: center; border-bottom: 2px solid grey;">0.6359</td>
-<td style="text-align: center; border-bottom: 2px solid grey;">0.1728</td>
-<td style="text-align: center; border-bottom: 2px solid grey;">0.5517</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">0.8091</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">0.6349</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">0.1742</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">0.5503</td>
 <td style="text-align: center; border-bottom: 2px solid grey;">1000</td>
 </tr>
 </tbody>
@@ -2494,17 +2490,17 @@ Indexes</th>
 </tr>
 <tr class="even">
 <td style="text-align: left; min-width: 7em;">rx=1.0 mg estrogen</td>
-<td style="text-align: right; min-width: 7em;">&nbsp; -0.3264</td>
+<td style="text-align: right; min-width: 7em;">&nbsp; -0.3258</td>
 <td style="text-align: right; min-width: 7em;">&nbsp; 0.1659</td>
-<td style="text-align: right; min-width: 7em;">-1.97</td>
-<td style="text-align: right; min-width: 7em;">0.0492</td>
+<td style="text-align: right; min-width: 7em;">-1.96</td>
+<td style="text-align: right; min-width: 7em;">0.0496</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; min-width: 7em;">rx=5.0 mg estrogen</td>
-<td style="text-align: right; min-width: 7em;">&nbsp; -0.0824</td>
+<td style="text-align: right; min-width: 7em;">&nbsp; -0.0822</td>
 <td style="text-align: right; min-width: 7em;">&nbsp; 0.1572</td>
 <td style="text-align: right; min-width: 7em;">-0.52</td>
-<td style="text-align: right; min-width: 7em;">0.6003</td>
+<td style="text-align: right; min-width: 7em;">0.6009</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; min-width: 7em; border-bottom: 2px solid grey;">…</td>

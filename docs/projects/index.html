@@ -79,7 +79,7 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-image','listing-title','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-image','listing-title','listing-categories','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
       searchColumns: ["listing-title","listing-author","listing-image","listing-description","listing-categories"],
     };
@@ -224,6 +224,17 @@ window.Quarto = {
 <div class="listing-subtitle">
 <a href="../projects/bachelor_thesis/bachelor_thesis.html" class="no-external"></a>
 </div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('TDA'); return false;">
+TDA
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Bachelor Thesis'); return false;">
+Bachelor Thesis
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
+Python
+</div>
+</div>
 <div class="listing-description">
 <a href="../projects/bachelor_thesis/bachelor_thesis.html" class="no-external">In this project I worked on Topological Data Analysis. In particular, I proved some Central Limit Theorems for Tessellation based Betti numbers.</a>
 </div>
@@ -246,6 +257,17 @@ window.Quarto = {
 <div class="listing-subtitle">
 <a href="../projects/bayesian_disease/bayesian_disease.html" class="no-external"></a>
 </div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Bayesian'); return false;">
+Bayesian
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
+R
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Stan'); return false;">
+Stan
+</div>
+</div>
 <div class="listing-description">
 <a href="../projects/bayesian_disease/bayesian_disease.html" class="no-external">In this project we will consider a Bayesian approach to modelling disease outbreaks inspired by this Stan case study. We will do this using a Susceptible-Infected-Recovered (SIR) model. The main objective is to estimate epidemiological parameters of interest.</a>
 </div>
@@ -255,7 +277,7 @@ window.Quarto = {
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="Survival analysis,R" data-listing-file-modified-sort="1720643906390" data-listing-reading-time-sort="11" data-listing-word-count-sort="2139">
+<div class="quarto-post image-right" data-index="2" data-categories="Survival analysis,R" data-listing-file-modified-sort="1720644904865" data-listing-reading-time-sort="11" data-listing-word-count-sort="2140">
 <div class="thumbnail">
 <p><a href="../projects/cox_model/cox.html" class="no-external"></a></p><a href="../projects/cox_model/cox.html" class="no-external">
 <p><img src="../projects/cox_model/image.jpg" class="thumbnail-image" style="height: 200px;"></p>
@@ -268,8 +290,16 @@ window.Quarto = {
 <div class="listing-subtitle">
 <a href="../projects/cox_model/cox.html" class="no-external"></a>
 </div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Survival analysis'); return false;">
+Survival analysis
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
+R
+</div>
+</div>
 <div class="listing-description">
-<a href="../projects/cox_model/cox.html" class="no-external">Analyzing prostate cancer dataset using a Cox model.</a>
+<a href="../projects/cox_model/cox.html" class="no-external">Analyzing prostate cancer dataset using a Cox model. The primary goal is to discover patterns in survival, and to do an analysis of covariance to assess the effect of treatment while adjusting for patient heterogeneity. Prediction is a secondary goal.</a>
 </div>
 </div>
 <div class="metadata">
@@ -289,6 +319,14 @@ window.Quarto = {
 </h3>
 <div class="listing-subtitle">
 <a href="../projects/notes_rms/notes_rms.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Notes'); return false;">
+Notes
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
+R
+</div>
 </div>
 <div class="listing-description">
 <a href="../projects/notes_rms/notes_rms.html" class="no-external">These are my notes to the book “Regression Modelling Strategies” by Frank Harrell. The notes are based on things I found interesting and learned. R code and figures are included when relevant.</a>

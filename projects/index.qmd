@@ -6,7 +6,7 @@ listing:
   - id: ehr
     max-description-length: 500
     image-height: 200px # hard fix for now
-    fields: [image, title, description]
+    fields: [image, title, categories, description]
     contents: 
       - cox_model
       - bachelor_thesis

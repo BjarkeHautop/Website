@@ -4,7 +4,7 @@ categories: [Survival analysis, R]
 image: "image.jpg"
 ---
 
-Analyzing prostate cancer dataset using a Cox model.
+Analyzing prostate cancer dataset using a Cox model. The primary goal is to discover patterns in survival, and to do an analysis of covariance to assess the effect of treatment while adjusting for patient heterogeneity. Prediction is a secondary goal.
 
 <!--more-->
 
@@ -16,9 +16,6 @@ and 4 prostate cancer, with almost equal numbers of patients on placebo and
 each of three doses of estrogen. Four patients had missing values on all of the
 following variables: wt, pf, hx, sbp, dbp, ekg, hg, bm; two of these patients
 were also missing sz. These patients are excluded from consideration. 
-
-The primary goal is to discover patterns in survival, and to do an analysis of covariance to assess the effect of treatment while adjusting for patient heterogeneity. 
-Prediction is a secondary goal.
 
 We will follow guidelines given in the book Regression Modeling Strategies 
 by Frank Harrell and his general approach to this dataset in Chapter 21. The analysis is expanded compared to what was done in the book. 
