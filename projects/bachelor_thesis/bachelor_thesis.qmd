@@ -1,0 +1,12 @@
+---
+title: "Bachelor Thesis: Asymptotic Normality for Tessellation-based Betti Numbers"
+categories: [TDA, Bachelor Thesis, Python]
+image: "image.jpg"
+---
+
+In this project I worked on Topological Data Analysis. In particular, I proved 
+some Central Limit Theorems for Tessellation based Betti numbers. 
+
+<!--more--> 
+
+[Click here to download the thesis](BachelorEnglish.pdf)

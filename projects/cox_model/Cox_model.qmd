@@ -1,0 +1,346 @@
+---
+title: "Cox model case study"
+categories: [Survival analysis, R]
+image: "image.jpg"
+---
+
+Analyzing prostate cancer dataset using a Cox model.
+
+<!--more-->
+
+# Data
+
+We consider the 506-patient prostate cancer dataset from Byar and Green. These
+data were from a randomized trial comparing four treatments for stage 3
+and 4 prostate cancer, with almost equal numbers of patients on placebo and
+each of three doses of estrogen. Four patients had missing values on all of the
+following variables: wt, pf, hx, sbp, dbp, ekg, hg, bm; two of these patients
+were also missing sz. These patients are excluded from consideration. 
+
+The primary goal is to discover patterns in survival, and to do an analysis of covariance to assess the effect of treatment while adjusting for patient heterogeneity. 
+Prediction is a secondary goal.
+
+We will follow guidelines given in the book Regression Modeling Strategies 
+by Frank Harrell and his general approach to this dataset in Chapter 21. The analysis is expanded compared to what was done in the book. 
+
+There are 354 deaths among the 502 patients and we will use a multivariate survival model to explain the time until death (of any cause).
+
+## Loading data
+
+```{r, message=F}
+library(Hmisc)
+library(survival)
+library(rms)
+library(scales)
+library(ggplot2)
+library(latex2exp)
+getHdata(prostate)
+```
+
+We start by showing summary of all the variables in the dataset
+
+```{r, warning=F, results='hide'}
+d <- describe(prostate[2:17])
+html(d, file='')
+```
+
+<details><summary>Click here to see output</summary
+
+```{r, warning=F, echo=F}
+d <- describe(prostate[2:17])
+html(d, file='')
+```
+
+We see that the variable ekg only has one observation in the last category and pf has two. So, we combine recent MI with old MI and call it MI, and we combine confined to bed
+with $>50\%$ daytime. 
+
+```{r}
+levels(prostate$ekg)[levels(prostate$ekg) %in%
+                       c('old MI', 'recent MI')] <- 'MI'
+
+levels(prostate$pf) <- c(levels(prostate$pf)[1:3],
+                         levels(prostate$pf)[3])
+```
+
+## Imputing missing values
+
+We have 27 patients with missing values as seen below, so we do imputation on these.
+
+The proportion of missing values is $0.05$, so we just do single imputation, since 
+simpler to make plots and validation. However if the proportion were higher one should
+do multiple imputation. 
+
+```{r, warn.conflicts=FALSE}
+sum(is.na(prostate))
+colSums(is.na(prostate))
+
+w <- transcan(~ sz + sg + ap + sbp + dbp + age +
+                wt + hg + ekg + pf + bm + hx, imputed= TRUE,
+             data=prostate, pl= FALSE, pr= FALSE)
+
+attach(prostate)
+sz <- impute(w, sz, data = prostate)
+sg <- impute (w, sg , data = prostate)
+age <- impute (w, age ,data = prostate)
+wt <- impute (w, wt , data = prostate)
+kg <- impute (w, ekg ,data = prostate)
+```
+
+# Specifying the model
+
+A Cox proportional hazards model is in terms of the hazard function given by:
+$$\lambda(t\vert X)=\lambda(t)\exp(X\beta).$$
+We fit a Cox proportional hazards model with the predictors and their degrees of freedom specified in the table below. All continuous predictors will be modeled with a restricted cubic spline with 4 knots. 
+
+```{r, echo=FALSE}
+library(knitr)
+library(kableExtra)
+
+# Your table data
+table_data <- data.frame(
+  Predictor = c("Dose of estrogen", "Age in years", "Weight index", "Performance rating", "History of cardiovascular disease", 
+                "Systolic blood pressure/10", "Diastolic blood pressure/10", "Electrocardiogram code", "Serum hemoglobin (g/100ml)", 
+                "Tumor size (cm^2)", "Stage/histologic grade combination", "Serum prostatic acid phosphatase", "Bone metastasis"),
+  Name = c("rx", "age", "wt", "pf", "hx", "sbp", "dbp", "ekg", "hg", "sz", "sg", "ap", "bm"),
+  d.f. = c(3, 3, 3, 2, 1, 3, 3, 5, 3, 3, 3, 3, 1),
+  Levels = c("placebo, 0.2, 1.0, 5.0 mg estrogen", '', '', "normal, in bed < 50% of time, in bed > 50%", 
+             "present/absent", '', '', "normal, benign, rhythm disturb., block, strain, myocardial infarction", '',
+             '', '', '', "present/absent")
+)
+
+# Create the table
+kable(table_data, format = "html", booktabs = TRUE) %>%
+  kable_styling()
+
+```
+
+We see that we have 36 degrees of freedom in our model, so about 1/10 of the amount of deaths there are. So there is some hope our model will validate. 
+
+```{r}
+dd <- datadist(prostate); options(datadist='dd')
+units(dtime) <- 'Month'
+S <- Surv(dtime , status != 'alive')
+
+f <- cph(S ~ rx + rcs(age ,4) + rcs(wt ,4) + pf + hx +
+          rcs(sbp ,4) + rcs(dbp ,4) + ekg + rcs(hg ,4) +
+          rcs(sg ,4) + rcs(sz ,4) + rcs(log(ap),4) + bm)
+print(f, html=TRUE, coefs=FALSE)
+
+```
+
+Test for removing all predictors is highly significant, so modelling is warranted. AIC on the $\chi^2$-scale is given by $136.04-2\cdot 36=64.04$. A rough shrinkage
+estimate is thus given by $(136.04-36)/136.04=0.74$. So we
+estimate that 0.26 of the model fitting will be noise, especially with regard to
+calibration accuracy. One approach would just be to multiply coefficients of final model if used for prediction by the shrinkage estimate. Instead we try to do some data reduction using domain knowledge. 
+
+## Data reduction using domain knowledge
+
+We do the following changes
+
+* Combine systolic blood pressure (sbp) and diastolic 
+blood pressure (dbp) into Mean Arterial Pressure.
+
+* Combine history of cardiovascular disease (hx) and electrocardiogram code ekg
+and assume linear. We code it as 2 if ekg are not normal or benign and hx, 1 if either, and 0 if none. 
+
+* Weight index not that important, so only use 3 knots.
+
+* Take log of Serum prostatic acid phosphatase (ap) for numeric stability (heavy right-tail) and allow 1 more knot for compensation
+
+* The tumor variables tumor size (sz) and stage/histologic grade combination (sg)
+should be important variables, but since we have both we keep them but give them 
+only 3 knots each. 
+
+* Assume performance rating (pf) is linear. 
+
+```{r}
+map <- (2*dbp + sbp)/3
+label(map) <- 'Mean Arterial Pressure/10'
+
+heart_d <- hx + ekg %nin% c('normal', 'benign')
+label(heart_d) <- 'Heart Disease Code'
+
+pf_linear <- as.numeric(pf)
+```
+
+So all in all we save 3 degrees of freedom from defining map, 5 for defining 
+Heart Disease Code, and 3 for dropping knots, 1 for assuming performance rating is linear and gain 1 from ap. For a total reduction of 11 degrees of freedom.
+
+```{r}
+dd <- datadist(dd, heart_d, map, pf_linear)
+
+f <- cph(S ~ rx + rcs(age, 4) + rcs(wt, 3) + pf_linear + heart_d + rcs(map, 3)
+         + rcs(hg, 4) + rcs(sg, 3) + rcs(sz, 3) + rcs(log(ap), 5) + bm,
+         x=TRUE , y=TRUE , surv=TRUE , time.inc = 5*12)
+
+print(f, html=TRUE, coefs =3)
+```
+
+LR 119.86 with 24 degrees of freedom. AIC is $119.86-2 \cdot 24=71.86$. Rough shrinkage estimate of this is now better at $(119.86-24)/119.86=0.80$.
+
+```{r}
+anova(f, html=T)
+```
+
+We see that the p-value for the treatment, doses of estrogen (rx), is below $0.05$, so it seems like it has some effect.    
+
+##  Checking Proportional Hazards
+
+A Cox model should have proportional hazards, since if we look at two individuals with covariate values $\boldsymbol{X}$ and $\boldsymbol{X}^*$ then the ratio
+of their hazard rates is
+$$\frac{h(t \vert \boldsymbol{X})}{h(t \vert \boldsymbol{X}^*)}=\exp\Big[\sum_{k=1}^p \beta_k(X_k-X_{k^*})\Big],$$
+which is a constant. We can test this assumption using scaled Schoenfeld residuals separately for each predictor and test the PH assumption using the "correlation with time” test. 
+Smoothed trends in the residuals are also plotted.
+
+```{r}
+z <- predict(f, type = 'terms')
+f.short <- cph(S ~ z, x=TRUE, y= TRUE)
+phtest <- cox.zph(f.short, transform = 'identity', terms=F)
+phtest
+```
+
+We see that the p-value of the test for proportional hazards is below $0.05$ for 
+dose of estrogen, indicating that it may not have constant relative hazard. We plot it and don't find anything too worry-some, and the global test of proportional hazard by adjusting for the 11 tests gives a p-value of $0.78$. So we accept our model and continue.
+
+```{r}
+plot(phtest , var= 'rx')
+```
+
+
+## Describing Effects
+
+We plot how each predictor is related to the log hazard of death with $95\%$-confidence bands. 
+
+```{r}
+ggplot(Predict(f), sepdiscrete='vertical', nlevels=4,
+vnames='names') 
+```
+
+# Presenting the final model for inference    
+
+To present point and interval estimates of predictor effects we draw a hazard
+ratio chart. Since the ap relationship is so non-monotonic we use a 20:1 hazard ratio for this variable. The others use the default.
+
+```{r}
+plot(summary(f, ap=c(1,20)), log=TRUE, main='')
+```
+
+This plot is interpreted as the hazard ratio for each variable if we went from for example age 70 to age 76. $95\%, 97.5\%$ and $99\%$ confidence bands are added.
+
+Finally we will also show a nomogram.
+
+```{r, fig.show='hide'}
+surv <- Survival(f)
+surv3 <- function (x) surv(3*12,lp=x)
+surv5 <- function (x) surv(5*12,lp=x)
+quan <- Quantile(f)
+med <- function (x) quan(lp=x)/12
+ss <- c(.05 ,.1, .2, .3, .4, .5, .6, .7, .8, .9, .95)
+nom <- nomogram (f, ap=c(.1,.5, 1, 2, 3, 4, 5, 10, 20, 30, 40),
+                 fun=list(surv3, surv5, med),
+                 funlabel=c('3-year Survival', '5-year Survival',
+                              'Median Survival Time (years)'),
+                 fun.at=list(ss, ss, c(.5, 1:6)))
+plot(nom, cex.axis=0.8, cex.var=0.7, xfrac=.65, lmgp=.35) 
+```
+
+![](Nomogram1.png)
+
+This is interpreted by taking a value for each predictor and seeing how many points each value correspond to. Then the total amount of points can be used to find the probability of for example 5-year survival. 
+
+# Model for prediction
+
+For a prediction model one should validate the model. We start by doing that
+
+## Validating the model
+
+We will use bootstrapping for validation. We first validate this model for Somers’ $D_{xy}$ rank correlation between predicted log hazard and observed survival time, and for slope shrinkage. The bootstrap is used (with 1000 resamples) to penalize for possible overfitting.
+
+```{r, warning=F}
+v <- validate(f, B=1000)
+options(prType='html')
+v
+```
+
+Here "training” refers to accuracy when evaluated on the bootstrap sample
+used to fit the model, and “test” refers to the accuracy when this model is
+applied without modification to the original sample. The apparent $D_{xy}$ is
+0.32, but a better estimate of how well the model will discriminate prognoses
+in the future is $D_{xy} = 0.27$. The bootstrap estimate of slope shrinkage is $0.79$,
+close to the simple heuristic estimate.
+
+### Validate the model for predicting the probability of surviving five years
+
+We will use the non-shrinked estimates to show that this model will have some overfitting consistent with *regression to the mean*. 
+
+```{r, warning=F}
+cal <- calibrate(f, B = 1000, u=5*12)
+plot(cal, subtitles= FALSE)
+```
+
+The line nearer the ideal line corresponds to apparent predictive accuracy. The blue curve corresponds to bootstrap-corrected estimates. We clearly see some regression to the mean. 
+
+## Final model for prediction
+
+For a better model for prediction one should multiply the coefficients in the model
+by the shrinkage estimate.
+
+```{r}
+v
+shrinkage_est <- v[3, 5] # Extract bootstrap estimate of shrinkage
+f_prediction <- f
+f_prediction$coefficients <- f$coefficients*shrinkage_est
+
+print(f_prediction, html=T, coef=3)
+```
+
+### Approximating the full model
+
+If the client doesn't want to collect all these variables for prediction we can do 
+model approximation. The goal is to explain `f_prediction`with a trade off between parameters and $R^2$. This can be done by backwards selection. 
+
+```{r}
+Z <- predict(f_prediction) # compute linear predictor from full model
+
+# Force sigma to be 1 since perfect fit
+a <- ols(Z ~ rx + rcs(age, 4) + rcs(wt, 3) + pf_linear + heart_d + rcs(map, 3)
+         + rcs(hg, 4) + rcs(sg, 3) + rcs(sz, 3) + rcs(log(ap), 5) + bm, sigma =1)
+
+backwards <- fastbw(a, aics=10000)
+print(backwards, html=T, digits=3)
+```
+
+Now the client can choose the trade-off between predictive ability and number of predictors. We visualize this in the following plot
+
+```{r}
+result <- as.data.frame(backwards$result)
+total_predictors <- nrow(result)
+R2 <- result$R2
+predictors <- c((total_predictors-1):0)
+
+ggplot(data.frame(predictors,R2), aes(x = predictors, y = R2)) +
+  geom_line(color = "blue") + 
+  geom_point(color = "red") +  
+  labs(x = "Predictors", y = TeX("$R^2$")) +  
+  ggtitle("R-squared vs. Predictors") +  
+  scale_y_continuous(breaks= pretty_breaks()) +
+  theme_minimal() 
+```
+
+A reasonable approach trade off would be to remove map, bm, sg and pf_linear from our model to get an approximate model which still has high $R^2$ of $0.96$ for explaining the full model. 
+
+```{r}
+f_approx <- ols(Z ~ rx + rcs(age, 4) + rcs(wt, 3) + heart_d
+         + rcs(hg, 4) + rcs(sz, 3) + rcs(log(ap), 5), x=T)
+
+print(f_approx, html=T, coefs=3)
+```
+
+# Conclusion
+
+We devolved a Cox proportional hazards model to explain time until death (of any cause)
+for this dataset. We described the effects the predictors in the model had by various plots.
+
+We did validation and calibration if one wished to use the model for prediction, to avoid issues such as regression to the mean. We then developed a simplified model which dropped 4 predictors, but could still predict the full model with high accuracy ($R^2=0.964)$. 
+
+Throughout we used the guidelines of Regression Modelling Strategies to follow sounds statistical strategies when building and validating a model.

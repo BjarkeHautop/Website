@@ -1,0 +1,274 @@
+---
+title: "Bayesian approach to disease outbreaks"
+categories: [Bayesian, R, Stan]
+image: "image.jpg"
+---
+
+In this project we will consider a Bayesian approach to modelling disease outbreaks inspired by [this Stan case study](https://mc-stan.org/users/documentation/case-studies/boarding_school_case_study.html). We will do this using a Susceptible-Infected-Recovered (SIR) model. The main objective is to estimate epidemiological parameters of interest.
+
+# Data
+
+The data consists of the daily number of students in bed, spanning over a time interval of 14 days. There were 763 male students who were mostly full boarders and 512 of them became ill. The outbreak lasted from the 22nd of January to the 4th of February. It is reported that one infected boy started the epidemic, which spread rapidly in the relatively closed community of the boarding school.
+
+```{r, warning=FALSE, message=FALSE}
+library(outbreaks)
+library(tidyverse)
+library(truncnorm)
+library(rstan)
+library(gridExtra)
+library(bayesplot)
+rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores())
+```
+
+We start by plotting the data.
+
+```{r}
+head(influenza_england_1978_school)
+
+theme_set(theme_bw())
+ggplot(data = influenza_england_1978_school) + 
+  geom_point(mapping = aes(x = date, y = in_bed)) + 
+  labs(y = "Number of students in bed")
+```
+
+# SIR model
+
+The Susceptible-Infected-Recovered (SIR) model is standard for disease transmission. It splits the population into three categories: the susceptible, the infected and the recovered. When a susceptible individual comes into contact with an infectious individual, the former can become infected for some time, and then recover and become immune. The dynamics can be summarized graphically:
+
+![](SIR.jpg)
+
+The SIR system can be expressed by the following set of differential equations: $$\begin{aligned}
+\frac{dS}{dt}&=-\beta S\frac{I}{N} \\
+\frac{dI}{dt}&=\beta S \frac{I}{N}-\gamma I \\
+\frac{dR}{dt}&=\gamma I,
+\end{aligned}$$ where
+
+-   $S(t)$ is the number of susceptible people (no immunity),
+-   $I(t)$ is the number of infected people (infectious),
+-   $R(t)$ is the number of recovered people (immune),
+-   $\beta$ is the constant rate at which susceptible individuals become, infected through contact with infectious individuals,
+-   $\gamma$ is the constant recovery rate of infected individuals.
+
+The SIR model holds under the following assumptions:
+
+-   The total population $N=S+I+R$ remains constant,
+-   Recovered individuals remain immune,
+-   The infection rate $\beta$ and $\gamma$ are constant,
+-   Individuals meet any other individual uniformly at random and recovery time follows an exponential distribution with mean $1/\gamma$.
+
+In our case we have the disease started with $1$ infected which gives us the initial conditions $I(0)=1, S(0)=N-1=762$, and $R(0)=0$.
+
+# Model
+
+We will do a Bayesian approach. That is, is a Bayesian framework our posterior distribution $p(\theta \vert \mathcal{Y})$ is given by $$p(\theta \vert \mathcal{Y}) \propto p(\mathcal{Y} \vert \theta)p(\theta).$$
+
+So we need to specify the sampling distribution $p(\mathcal{Y} \vert \theta)$ and the prior distribution $p(\theta)$.
+
+## Sampling distribution
+
+Given our parameters and initial conditions we can find the number of infected students, $I_{\text{ODE}}(t)$. We want to link this solution to the observed data, i.e. the number of students in bed, $I_{\text{obs}}(t)$. That is, our observed is a noisy estimate of the true number of infected students. To allow for possible overdispersion we choose to sample from a negative binomial distribution. $$I_{\text{obs}}(t) \sim \text{NegBin}(I_{\text{ODE}}(t), \phi)$$ So, we have $p(\mathcal{Y}\vert \theta)$ with $\theta=(\beta,\gamma,\phi)$.
+
+## Prior distribution
+
+We select a prior for each of the three parameters $\beta,\gamma$, and $\phi$. For the rate of which susceptible people become infected, $\beta$, we use a normal distribution truncated at $0$. Using domain knowledge a reasonable choice is to have the mean be $2$ and $P(\beta>3)=0.2$. Solving this numerically gives us the parameters $\mu=1.7$ and $sd=1.41$. Thus, $$\beta \sim \text{TruncN}(1.7,\; 1.41^2,\; 0, \; \infty).$$ For $\gamma$ we will also use a truncated normal distribution, where we know that typically an influenza lasts a few days. In particular, we want the mean of $\gamma$ to be $0.5$, so the average length of the infectious disease is $1/\gamma=2$. We also want the recovery time to be more than $1$ day with probability $0.9$ (that is $P(\gamma\leq 1)=0.9$. Solving this numerically gives us the parameters $\mu=0.2$ and $\sigma=0.53$. Thus, $$\gamma \sim \text{TruncN}(0.2, \; 0.53^2, \; 0, \; \infty)$$ For the overdispersion parameter $\phi$ we will use a generic prior on $1/\sqrt{\phi}$ as recommended [here](https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations), that is $$1/\sqrt{\phi} \sim \text{TruncN}(0,\; 1, \; 0, \;\infty).$$
+
+# Implementing model in Stan
+
+## Quantities
+
+In infectious disease models, a key parameter of interest is often the basic reproduction number, $R_0$. $R_0$ represents the average number of secondary infections generated by a single infected individual in a completely susceptible population over the entire infectious period. $R_0>1$ indicates a sustainable infection, which can lead to a major outbreak, while $R_0<1$ suggests that the infection will die out. Bayesian inference allows us to construct a posterior distribution for $p(R_0\vert \mathcal{Y})$.
+
+The other quantities we will track is recovery time and predicted number of cases.
+
+## Coding the model in Stan
+
+<details>
+
+<summary>Click here to see details about how to code the model in Stan</summary>
+
+The full code for our Stan model is
+
+```{stan output.var = "compiled_model"}
+// Code for ODE
+functions {
+  real[] sir(real t, real[] y, real[] theta, 
+             real[] x_r, int[] x_i) {
+
+      real S = y[1];
+      real I = y[2];
+      real R = y[3];
+      real N = x_i[1];
+      
+      real beta = theta[1];
+      real gamma = theta[2];
+      
+      real dS_dt = -beta * I * S / N;
+      real dI_dt =  beta * I * S / N - gamma * I;
+      real dR_dt =  gamma * I;
+      
+      return {dS_dt, dI_dt, dR_dt};
+  }
+}
+
+data {
+  int<lower=1> n_days;
+  real y0[3];
+  real t0;
+  real ts[n_days];
+  int N;
+  int cases[n_days];
+}
+
+// Track status of individuals in SIR model in x
+transformed data {
+  real x_r[0];
+  int x_i[1] = { N };
+}
+
+// Truncated prior using <lower=...>
+parameters {
+  real<lower=0> beta;
+  real<lower=0> gamma;
+  real<lower=0> phi_inv_sqrt;
+}
+
+transformed parameters{
+  real y[n_days, 3];
+  real phi = 1. / (square(phi_inv_sqrt));
+  {
+    real theta[2];
+    theta[1] = beta;
+    theta[2] = gamma;
+
+    y = integrate_ode_rk45(sir, y0, t0, ts, theta, x_r, x_i);
+  }
+}
+
+model {
+  //priors 
+  beta ~ normal(1.7, 1.4); 
+  gamma ~ normal(0.2, 0.53);
+  phi_inv_sqrt ~ normal(0, 1);
+  
+  // sampling distribution
+  // col(matrix x, int n) - The n-th column of matrix x. 
+  // Here the number of infected people 
+  cases ~ neg_binomial_2(col(to_matrix(y), 2), phi);
+}
+
+// Quantities of interest
+generated quantities {
+  real R0 = beta / gamma;
+  real recovery_time = 1 / gamma;
+  real pred_cases[n_days];
+  pred_cases = neg_binomial_2_rng(col(to_matrix(y), 2), phi);
+}
+```
+
+</details>
+
+## Running Stan model
+
+We run MCMC with default options.
+
+```{r}
+cases <- influenza_england_1978_school$in_bed 
+
+# total count
+N <- 763;
+
+# times
+n_days <- length(cases) 
+t <- seq(0, n_days, by = 1)
+t0 = 0 
+t <- t[-1]
+
+# initial conditions
+i0 <- 1
+s0 <- N - i0
+r0 <- 0
+y0 = c(S = s0, I = i0, R = r0)
+
+# data for Stan
+data_sir <- list(n_days = n_days, y0 = y0, t0 = t0, ts = t, N = N, 
+                 cases = cases)
+
+fit_sir_negbin <- sampling(compiled_model,
+                           data = data_sir,
+                           seed = 0)
+```
+
+# Checking the model
+
+We start by showing summary table of the parameters in our model.
+
+```{r}
+pars=c('beta', 'gamma', "R0", "recovery_time")
+print(fit_sir_negbin, pars = pars)
+```
+
+In the summary we also see information about whether to trust the results. We see that  $\widehat{R}=1$ and $n_\text{eff}$ is large, so it looks good.
+
+We also plot the marginal posterior densities for the 4 Markov Chains and confirm they are in agreement.
+
+```{r}
+stan_dens(fit_sir_negbin, pars = pars, separate_chains = TRUE)
+```
+
+We will check our model by doing posterior predictive checks. That is, we predict the data we would expect based on the model posterior, and we compare it with the actually observed data to see if they are consistent. We do this and add a $90\%$ credible interval.
+
+```{r}
+smr_pred <- cbind(as.data.frame(summary(
+  fit_sir_negbin, pars = "pred_cases", 
+  probs = c(0.05, 0.5, 0.95))$summary), t, cases)
+
+colnames(smr_pred) <- make.names(colnames(smr_pred)) # to remove % in the col names
+
+ggplot(smr_pred, mapping = aes(x = t)) +
+  geom_ribbon(aes(ymin = X5., ymax = X95.), fill="green", alpha = 0.35) +
+  geom_line(mapping = aes(x = t, y = X50.), color="blue") + 
+  geom_point(mapping = aes(y = cases)) +
+  labs(x = "Day", y = "Number of students in bed")
+```
+
+We see that our predictions align well with the observed data.
+
+# Inference
+
+We show the marginal posterior (with chains combined) below.
+
+```{r}
+# Plot posterior
+
+posterior <- as.matrix(fit_sir_negbin)
+
+plot_title <- ggtitle("Posterior distributions",
+                      "with medians and 90% intervals")
+mcmc_areas(posterior,
+           pars = pars,
+           prob = 0.9) + plot_title
+```
+
+Of particular interest is that the distribution of the basic reproduction number, $R_0$, has all the mass way above $1$, so this infection would be sustainable.
+
+We can also access the true number of infected, which is a latent variable. We again add a $90\%$ credible interval.
+
+```{r}
+params <- lapply(t, function(i){sprintf("y[%s,2]", i)}) #number of infected for each day
+
+smr_y <- as.data.frame(summary(fit_sir_negbin, 
+                               pars = params, 
+                               probs = c(0.05, 0.5,0.95))$summary)
+
+colnames(smr_y) <- make.names(colnames(smr_y)) # to remove % in the col names
+
+ggplot(smr_y, mapping = aes(x = t)) +
+  geom_ribbon(aes(ymin = X5., ymax = X95.), fill = "green", alpha = 0.35) +
+  geom_line(mapping = aes(x = t, y = X50.), color = "blue") + 
+  labs(x = "Day", y = "Number of infected students")
+```
+
+# Conclusion
+
+We showed a Bayesian approach to modelling disease outbreak using a SIR model. This allows one to incorporate domain knowledge about the disease and estimate distribution of quantities of interest, such as the basic reproduction number, $R_0$.

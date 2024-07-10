@@ -1,0 +1,18 @@
+[
+  {
+    "listing": "/blog.html",
+    "items": [
+      "/blog/post-with-code/index.html",
+      "/blog/welcome/index.html"
+    ]
+  },
+  {
+    "listing": "/projects/index.html",
+    "items": [
+      "/projects/bachelor_thesis/bachelor_thesis.html",
+      "/projects/bayesian_disease/bayesian_disease.html",
+      "/projects/cox_model/Cox_model.html",
+      "/projects/notes_rms/notes_rms.html"
+    ]
+  }
+]

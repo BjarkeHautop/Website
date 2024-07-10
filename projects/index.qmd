@@ -1,0 +1,42 @@
+---
+title: "Projects"
+description: |
+  Here are some of my projects. 
+listing:
+  - id: ehr
+    max-description-length: 500
+    image-height: 200px # hard fix for now
+    fields: [image, title, description]
+    contents: 
+      - cox_model
+      - bachelor_thesis
+      - bayesian_disease
+      - notes_rms
+    type: default
+    categories: true
+
+format:
+  html:
+    css: styles.css
+
+#  - id: packages
+#    max-description-length: 80
+#    image-height: 250px
+#    fields: [title, description]
+#    contents: 
+#      - pkg_1
+#      - pkg_2
+#    type: table
+#    grid-item-border: false
+#    sort-ui: false
+#    filter-ui: false
+---
+
+::: {#ehr}
+:::
+
+
+
+
+
+

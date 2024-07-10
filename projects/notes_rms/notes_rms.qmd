@@ -1,0 +1,28 @@
+---
+title: "Notes to Regression Modelling Strategies by Frank Harrell"
+categories: [Notes, R]
+image: "image.jpg"
+---
+
+These are my notes to the book "Regression Modelling Strategies" by Frank 
+Harrell. The notes are based on things I found interesting and learned. R code and figures are included when relevant.
+
+<!--more--> 
+
+## Sections
+
+My notes have the following sections
+
+- Issues with step-wise variable selection
+
+- Should one assume a linear relationship?
+
+- Prediction
+
+- Validation
+
+- Nomograms
+
+[Click here to download my notes](notes_rms.pdf)
+
+

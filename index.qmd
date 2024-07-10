@@ -1,0 +1,11 @@
+---
+title: "My website"
+---
+
+## Welcome!
+
+Welcome to my website dedicated to statistics. Here, you'll find information, resources, and insights on some of my interests.
+
+### Contact me
+
+Contact me at [bjarke.hautop@gmail.com](mailto:bjarke.hautop@gmail.com).

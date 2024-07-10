@@ -1,0 +1,42 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  page-navigation: true
+
+  page-footer:
+    left: "&copy; Copyright 2024, Bjarke Hautop Kristensen"
+    right: "This page is built with [Quarto](https://quarto.org/)"
+
+  sidebar:
+    pinned: true
+    align: center
+    style: "docked"
+    collapse-level: 1
+    contents:
+
+      - text: "Projects"
+        href: projects/index.qmd
+
+      #- text: "Blog"
+      #  href: blog.qmd
+      
+      - text: "About me"
+        href: about.qmd
+      
+      #- section: "About"
+      #  contents:
+      #    - text: "About me"
+      #      href: about.qmd
+      #     
+      #    - text: "This template"
+      #      href: about_template.qmd
+          
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+

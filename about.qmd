@@ -1,0 +1,42 @@
+---
+title: "Bjarke Hautop Kristensen"
+image: profile.png
+about:
+  id: hero-heading
+  template: trestles
+  image-shape: rectangle
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: www.linkedin.com/in/bjarkehautop
+    - icon: github
+      text: Github
+      href: https://github.com/BjarkeHautop
+    - text: "{{< iconify material-symbols:mail-outline >}} email"
+      #text: email
+      href: bjarke.hautop@gmail.com
+
+---
+
+::: {#hero-heading}
+
+Welcome to my website!
+
+## Education 
+
+Aarhus University | Aarhus, Denmark.
+
+Studying a master in Statistics | 2023-2025
+
+## CV
+
+[Click here to download my CV](CV.pdf)
+
+## Hobbies
+
+- Chess
+
+- Powerlifting
+
+:::
+
