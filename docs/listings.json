@@ -9,10 +9,10 @@
   {
     "listing": "/projects/index.html",
     "items": [
-      "/projects/bachelor_thesis/bachelor_thesis.html",
       "/projects/bayesian_disease/bayesian_disease.html",
+      "/projects/notes_rms/notes_rms.html",
       "/projects/cox_model/cox.html",
-      "/projects/notes_rms/notes_rms.html"
+      "/projects/bachelor_thesis/bachelor_thesis.html"
     ]
   }
 ]
