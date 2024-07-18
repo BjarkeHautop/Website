@@ -2,7 +2,7 @@
 title: "Bayesian approach to disease outbreaks"
 categories: [Bayesian, R, Stan]
 image: "image.jpg"
-date: 18/11/2024
+date: 07/18/2024
 date-format: "MMMM, YYYY"
 ---
 
@@ -377,7 +377,7 @@ For $\gamma$ we will try the following other priors:
 
 - Mean $1/3$ and $P(\gamma\leq 0.6)=0.9$. This gives us the prior $$\gamma \sim \mathrm{Normal}^+(0.28, \; 0.24),$$ 
 
-- Mean $1/4$ and $P(\gamma\leq 0.4)=0.9$. This gives us the prior $$\gamma \sim \mathrm{Normal}^+(0.2435308, \; 0.12).$$  
+- Mean $1/4$ and $P(\gamma\leq 0.4)=0.9$. This gives us the prior $$\gamma \sim \mathrm{Normal}^+(0.24, \; 0.12).$$  
 
 Now we see how the posterior changes with these different priors. For $\beta$ 
 this can be done with following code.
