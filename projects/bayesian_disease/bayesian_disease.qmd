@@ -2,6 +2,8 @@
 title: "Bayesian approach to disease outbreaks"
 categories: [Bayesian, R, Stan]
 image: "image.jpg"
+date: 18/11/2024
+date-format: "MMMM, YYYY"
 ---
 
 In this project we will consider a Bayesian approach to modelling disease outbreaks inspired by [this Stan case study](https://mc-stan.org/users/documentation/case-studies/boarding_school_case_study.html). We will do this using a Susceptible-Infected-Recovered (SIR) model. The main objective is to estimate epidemiological parameters of interest.
@@ -17,8 +19,13 @@ library(truncnorm)
 library(rstan)
 library(gridExtra)
 library(bayesplot)
+library(adjustr)
 rstan_options(auto_write = TRUE)
 options(mc.cores = parallel::detectCores())
+```
+
+```{r, echo=FALSE}
+file_path <- "C:/Users/bjark/Documents/Quarto website/Website/projects/bayesian_disease/stan_model.stan"
 ```
 
 We start by plotting the data.
@@ -71,7 +78,114 @@ Given our parameters and initial conditions we can find the number of infected s
 
 ## Prior distribution
 
-We select a prior for each of the three parameters $\beta,\gamma$, and $\phi$. For the rate of which susceptible people become infected, $\beta$, we use a normal distribution truncated at $0$. Using domain knowledge a reasonable choice is to have the mean be $2$ and $P(\beta>3)=0.2$. Solving this numerically gives us the parameters $\mu=1.7$ and $sd=1.41$. Thus, $$\beta \sim \text{TruncN}(1.7,\; 1.41^2,\; 0, \; \infty).$$ For $\gamma$ we will also use a truncated normal distribution, where we know that typically an influenza lasts a few days. In particular, we want the mean of $\gamma$ to be $0.5$, so the average length of the infectious disease is $1/\gamma=2$. We also want the recovery time to be more than $1$ day with probability $0.9$ (that is $P(\gamma\leq 1)=0.9$. Solving this numerically gives us the parameters $\mu=0.2$ and $\sigma=0.53$. Thus, $$\gamma \sim \text{TruncN}(0.2, \; 0.53^2, \; 0, \; \infty)$$ For the overdispersion parameter $\phi$ we will use a generic prior on $1/\sqrt{\phi}$ as recommended [here](https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations), that is $$1/\sqrt{\phi} \sim \text{TruncN}(0,\; 1, \; 0, \;\infty).$$
+We select a prior for each of the three parameters $\beta,\gamma$, and $\phi$. For the rate of which susceptible people become infected, $\beta$, we use a normal distribution truncated at $0$.
+Using domain knowledge a reasonable choice is to have the mean be $2$ and $P(\beta>3)=0.2$. To do this we will need code to numerically solve for these parameters. 
+
+<details>
+
+<summary>Click here to see code for solving for parameters in truncated normal</summary>
+
+```{r}
+solve_truncated_normal <- function(desired_mean, x_value, desired_prob, a = 0, 
+                                   b = Inf, initial_guess=c(desired_mean, 1), maxit=1000,
+                                   verbose=FALSE) {
+  "
+  This function solves for the parameters (mean and standard deviation) of a truncated normal distribution 
+  
+  such that the distribution aligns with a given desired mean and the cumulative probability at a specific value. 
+
+  Args:
+  desired_mean (numeric): The desired mean E[X] of the truncated normal distribution.
+  desired_prob (numeric): The desired cumulative probability P(X <= x_value) of the truncated normal distribution.
+  x_value (numeric): The value x for which the cumulative probability is specified.
+  a (numeric, optional): The lower bound of the truncation interval. Default is 0.
+  b (numeric, optional): The upper bound of the truncation interval. Default is Inf.
+  Initial_guess: The initial guess for the parameters used for optimizing. Default 
+  is mean being the desired mean and sd being 1. 
+  maxit: The maximum number of iterations allowed for optim. See also ?optim.
+
+  Returns:
+  list: A list containing the optimal mean (mu) and standard deviation (sigma) of the truncated normal distribution.
+  "
+  
+  # Check for logical consistency and edge cases
+  if (a >= b) {
+    stop("Error: Lower bound 'a' must be less than upper bound 'b'.")
+  }
+  if (desired_mean <= a || desired_mean >= b) {
+    stop("Error: Desired mean must be within the bounds [a, b].")
+  }
+  if (desired_prob <= 0 || desired_prob >= 1) {
+    stop("Error: Desired probability must be between 0 and 1.")
+  }
+  if (x_value <= a || x_value >= b) {
+    stop("Error: x_value must be within the bounds [a, b].")
+  }
+  
+  # Define the objective function to minimize
+  objective_function <- function(params) {
+    mu <- params[1]
+    sigma <- params[2]
+    
+    # Penalize if parameters go out of bounds
+    if (mu <= a || mu >= b || sigma <= 0) {
+      return(Inf)
+    }
+    
+    # Following syntax given on https://en.wikipedia.org/wiki/Truncated_normal_distribution
+    xi <- (x_value - mu) / sigma
+    alpha <- (a - mu) / sigma
+    beta <- (b - mu) / sigma
+    Z <- pnorm(beta) - pnorm(alpha)
+    
+    mean_trunc <- mu + (dnorm(alpha) - dnorm(beta)) / Z * sigma
+    prob_trunc <- (pnorm(xi) - pnorm(alpha)) / Z
+    
+    # Calculate the sum of squared differences
+    error <- (mean_trunc - desired_mean)^2 + (prob_trunc - desired_prob)^2
+    
+    return(error)
+  }
+  
+  # Optimize the parameters
+  result <- optim(initial_guess, objective_function, 
+                    control = list(maxit=maxit))
+  # Check for convergence or failure
+  if (result$convergence != 0) {
+    warning("Optimization did not converge.")
+  }  
+  
+  if (verbose) {
+    print(result)
+  } 
+  
+  # Extract the optimal parameters
+  optimal_mu <- result$par[1]
+  optimal_sigma <- result$par[2]
+  
+  return(list(mu = optimal_mu, sigma = optimal_sigma))
+}
+```
+
+</details>
+
+Now we can solve for the parameters numerically.
+
+```{r}
+solve_truncated_normal(desired_mean = 2, x_value = 3, desired_prob = 1-0.2)
+```
+
+Thus, $$\beta \sim \mathrm{Normal}^+(1.68,\; 1.42^2).$$ 
+
+For $\gamma$ we will also use truncated normal distribution, where we know that typically an influenza lasts a few days. In particular, we want the mean of $\gamma$ to be $0.5$, so the average length of the infectious disease is $1/\gamma=1/0.5=2$. We also want the recovery time to be more than $1$ day with probability $0.9$ (that is $P(\gamma\leq 1)=0.9$). We again solve for the parameters numerically.
+
+```{r}
+solve_truncated_normal(desired_mean = 0.5, x_value = 1, desired_prob = 0.9)
+```
+
+Thus, $$\gamma \sim \mathrm{Normal}^+(0.18, \; 0.54^2),$$ 
+
+For the overdispersion parameter $\phi$ we will use a generic prior on $1/\sqrt{\phi}$ as recommended by Stan [here](https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations), that is $$1/\sqrt{\phi} \sim \mathrm{Normal}^+(0,\; 1^2).$$
 
 # Implementing model in Stan
 
@@ -89,11 +203,11 @@ The other quantities we will track is recovery time and predicted number of case
 
 The full code for our Stan model is
 
-```{stan output.var = "compiled_model"}
+```{stan, output.var = "not_used"}
 // Code for ODE
 functions {
-  real[] sir(real t, real[] y, real[] theta, 
-             real[] x_r, int[] x_i) {
+  vector sir(real t, vector y, array[] real theta, 
+             array[] real x_r, array[] int x_i) {
 
       real S = y[1];
       real I = y[2];
@@ -107,23 +221,24 @@ functions {
       real dI_dt =  beta * I * S / N - gamma * I;
       real dR_dt =  gamma * I;
       
-      return {dS_dt, dI_dt, dR_dt};
+      // ' transposes our row vector into a column vector
+      return [dS_dt, dI_dt, dR_dt]';
   }
 }
 
 data {
   int<lower=1> n_days;
-  real y0[3];
-  real t0;
-  real ts[n_days];
+  vector[3] y0;
+  array[n_days] real t;
   int N;
-  int cases[n_days];
+  array [n_days] int cases;
 }
 
 // Track status of individuals in SIR model in x
 transformed data {
-  real x_r[0];
-  int x_i[1] = { N };
+  real t0 = 0; 
+  array[0] real x_r;
+  array[1] int x_i = { N };
 }
 
 // Truncated prior using <lower=...>
@@ -134,14 +249,14 @@ parameters {
 }
 
 transformed parameters{
-  real y[n_days, 3];
+  array[n_days] vector[3] y;
   real phi = 1. / (square(phi_inv_sqrt));
   {
-    real theta[2];
+    array[2] real theta;
     theta[1] = beta;
     theta[2] = gamma;
 
-    y = integrate_ode_rk45(sir, y0, t0, ts, theta, x_r, x_i);
+    y = ode_rk45(sir, y0, t0, t, theta, x_r, x_i);
   }
 }
 
@@ -152,25 +267,30 @@ model {
   phi_inv_sqrt ~ normal(0, 1);
   
   // sampling distribution
-  // col(matrix x, int n) - The n-th column of matrix x. 
-  // Here the number of infected people 
-  cases ~ neg_binomial_2(col(to_matrix(y), 2), phi);
+  cases ~ neg_binomial_2(y[,2], phi);
 }
 
 // Quantities of interest
 generated quantities {
   real R0 = beta / gamma;
   real recovery_time = 1 / gamma;
-  real pred_cases[n_days];
-  pred_cases = neg_binomial_2_rng(col(to_matrix(y), 2), phi);
+  array[n_days] real pred_cases;
+  pred_cases = neg_binomial_2_rng(y[,2], phi);
 }
+
 ```
 
 </details>
 
+We now define the model. 
+
+```{r, warning=FALSE, message=FALSE}
+model <- stan_model(file = file_path)
+```
+
 ## Running Stan model
 
-We run MCMC with default options.
+We run our model with default options.
 
 ```{r}
 cases <- influenza_england_1978_school$in_bed 
@@ -181,7 +301,6 @@ N <- 763;
 # times
 n_days <- length(cases) 
 t <- seq(0, n_days, by = 1)
-t0 = 0 
 t <- t[-1]
 
 # initial conditions
@@ -191,12 +310,12 @@ r0 <- 0
 y0 = c(S = s0, I = i0, R = r0)
 
 # data for Stan
-data_sir <- list(n_days = n_days, y0 = y0, t0 = t0, ts = t, N = N, 
+data_sir <- list(n_days = n_days, y0 = y0, t = t, N = N, 
                  cases = cases)
 
-fit_sir_negbin <- sampling(compiled_model,
-                           data = data_sir,
-                           seed = 0)
+fit_sir_negbin <- stan(file = file_path, 
+                       data = data_sir,
+                       seed = 1405,)
 ```
 
 # Checking the model
@@ -233,6 +352,57 @@ ggplot(smr_pred, mapping = aes(x = t)) +
 ```
 
 We see that our predictions align well with the observed data.
+
+# Prior sensitivity 
+
+We will perform prior sensitivity analysis, that is analyzing how much the prior choice affects the posterior. We will use the package `adjustr` to do this. For $\beta$ we will try the following other priors:
+
+- Mean $1$ and $P(\beta)>2=0.2$. This gives us the prior $$\beta \sim \mathrm{Normal}^+(1.6, \; 1.3),$$
+
+- Mean $3$ and $P(\beta)>4=0.2$. This gives us the prior $$\beta \sim \mathrm{Normal}^+(2.98, \; 1.2),$$
+
+- Mean $4$ and $P(\beta)>5=0.2$. This gives us the prior $$\beta \sim \mathrm{Normal}^+(4, \; 1.19).$$
+
+Where we again solved for the parameters numerically, as seen below.
+
+```{r, eval=FALSE}
+solve_truncated_normal(1, 2, 1-0.2)
+solve_truncated_normal(3, 4, 1-0.2)
+solve_truncated_normal(4, 5, 1-0.2)
+```
+
+For $\gamma$ we will try the following other priors:
+
+- Mean $1$ and $P(\gamma\leq 1.5)=0.9$. This gives us the prior $$\gamma \sim \mathrm{Normal}^+(1, \; 0.4),$$ 
+
+- Mean $1/3$ and $P(\gamma\leq 0.6)=0.9$. This gives us the prior $$\gamma \sim \mathrm{Normal}^+(0.28, \; 0.24),$$ 
+
+- Mean $1/4$ and $P(\gamma\leq 0.4)=0.9$. This gives us the prior $$\gamma \sim \mathrm{Normal}^+(0.2435308, \; 0.12).$$  
+
+Now we see how the posterior changes with these different priors. For $\beta$ 
+this can be done with following code.
+
+```{r}
+spec_beta = make_spec(beta ~ normal(mu, sd), 
+                      mu=c(1.6, 2.98, 4), sd=c(1.3, 1.2, 1.19))
+
+adjusted_beta = adjust_weights(spec_beta, fit_sir_negbin)
+summarize(adjusted_beta, mean(beta), var(beta))
+```
+
+We see the posterior mean and variance didn't change for $\beta$ with those different priors. So the posterior is being dominated by the data, which is a good thing. 
+
+We do the same for $\gamma$. 
+
+```{r}
+spec_gamma = make_spec(beta ~ normal(mu, sd), 
+                       mu=c(1, 0.28, 0.24), sd=c(0.4, 0.24, 0.12))
+
+adjusted_gamma = adjust_weights(spec_gamma, fit_sir_negbin)
+summarize(adjusted_gamma, mean(gamma), var(gamma))
+```
+
+We see that the posterior mean and variance barely changes for $\gamma$ with those different priors. So the posterior is being dominated by the data, which is a good thing. 
 
 # Inference
 
@@ -271,4 +441,8 @@ ggplot(smr_y, mapping = aes(x = t)) +
 
 # Conclusion
 
-We showed a Bayesian approach to modelling disease outbreak using a SIR model. This allows one to incorporate domain knowledge about the disease and estimate distribution of quantities of interest, such as the basic reproduction number, $R_0$.
+In this study, we presented a Bayesian approach to modeling disease outbreaks using the Susceptible-Infected-Recovered (SIR) model. This methodology enables the incorporation of domain-specific knowledge about the disease, allowing for the estimation of crucial epidemiological parameters, such as the basic reproduction number,$R_0$. By leveraging Bayesian inference, we can obtain a probabilistic understanding of these parameters, which provides valuable insights into the uncertainty and variability inherent in the modeling process.
+
+We conducted extensive model validation and robustness checks, including posterior predictive checks and prior sensitivity analyses, to ensure the reliability and robustness of our findings.
+
+In conclusion, the Bayesian SIR model provides a powerful tool for public health officials and researchers, enabling them to make informed decisions based on a comprehensive understanding of disease dynamics. Future work could extend this framework to more complex models and explore its application to different types of infectious diseases.

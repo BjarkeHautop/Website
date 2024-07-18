@@ -2,6 +2,8 @@
 title: "Bachelor Thesis: Asymptotic Normality for Tessellation-based Betti Numbers"
 categories: [TDA, Bachelor Thesis, Python]
 image: "image.jpg"
+date: 06/29/2023
+date-format: "MMMM, YYYY"
 ---
 
 In this project I worked on Topological Data Analysis. In particular, I proved 

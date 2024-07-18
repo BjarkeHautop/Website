@@ -6,7 +6,8 @@ listing:
   - id: ehr
     max-description-length: 500
     image-height: 200px # hard fix for now
-    fields: [image, title, categories, description]
+    fields: [image, title, categories, description, date]
+    date-format: "MMMM, YYYY"
     contents: 
       - cox_model
       - bachelor_thesis
@@ -14,6 +15,7 @@ listing:
       - notes_rms
     type: default
     categories: true
+    sort: "date desc"
 
 format:
   html:

@@ -2,6 +2,8 @@
 title: "Notes to Regression Modelling Strategies by Frank Harrell"
 categories: [Notes, R]
 image: "image.jpg"
+date: 07/05/2024
+date-format: "MMMM, YYYY"
 ---
 
 These are my notes to the book "Regression Modelling Strategies" by Frank 

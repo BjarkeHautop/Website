@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.555">
+<meta name="generator" content="quarto-1.5.54">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -100,7 +100,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -139,13 +139,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Bayesian approach to disease outbreaks</li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -198,6 +198,7 @@ window.Quarto = {
   <li><a href="#running-stan-model" id="toc-running-stan-model" class="nav-link" data-scroll-target="#running-stan-model">Running Stan model</a></li>
   </ul></li>
   <li><a href="#checking-the-model" id="toc-checking-the-model" class="nav-link" data-scroll-target="#checking-the-model">Checking the model</a></li>
+  <li><a href="#prior-sensitivity" id="toc-prior-sensitivity" class="nav-link" data-scroll-target="#prior-sensitivity">Prior sensitivity</a></li>
   <li><a href="#inference" id="toc-inference" class="nav-link" data-scroll-target="#inference">Inference</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
@@ -224,7 +225,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">July, 2024</p>
+      <p class="date">June, 2025</p>
     </div>
   </div>
   
@@ -247,8 +248,9 @@ window.Quarto = {
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstan)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bayesplot)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rstan_options</span>(<span class="at">auto_write =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">mc.cores =</span> parallel<span class="sc">::</span><span class="fu">detectCores</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(adjustr)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rstan_options</span>(<span class="at">auto_write =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">mc.cores =</span> parallel<span class="sc">::</span><span class="fu">detectCores</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We start by plotting the data.</p>
 <div class="cell">
@@ -269,7 +271,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="bayesian_disease_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="bayesian_disease_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -310,7 +312,118 @@ window.Quarto = {
 </section>
 <section id="prior-distribution" class="level2">
 <h2 class="anchored" data-anchor-id="prior-distribution">Prior distribution</h2>
-<p>We select a prior for each of the three parameters <span class="math inline">\(\beta,\gamma\)</span>, and <span class="math inline">\(\phi\)</span>. For the rate of which susceptible people become infected, <span class="math inline">\(\beta\)</span>, we use a normal distribution truncated at <span class="math inline">\(0\)</span>. Using domain knowledge a reasonable choice is to have the mean be <span class="math inline">\(2\)</span> and <span class="math inline">\(P(\beta&gt;3)=0.2\)</span>. Solving this numerically gives us the parameters <span class="math inline">\(\mu=1.7\)</span> and <span class="math inline">\(sd=1.41\)</span>. Thus, <span class="math display">\[\beta \sim \text{TruncN}(1.7,\; 1.41^2,\; 0, \; \infty).\]</span> For <span class="math inline">\(\gamma\)</span> we will also use a truncated normal distribution, where we know that typically an influenza lasts a few days. In particular, we want the mean of <span class="math inline">\(\gamma\)</span> to be <span class="math inline">\(0.5\)</span>, so the average length of the infectious disease is <span class="math inline">\(1/\gamma=2\)</span>. We also want the recovery time to be more than <span class="math inline">\(1\)</span> day with probability <span class="math inline">\(0.9\)</span> (that is <span class="math inline">\(P(\gamma\leq 1)=0.9\)</span>. Solving this numerically gives us the parameters <span class="math inline">\(\mu=0.2\)</span> and <span class="math inline">\(\sigma=0.53\)</span>. Thus, <span class="math display">\[\gamma \sim \text{TruncN}(0.2, \; 0.53^2, \; 0, \; \infty)\]</span> For the overdispersion parameter <span class="math inline">\(\phi\)</span> we will use a generic prior on <span class="math inline">\(1/\sqrt{\phi}\)</span> as recommended <a href="https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations">here</a>, that is <span class="math display">\[1/\sqrt{\phi} \sim \text{TruncN}(0,\; 1, \; 0, \;\infty).\]</span></p>
+<p>We select a prior for each of the three parameters <span class="math inline">\(\beta,\gamma\)</span>, and <span class="math inline">\(\phi\)</span>. For the rate of which susceptible people become infected, <span class="math inline">\(\beta\)</span>, we use a normal distribution truncated at <span class="math inline">\(0\)</span>. Using domain knowledge a reasonable choice is to have the mean be <span class="math inline">\(2\)</span> and <span class="math inline">\(P(\beta&gt;3)=0.2\)</span>. To do this we will need code to numerically solve for these parameters.</p>
+<details>
+<summary>
+Click here to see code for solving for parameters in truncated normal
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>solve_truncated_normal <span class="ot">&lt;-</span> <span class="cf">function</span>(desired_mean, x_value, desired_prob, <span class="at">a =</span> <span class="dv">0</span>, </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">b =</span> <span class="cn">Inf</span>, <span class="at">initial_guess=</span><span class="fu">c</span>(desired_mean, <span class="dv">1</span>), <span class="at">maxit=</span><span class="dv">1000</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">verbose=</span><span class="cn">FALSE</span>) {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="st">  This function solves for the parameters (mean and standard deviation) of a truncated normal distribution </span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="st">  such that the distribution aligns with a given desired mean and the cumulative probability at a specific value. </span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="st">  Args:</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="st">  desired_mean (numeric): The desired mean E[X] of the truncated normal distribution.</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="st">  desired_prob (numeric): The desired cumulative probability P(X &lt;= x_value) of the truncated normal distribution.</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="st">  x_value (numeric): The value x for which the cumulative probability is specified.</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="st">  a (numeric, optional): The lower bound of the truncation interval. Default is 0.</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="st">  b (numeric, optional): The upper bound of the truncation interval. Default is Inf.</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="st">  Initial_guess: The initial guess for the parameters used for optimizing. Default </span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="st">  is mean being the desired mean and sd being 1. </span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="st">  maxit: The maximum number of iterations allowed for optim. See also ?optim.</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="st">  Returns:</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="st">  list: A list containing the optimal mean (mu) and standard deviation (sigma) of the truncated normal distribution.</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="st">  "</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Check for logical consistency and edge cases</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (a <span class="sc">&gt;=</span> b) {</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"Error: Lower bound 'a' must be less than upper bound 'b'."</span>)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (desired_mean <span class="sc">&lt;=</span> a <span class="sc">||</span> desired_mean <span class="sc">&gt;=</span> b) {</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"Error: Desired mean must be within the bounds [a, b]."</span>)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (desired_prob <span class="sc">&lt;=</span> <span class="dv">0</span> <span class="sc">||</span> desired_prob <span class="sc">&gt;=</span> <span class="dv">1</span>) {</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"Error: Desired probability must be between 0 and 1."</span>)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (x_value <span class="sc">&lt;=</span> a <span class="sc">||</span> x_value <span class="sc">&gt;=</span> b) {</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"Error: x_value must be within the bounds [a, b]."</span>)</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Define the objective function to minimize</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>  objective_function <span class="ot">&lt;-</span> <span class="cf">function</span>(params) {</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    mu <span class="ot">&lt;-</span> params[<span class="dv">1</span>]</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    sigma <span class="ot">&lt;-</span> params[<span class="dv">2</span>]</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Penalize if parameters go out of bounds</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (mu <span class="sc">&lt;=</span> a <span class="sc">||</span> mu <span class="sc">&gt;=</span> b <span class="sc">||</span> sigma <span class="sc">&lt;=</span> <span class="dv">0</span>) {</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(<span class="cn">Inf</span>)</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Following syntax given on https://en.wikipedia.org/wiki/Truncated_normal_distribution</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    xi <span class="ot">&lt;-</span> (x_value <span class="sc">-</span> mu) <span class="sc">/</span> sigma</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    alpha <span class="ot">&lt;-</span> (a <span class="sc">-</span> mu) <span class="sc">/</span> sigma</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>    beta <span class="ot">&lt;-</span> (b <span class="sc">-</span> mu) <span class="sc">/</span> sigma</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>    Z <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(beta) <span class="sc">-</span> <span class="fu">pnorm</span>(alpha)</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>    mean_trunc <span class="ot">&lt;-</span> mu <span class="sc">+</span> (<span class="fu">dnorm</span>(alpha) <span class="sc">-</span> <span class="fu">dnorm</span>(beta)) <span class="sc">/</span> Z <span class="sc">*</span> sigma</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>    prob_trunc <span class="ot">&lt;-</span> (<span class="fu">pnorm</span>(xi) <span class="sc">-</span> <span class="fu">pnorm</span>(alpha)) <span class="sc">/</span> Z</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate the sum of squared differences</span></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>    error <span class="ot">&lt;-</span> (mean_trunc <span class="sc">-</span> desired_mean)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (prob_trunc <span class="sc">-</span> desired_prob)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(error)</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Optimize the parameters</span></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="fu">optim</span>(initial_guess, objective_function, </span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>                    <span class="at">control =</span> <span class="fu">list</span>(<span class="at">maxit=</span>maxit))</span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Check for convergence or failure</span></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (result<span class="sc">$</span>convergence <span class="sc">!=</span> <span class="dv">0</span>) {</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>    <span class="fu">warning</span>(<span class="st">"Optimization did not converge."</span>)</span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>  }  </span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (verbose) {</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(result)</span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>  } </span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract the optimal parameters</span></span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>  optimal_mu <span class="ot">&lt;-</span> result<span class="sc">$</span>par[<span class="dv">1</span>]</span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>  optimal_sigma <span class="ot">&lt;-</span> result<span class="sc">$</span>par[<span class="dv">2</span>]</span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">mu =</span> optimal_mu, <span class="at">sigma =</span> optimal_sigma))</span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</details>
+<p>Now we can solve for the parameters numerically.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">solve_truncated_normal</span>(<span class="at">desired_mean =</span> <span class="dv">2</span>, <span class="at">x_value =</span> <span class="dv">3</span>, <span class="at">desired_prob =</span> <span class="dv">1</span><span class="fl">-0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$mu
+[1] 1.683443
+
+$sigma
+[1] 1.417515</code></pre>
+</div>
+</div>
+<p>Thus, <span class="math display">\[\beta \sim \mathrm{Normal}^+(1.68,\; 1.42^2).\]</span></p>
+<p>For <span class="math inline">\(\gamma\)</span> we will also use truncated normal distribution, where we know that typically an influenza lasts a few days. In particular, we want the mean of <span class="math inline">\(\gamma\)</span> to be <span class="math inline">\(0.5\)</span>, so the average length of the infectious disease is <span class="math inline">\(1/\gamma=1/0.5=2\)</span>. We also want the recovery time to be more than <span class="math inline">\(1\)</span> day with probability <span class="math inline">\(0.9\)</span> (that is <span class="math inline">\(P(\gamma\leq 1)=0.9\)</span>). We again solve for the parameters numerically.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">solve_truncated_normal</span>(<span class="at">desired_mean =</span> <span class="fl">0.5</span>, <span class="at">x_value =</span> <span class="dv">1</span>, <span class="at">desired_prob =</span> <span class="fl">0.9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$mu
+[1] 0.1766169
+
+$sigma
+[1] 0.537865</code></pre>
+</div>
+</div>
+<p>Thus, <span class="math display">\[\gamma \sim \mathrm{Normal}^+(0.18, \; 0.54^2),\]</span></p>
+<p>For the overdispersion parameter <span class="math inline">\(\phi\)</span> we will use a generic prior on <span class="math inline">\(1/\sqrt{\phi}\)</span> as recommended by Stan <a href="https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations">here</a>, that is <span class="math display">\[1/\sqrt{\phi} \sim \mathrm{Normal}^+(0,\; 1^2).\]</span></p>
 </section>
 </section>
 <section id="implementing-model-in-stan" class="level1">
@@ -327,112 +440,114 @@ window.Quarto = {
 Click here to see details about how to code the model in Stan
 </summary>
 <p>The full code for our Stan model is</p>
-<div class="cell" data-output.var="compiled_model">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode stan code-with-copy"><code class="sourceCode stan"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Code for ODE</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">functions</span> {</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span>[] sir(<span class="dt">real</span> t, <span class="dt">real</span>[] y, <span class="dt">real</span>[] theta, </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>             <span class="dt">real</span>[] x_r, <span class="dt">int</span>[] x_i) {</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">real</span> S = y[<span class="dv">1</span>];</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">real</span> I = y[<span class="dv">2</span>];</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">real</span> R = y[<span class="dv">3</span>];</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">real</span> N = x_i[<span class="dv">1</span>];</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">real</span> beta = theta[<span class="dv">1</span>];</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>      <span class="dt">real</span> gamma = theta[<span class="dv">2</span>];</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">real</span> dS_dt = -beta * I * S / N;</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>      <span class="dt">real</span> dI_dt =  beta * I * S / N - gamma * I;</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>      <span class="dt">real</span> dR_dt =  gamma * I;</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> {dS_dt, dI_dt, dR_dt};</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> {</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">1</span>&gt; n_days;</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span> y0[<span class="dv">3</span>];</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span> t0;</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span> ts[n_days];</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> N;</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> cases[n_days];</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="co">// Track status of individuals in SIR model in x</span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="kw">transformed data</span> {</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span> x_r[<span class="dv">0</span>];</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> x_i[<span class="dv">1</span>] = { N };</span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="co">// Truncated prior using &lt;lower=...&gt;</span></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="kw">parameters</span> {</span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; beta;</span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; gamma;</span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; phi_inv_sqrt;</span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="kw">transformed parameters</span>{</span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span> y[n_days, <span class="dv">3</span>];</span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span> phi = <span class="fl">1.</span> / (square(phi_inv_sqrt));</span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>  {</span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    <span class="dt">real</span> theta[<span class="dv">2</span>];</span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    theta[<span class="dv">1</span>] = beta;</span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>    theta[<span class="dv">2</span>] = gamma;</span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>    y = <span class="kw">integrate_ode_rk45</span>(sir, y0, t0, ts, theta, x_r, x_i);</span>
-<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a><span class="kw">model</span> {</span>
-<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>  <span class="co">//priors </span></span>
-<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>  beta ~ normal(<span class="fl">1.7</span>, <span class="fl">1.4</span>); </span>
-<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>  gamma ~ normal(<span class="fl">0.2</span>, <span class="fl">0.53</span>);</span>
-<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>  phi_inv_sqrt ~ normal(<span class="dv">0</span>, <span class="dv">1</span>);</span>
-<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>  <span class="co">// sampling distribution</span></span>
-<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>  <span class="co">// col(matrix x, int n) - The n-th column of matrix x. </span></span>
-<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Here the number of infected people </span></span>
-<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>  cases ~ neg_binomial_2(col(to_matrix(y), <span class="dv">2</span>), phi);</span>
-<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a><span class="co">// Quantities of interest</span></span>
-<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a><span class="kw">generated quantities</span> {</span>
-<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span> R0 = beta / gamma;</span>
-<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span> recovery_time = <span class="dv">1</span> / gamma;</span>
-<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span> pred_cases[n_days];</span>
-<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>  pred_cases = neg_binomial_2_rng(col(to_matrix(y), <span class="dv">2</span>), phi);</span>
-<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-output.var="not_used">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode stan code-with-copy"><code class="sourceCode stan"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Code for ODE</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">functions</span> {</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">vector</span> sir(<span class="dt">real</span> t, <span class="dt">vector</span> y, <span class="dt">array</span>[] <span class="dt">real</span> theta, </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>             <span class="dt">array</span>[] <span class="dt">real</span> x_r, <span class="dt">array</span>[] <span class="dt">int</span> x_i) {</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">real</span> S = y[<span class="dv">1</span>];</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">real</span> I = y[<span class="dv">2</span>];</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">real</span> R = y[<span class="dv">3</span>];</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">real</span> N = x_i[<span class="dv">1</span>];</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">real</span> beta = theta[<span class="dv">1</span>];</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>      <span class="dt">real</span> gamma = theta[<span class="dv">2</span>];</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">real</span> dS_dt = -beta * I * S / N;</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>      <span class="dt">real</span> dI_dt =  beta * I * S / N - gamma * I;</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>      <span class="dt">real</span> dR_dt =  gamma * I;</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>      <span class="co">// ' transposes our row vector into a column vector</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> [dS_dt, dI_dt, dR_dt]';</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> {</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">1</span>&gt; n_days;</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>  <span class="dt">vector</span>[<span class="dv">3</span>] y0;</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>  <span class="dt">array</span>[n_days] <span class="dt">real</span> t;</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> N;</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>  <span class="dt">array</span> [n_days] <span class="dt">int</span> cases;</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="co">// Track status of individuals in SIR model in x</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="kw">transformed data</span> {</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span> t0 = <span class="dv">0</span>; </span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>  <span class="dt">array</span>[<span class="dv">0</span>] <span class="dt">real</span> x_r;</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>  <span class="dt">array</span>[<span class="dv">1</span>] <span class="dt">int</span> x_i = { N };</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a><span class="co">// Truncated prior using &lt;lower=...&gt;</span></span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a><span class="kw">parameters</span> {</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; beta;</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; gamma;</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; phi_inv_sqrt;</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a><span class="kw">transformed parameters</span>{</span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>  <span class="dt">array</span>[n_days] <span class="dt">vector</span>[<span class="dv">3</span>] y;</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span> phi = <span class="fl">1.</span> / (square(phi_inv_sqrt));</span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>    <span class="dt">array</span>[<span class="dv">2</span>] <span class="dt">real</span> theta;</span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>    theta[<span class="dv">1</span>] = beta;</span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>    theta[<span class="dv">2</span>] = gamma;</span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>    y = ode_rk45(sir, y0, t0, t, theta, x_r, x_i);</span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a><span class="kw">model</span> {</span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>  <span class="co">//priors </span></span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>  beta ~ normal(<span class="fl">1.7</span>, <span class="fl">1.4</span>); </span>
+<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>  gamma ~ normal(<span class="fl">0.2</span>, <span class="fl">0.53</span>);</span>
+<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a>  phi_inv_sqrt ~ normal(<span class="dv">0</span>, <span class="dv">1</span>);</span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a>  <span class="co">// sampling distribution</span></span>
+<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a>  cases ~ neg_binomial_2(y[,<span class="dv">2</span>], phi);</span>
+<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a><span class="co">// Quantities of interest</span></span>
+<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a><span class="kw">generated quantities</span> {</span>
+<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span> R0 = beta / gamma;</span>
+<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span> recovery_time = <span class="dv">1</span> / gamma;</span>
+<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a>  <span class="dt">array</span>[n_days] <span class="dt">real</span> pred_cases;</span>
+<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a>  pred_cases = neg_binomial_2_rng(y[,<span class="dv">2</span>], phi);</span>
+<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </details>
+<p>We now define the model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">stan_model</span>(<span class="at">file =</span> file_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="running-stan-model" class="level2">
 <h2 class="anchored" data-anchor-id="running-stan-model">Running Stan model</h2>
-<p>We run MCMC with default options.</p>
+<p>We run our model with default options.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>cases <span class="ot">&lt;-</span> influenza_england_1978_school<span class="sc">$</span>in_bed </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># total count</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">763</span>;</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># times</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>n_days <span class="ot">&lt;-</span> <span class="fu">length</span>(cases) </span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, n_days, <span class="at">by =</span> <span class="dv">1</span>)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>t0 <span class="ot">=</span> <span class="dv">0</span> </span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> t[<span class="sc">-</span><span class="dv">1</span>]</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># initial conditions</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>i0 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>s0 <span class="ot">&lt;-</span> N <span class="sc">-</span> i0</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>r0 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>y0 <span class="ot">=</span> <span class="fu">c</span>(<span class="at">S =</span> s0, <span class="at">I =</span> i0, <span class="at">R =</span> r0)</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co"># data for Stan</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>data_sir <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">n_days =</span> n_days, <span class="at">y0 =</span> y0, <span class="at">t0 =</span> t0, <span class="at">ts =</span> t, <span class="at">N =</span> N, </span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>                 <span class="at">cases =</span> cases)</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>fit_sir_negbin <span class="ot">&lt;-</span> <span class="fu">sampling</span>(compiled_model,</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>                           <span class="at">data =</span> data_sir,</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>                           <span class="at">seed =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cases <span class="ot">&lt;-</span> influenza_england_1978_school<span class="sc">$</span>in_bed </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># total count</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">763</span>;</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># times</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>n_days <span class="ot">&lt;-</span> <span class="fu">length</span>(cases) </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, n_days, <span class="at">by =</span> <span class="dv">1</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> t[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co"># initial conditions</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>i0 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>s0 <span class="ot">&lt;-</span> N <span class="sc">-</span> i0</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>r0 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>y0 <span class="ot">=</span> <span class="fu">c</span>(<span class="at">S =</span> s0, <span class="at">I =</span> i0, <span class="at">R =</span> r0)</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co"># data for Stan</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>data_sir <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">n_days =</span> n_days, <span class="at">y0 =</span> y0, <span class="at">t =</span> t, <span class="at">N =</span> N, </span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>                 <span class="at">cases =</span> cases)</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>fit_sir_negbin <span class="ot">&lt;-</span> <span class="fu">stan</span>(<span class="at">file =</span> file_path, </span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> data_sir,</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>                       <span class="at">seed =</span> <span class="dv">1405</span>,)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -440,20 +555,20 @@ Click here to see details about how to code the model in Stan
 <h1>Checking the model</h1>
 <p>We start by showing summary table of the parameters in our model.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pars<span class="ot">=</span><span class="fu">c</span>(<span class="st">'beta'</span>, <span class="st">'gamma'</span>, <span class="st">"R0"</span>, <span class="st">"recovery_time"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit_sir_negbin, <span class="at">pars =</span> pars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pars<span class="ot">=</span><span class="fu">c</span>(<span class="st">'beta'</span>, <span class="st">'gamma'</span>, <span class="st">"R0"</span>, <span class="st">"recovery_time"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit_sir_negbin, <span class="at">pars =</span> pars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Inference for Stan model: anon_model.
 4 chains, each with iter=2000; warmup=1000; thin=1; 
 post-warmup draws per chain=1000, total post-warmup draws=4000.
 
               mean se_mean   sd 2.5%  25%  50%  75% 97.5% n_eff Rhat
-beta          1.73    0.00 0.05 1.63 1.70 1.73 1.77  1.85  2223    1
-gamma         0.54    0.00 0.05 0.46 0.51 0.54 0.57  0.64  2881    1
-R0            3.23    0.01 0.28 2.73 3.05 3.21 3.39  3.83  2911    1
-recovery_time 1.86    0.00 0.16 1.57 1.76 1.86 1.96  2.19  2808    1
+beta          1.73    0.00 0.05 1.63 1.70 1.73 1.77  1.85  2041    1
+gamma         0.54    0.00 0.05 0.45 0.51 0.54 0.57  0.63  2409    1
+R0            3.23    0.01 0.29 2.74 3.05 3.22 3.39  3.87  2109    1
+recovery_time 1.86    0.00 0.16 1.58 1.76 1.86 1.96  2.20  2394    1
 
-Samples were drawn using NUTS(diag_e) at Fri Jul 12 14:48:44 2024.
+Samples were drawn using NUTS(diag_e) at Thu Jul 18 16:50:01 2024.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
@@ -462,55 +577,112 @@ convergence, Rhat=1).</code></pre>
 <p>In the summary we also see information about whether to trust the results. We see that <span class="math inline">\(\widehat{R}=1\)</span> and <span class="math inline">\(n_\text{eff}\)</span> is large, so it looks good.</p>
 <p>We also plot the marginal posterior densities for the 4 Markov Chains and confirm they are in agreement.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stan_dens</span>(fit_sir_negbin, <span class="at">pars =</span> pars, <span class="at">separate_chains =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stan_dens</span>(fit_sir_negbin, <span class="at">pars =</span> pars, <span class="at">separate_chains =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="bayesian_disease_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="bayesian_disease_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>We will check our model by doing posterior predictive checks. That is, we predict the data we would expect based on the model posterior, and we compare it with the actually observed data to see if they are consistent. We do this and add a <span class="math inline">\(90\%\)</span> credible interval.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>smr_pred <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">as.data.frame</span>(<span class="fu">summary</span>(</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  fit_sir_negbin, <span class="at">pars =</span> <span class="st">"pred_cases"</span>, </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.5</span>, <span class="fl">0.95</span>))<span class="sc">$</span>summary), t, cases)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(smr_pred) <span class="ot">&lt;-</span> <span class="fu">make.names</span>(<span class="fu">colnames</span>(smr_pred)) <span class="co"># to remove % in the col names</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(smr_pred, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> t)) <span class="sc">+</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> X5., <span class="at">ymax =</span> X95.), <span class="at">fill=</span><span class="st">"green"</span>, <span class="at">alpha =</span> <span class="fl">0.35</span>) <span class="sc">+</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> X50.), <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span> </span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> cases)) <span class="sc">+</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Day"</span>, <span class="at">y =</span> <span class="st">"Number of students in bed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>smr_pred <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">as.data.frame</span>(<span class="fu">summary</span>(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  fit_sir_negbin, <span class="at">pars =</span> <span class="st">"pred_cases"</span>, </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.5</span>, <span class="fl">0.95</span>))<span class="sc">$</span>summary), t, cases)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(smr_pred) <span class="ot">&lt;-</span> <span class="fu">make.names</span>(<span class="fu">colnames</span>(smr_pred)) <span class="co"># to remove % in the col names</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(smr_pred, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> t)) <span class="sc">+</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> X5., <span class="at">ymax =</span> X95.), <span class="at">fill=</span><span class="st">"green"</span>, <span class="at">alpha =</span> <span class="fl">0.35</span>) <span class="sc">+</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> X50.), <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span> </span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> cases)) <span class="sc">+</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Day"</span>, <span class="at">y =</span> <span class="st">"Number of students in bed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="bayesian_disease_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="bayesian_disease_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>We see that our predictions align well with the observed data.</p>
 </section>
+<section id="prior-sensitivity" class="level1">
+<h1>Prior sensitivity</h1>
+<p>We will perform prior sensitivity analysis, that is analyzing how much the prior choice affects the posterior. We will use the package <code>adjustr</code> to do this. For <span class="math inline">\(\beta\)</span> we will try the following other priors:</p>
+<ul>
+<li><p>Mean <span class="math inline">\(1\)</span> and <span class="math inline">\(P(\beta)&gt;2=0.2\)</span>. This gives us the prior <span class="math display">\[\beta \sim \mathrm{Normal}^+(1.6, \; 1.3),\]</span></p></li>
+<li><p>Mean <span class="math inline">\(3\)</span> and <span class="math inline">\(P(\beta)&gt;4=0.2\)</span>. This gives us the prior <span class="math display">\[\beta \sim \mathrm{Normal}^+(2.98, \; 1.2),\]</span></p></li>
+<li><p>Mean <span class="math inline">\(4\)</span> and <span class="math inline">\(P(\beta)&gt;5=0.2\)</span>. This gives us the prior <span class="math display">\[\beta \sim \mathrm{Normal}^+(4, \; 1.19).\]</span></p></li>
+</ul>
+<p>Where we again solved for the parameters numerically, as seen below.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">solve_truncated_normal</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span><span class="fl">-0.2</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">solve_truncated_normal</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">1</span><span class="fl">-0.2</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">solve_truncated_normal</span>(<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">1</span><span class="fl">-0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For <span class="math inline">\(\gamma\)</span> we will try the following other priors:</p>
+<ul>
+<li><p>Mean <span class="math inline">\(1\)</span> and <span class="math inline">\(P(\gamma\leq 1.5)=0.9\)</span>. This gives us the prior <span class="math display">\[\gamma \sim \mathrm{Normal}^+(1, \; 0.4),\]</span></p></li>
+<li><p>Mean <span class="math inline">\(1/3\)</span> and <span class="math inline">\(P(\gamma\leq 0.6)=0.9\)</span>. This gives us the prior <span class="math display">\[\gamma \sim \mathrm{Normal}^+(0.28, \; 0.24),\]</span></p></li>
+<li><p>Mean <span class="math inline">\(1/4\)</span> and <span class="math inline">\(P(\gamma\leq 0.4)=0.9\)</span>. This gives us the prior <span class="math display">\[\gamma \sim \mathrm{Normal}^+(0.2435308, \; 0.12).\]</span></p></li>
+</ul>
+<p>Now we see how the posterior changes with these different priors. For <span class="math inline">\(\beta\)</span> this can be done with following code.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>spec_beta <span class="ot">=</span> <span class="fu">make_spec</span>(beta <span class="sc">~</span> <span class="fu">normal</span>(mu, sd), </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">mu=</span><span class="fu">c</span>(<span class="fl">1.6</span>, <span class="fl">2.98</span>, <span class="dv">4</span>), <span class="at">sd=</span><span class="fu">c</span>(<span class="fl">1.3</span>, <span class="fl">1.2</span>, <span class="fl">1.19</span>))</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>adjusted_beta <span class="ot">=</span> <span class="fu">adjust_weights</span>(spec_beta, fit_sir_negbin)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(adjusted_beta, <span class="fu">mean</span>(beta), <span class="fu">var</span>(beta))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 7
+     mu    sd .samp                 .weights .pareto_k `mean(beta)` `var(beta)`
+  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;                 &lt;list&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
+1  1.6   1.3  beta ~ normal(mu, sd) &lt;dbl&gt;      -0.0420         1.73     0.00299
+2  2.98  1.2  beta ~ normal(mu, sd) &lt;dbl&gt;       0.115          1.73     0.00299
+3  4     1.19 beta ~ normal(mu, sd) &lt;dbl&gt;       0.148          1.73     0.00298
+4 NA    NA    &lt;original model&gt;      &lt;dbl&gt;    -Inf              1.73     0.00299</code></pre>
+</div>
+</div>
+<p>We see the posterior mean and variance didn’t change for <span class="math inline">\(\beta\)</span> with those different priors. So the posterior is being dominated by the data, which is a good thing.</p>
+<p>We do the same for <span class="math inline">\(\gamma\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>spec_gamma <span class="ot">=</span> <span class="fu">make_spec</span>(beta <span class="sc">~</span> <span class="fu">normal</span>(mu, sd), </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">mu=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.28</span>, <span class="fl">0.24</span>), <span class="at">sd=</span><span class="fu">c</span>(<span class="fl">0.4</span>, <span class="fl">0.24</span>, <span class="fl">0.12</span>))</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>adjusted_gamma <span class="ot">=</span> <span class="fu">adjust_weights</span>(spec_gamma, fit_sir_negbin)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(adjusted_gamma, <span class="fu">mean</span>(gamma), <span class="fu">var</span>(gamma))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 7
+     mu    sd .samp                .weights .pareto_k `mean(gamma)` `var(gamma)`
+  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;                &lt;list&gt;       &lt;dbl&gt;         &lt;dbl&gt;        &lt;dbl&gt;
+1  1     0.4  beta ~ normal(mu, s… &lt;dbl&gt;       0.0440         0.540      0.00203
+2  0.28  0.24 beta ~ normal(mu, s… &lt;dbl&gt;       0.465          0.540      0.00206
+3  0.24  0.12 beta ~ normal(mu, s… &lt;dbl&gt;       2.02          NA         NA      
+4 NA    NA    &lt;original model&gt;     &lt;dbl&gt;    -Inf              0.540      0.00206</code></pre>
+</div>
+</div>
+<p>We see that the posterior mean and variance barely changes for <span class="math inline">\(\gamma\)</span> with those different priors. So the posterior is being dominated by the data, which is a good thing.</p>
+</section>
 <section id="inference" class="level1">
 <h1>Inference</h1>
 <p>We show the marginal posterior (with chains combined) below.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot posterior</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>posterior <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(fit_sir_negbin)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plot_title <span class="ot">&lt;-</span> <span class="fu">ggtitle</span>(<span class="st">"Posterior distributions"</span>,</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"with medians and 90% intervals"</span>)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmc_areas</span>(posterior,</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">pars =</span> pars,</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">prob =</span> <span class="fl">0.9</span>) <span class="sc">+</span> plot_title</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot posterior</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>posterior <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(fit_sir_negbin)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>plot_title <span class="ot">&lt;-</span> <span class="fu">ggtitle</span>(<span class="st">"Posterior distributions"</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"with medians and 90% intervals"</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmc_areas</span>(posterior,</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">pars =</span> pars,</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">prob =</span> <span class="fl">0.9</span>) <span class="sc">+</span> plot_title</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="bayesian_disease_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="bayesian_disease_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -518,22 +690,22 @@ convergence, Rhat=1).</code></pre>
 <p>Of particular interest is that the distribution of the basic reproduction number, <span class="math inline">\(R_0\)</span>, has all the mass way above <span class="math inline">\(1\)</span>, so this infection would be sustainable.</p>
 <p>We can also access the true number of infected, which is a latent variable. We again add a <span class="math inline">\(90\%\)</span> credible interval.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">lapply</span>(t, <span class="cf">function</span>(i){<span class="fu">sprintf</span>(<span class="st">"y[%s,2]"</span>, i)}) <span class="co">#number of infected for each day</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>smr_y <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">summary</span>(fit_sir_negbin, </span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">pars =</span> params, </span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.5</span>,<span class="fl">0.95</span>))<span class="sc">$</span>summary)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(smr_y) <span class="ot">&lt;-</span> <span class="fu">make.names</span>(<span class="fu">colnames</span>(smr_y)) <span class="co"># to remove % in the col names</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(smr_y, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> t)) <span class="sc">+</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> X5., <span class="at">ymax =</span> X95.), <span class="at">fill =</span> <span class="st">"green"</span>, <span class="at">alpha =</span> <span class="fl">0.35</span>) <span class="sc">+</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> X50.), <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span> </span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Day"</span>, <span class="at">y =</span> <span class="st">"Number of infected students"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">lapply</span>(t, <span class="cf">function</span>(i){<span class="fu">sprintf</span>(<span class="st">"y[%s,2]"</span>, i)}) <span class="co">#number of infected for each day</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>smr_y <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">summary</span>(fit_sir_negbin, </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">pars =</span> params, </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.5</span>,<span class="fl">0.95</span>))<span class="sc">$</span>summary)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(smr_y) <span class="ot">&lt;-</span> <span class="fu">make.names</span>(<span class="fu">colnames</span>(smr_y)) <span class="co"># to remove % in the col names</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(smr_y, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> t)) <span class="sc">+</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> X5., <span class="at">ymax =</span> X95.), <span class="at">fill =</span> <span class="st">"green"</span>, <span class="at">alpha =</span> <span class="fl">0.35</span>) <span class="sc">+</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> X50.), <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span> </span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Day"</span>, <span class="at">y =</span> <span class="st">"Number of infected students"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="bayesian_disease_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="bayesian_disease_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -541,7 +713,9 @@ convergence, Rhat=1).</code></pre>
 </section>
 <section id="conclusion" class="level1">
 <h1>Conclusion</h1>
-<p>We showed a Bayesian approach to modelling disease outbreak using a SIR model. This allows one to incorporate domain knowledge about the disease and estimate distribution of quantities of interest, such as the basic reproduction number, <span class="math inline">\(R_0\)</span>.</p>
+<p>In this study, we presented a Bayesian approach to modeling disease outbreaks using the Susceptible-Infected-Recovered (SIR) model. This methodology enables the incorporation of domain-specific knowledge about the disease, allowing for the estimation of crucial epidemiological parameters, such as the basic reproduction number,<span class="math inline">\(R_0\)</span>. By leveraging Bayesian inference, we can obtain a probabilistic understanding of these parameters, which provides valuable insights into the uncertainty and variability inherent in the modeling process.</p>
+<p>We conducted extensive model validation and robustness checks, including posterior predictive checks and prior sensitivity analyses, to ensure the reliability and robustness of our findings.</p>
+<p>In conclusion, the Bayesian SIR model provides a powerful tool for public health officials and researchers, enabling them to make informed decisions based on a comprehensive understanding of disease dynamics. Future work could extend this framework to more complex models and explore its application to different types of infectious diseases.</p>
 
 
 </section>
@@ -582,18 +756,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -625,7 +788,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -633,7 +818,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

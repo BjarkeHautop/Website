@@ -2,6 +2,8 @@
 title: "Cox model case study"
 categories: [Survival analysis, R]
 image: "image.jpg"
+date: 07/3/2024
+date-format: "MMMM, YYYY"
 ---
 
 Analyzing prostate cancer dataset using a Cox model. The primary goal is to discover patterns in survival, and to do an analysis of covariance to assess the effect of treatment while adjusting for patient heterogeneity. Prediction is a secondary goal.
