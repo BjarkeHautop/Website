@@ -14,3 +14,5 @@ StanHeaders
 rstan
 gridExtra
 bayesplot
+adjustr
+solvetruncated

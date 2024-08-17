@@ -1,6 +1,9 @@
 project:
   type: website
   output-dir: docs
+  
+execute:
+  cache: true
 
 website:
   page-navigation: true

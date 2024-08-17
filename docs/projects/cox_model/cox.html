@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.555">
+<meta name="generator" content="quarto-1.5.54">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -104,7 +104,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -143,13 +143,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cox model case study</li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -263,12 +263,14 @@ window.Quarto = {
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(latex2exp)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">getHdata</span>(prostate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">getHdata</span>(prostate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We start by showing summary of all the variables in the dataset</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">describe</span>(prostate[<span class="dv">2</span><span class="sc">:</span><span class="dv">17</span>])</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span>(d, <span class="at">file=</span><span class="st">''</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span>(d, <span class="at">file =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <details>
 <summary>
@@ -311,22 +313,22 @@ prostate[2:17] Descriptives
 <hr class="thinhr">
 <span style="font-weight:bold">stage</span>: Stage
 <style>
- .hmisctable157427 {
+ .hmisctable182341 {
  border: none;
  font-size: 85%;
  }
- .hmisctable157427 td {
+ .hmisctable182341 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable157427 th {
+ .hmisctable182341 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable157427">
+<table data-quarto-disable-processing="true" class="hmisctable182341">
 <tbody><tr>
 <th>
 n
@@ -378,22 +380,22 @@ Gmd
 iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAMAAABFNRROAAAACVBMVEUAAADMzMz////1iUV5AAAAGElEQVQImWNgYGRkgGMGBiYmBCafR2szATIJAItKdysKAAAAAElFTkSuQmCC" alt="image">
 </div>
 <style>
- .hmisctable684714 {
+ .hmisctable977383 {
  border: none;
  font-size: 85%;
  }
- .hmisctable684714 td {
+ .hmisctable977383 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable684714 th {
+ .hmisctable977383 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable684714">
+<table data-quarto-disable-processing="true" class="hmisctable977383">
 <tbody><tr>
 <th>
 n
@@ -427,22 +429,22 @@ distinct
 iVBORw0KGgoAAAANSUhEUgAAAJcAAAANCAMAAACTvAxuAAAACVBMVEUAAADMzMz////1iUV5AAAAvklEQVQ4jd2TUQ7EIAhE0fsfurVVOgOoaaM/JdltQGGekyApiaS98UVAcpbztzW+CPS51uH+jquEG+CmQaGrFB7o/PB6fGi4rm8ASQV+xvgxhstAOC5NpKxLiXtxBBOzVFrmG3QvXD2xClyXaySrJOeXSfDJzZ6WgF+PHz2/WEGdgpT9yiADXOGA2kdJA3VcKBVxYWQ8H3CZjknJTNXEcYUKE65VUblQ6F3vJi4QGFrUb+N9XBq6eC/b6v+5jwdOEgevXeprNwAAAABJRU5ErkJggg==" alt="image">
 </div>
 <style>
- .hmisctable389869 {
+ .hmisctable198000 {
  border: none;
  font-size: 85%;
  }
- .hmisctable389869 td {
+ .hmisctable198000 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable389869 th {
+ .hmisctable198000 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable389869">
+<table data-quarto-disable-processing="true" class="hmisctable198000">
 <tbody><tr>
 <th>
 n
@@ -534,22 +536,22 @@ Gmd
 iVBORw0KGgoAAAANSUhEUgAAAB8AAAANCAMAAABmbkWbAAAACVBMVEUAAADMzMz////1iUV5AAAAOElEQVQYlWNgYMQLGBiYmEAYF6CSPE4lhOVBbgQhvO6nwHxi5aFKIBRcPYo8hmJk90N9gcQCOR8A8TUCOwBlw/UAAAAASUVORK5CYII=" alt="image">
 </div>
 <style>
- .hmisctable292756 {
+ .hmisctable306056 {
  border: none;
  font-size: 85%;
  }
- .hmisctable292756 td {
+ .hmisctable306056 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable292756 th {
+ .hmisctable306056 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable292756">
+<table data-quarto-disable-processing="true" class="hmisctable306056">
 <tbody><tr>
 <th>
 n
@@ -574,22 +576,22 @@ distinct
 </tr>
 </tbody></table>
 <style>
- .hmisctable563139 {
+ .hmisctable254647 {
  border: none;
  font-size: 85%;
  }
- .hmisctable563139 td {
+ .hmisctable254647 td {
  text-align: right;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable563139 th {
+ .hmisctable254647 th {
  color: Black;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: bold;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable563139">
+<table data-quarto-disable-processing="true" class="hmisctable254647">
 <tbody><tr>
 <td>
 <font color="MidnightBlue">lowest</font>&nbsp;:
@@ -638,22 +640,22 @@ dead - unknown cause
 iVBORw0KGgoAAAANSUhEUgAAAHwAAAANCAMAAABcvvroAAAACVBMVEUAAADMzMz////1iUV5AAAAhElEQVQ4jc2UgQ6AIAhE0f//6AiDTMUoyIU3czrvad2CFFMA3D3ZlGMKsLArQ/OmYLgcYRmciH+CW47ghzPxDTwi5yR+nlqQ9tHNjV/eA5f3q8Bv+U54pU/gnZd4GuBz/nWx8W39y4pC0aezln36JWMrgmqwq8vvONZK2nm6NqaQH8i0AT7eCR8ok+jnAAAAAElFTkSuQmCC" alt="image">
 </div>
 <style>
- .hmisctable141228 {
+ .hmisctable727043 {
  border: none;
  font-size: 85%;
  }
- .hmisctable141228 td {
+ .hmisctable727043 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable141228 th {
+ .hmisctable727043 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable141228">
+<table data-quarto-disable-processing="true" class="hmisctable727043">
 <tbody><tr>
 <th>
 n
@@ -745,22 +747,22 @@ Gmd
 iVBORw0KGgoAAAANSUhEUgAAAJcAAAANCAMAAACTvAxuAAAACVBMVEUAAADMzMz////1iUV5AAAAmElEQVQ4jc2UjQ7AEAyEj/d/6A0tOvuprhK36JpgvpWDYBJgm6dfIM4K4LBS6u9XkjMBtuBKEOi4SCuxJrko25srb6gcNaZmLpX53pS72aLFpw5uffozKgYd8k9FUUCPeg04G3PxOnouwejNVW8mC82Fq6HZIMGT23bEP1AXwttrBQrUbKJquVCDi6SXQ3rI36E5Fl0s79QOmtwJ1iA1y4IAAAAASUVORK5CYII=" alt="image">
 </div>
 <style>
- .hmisctable230668 {
+ .hmisctable362423 {
  border: none;
  font-size: 74%;
  }
- .hmisctable230668 td {
+ .hmisctable362423 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable230668 th {
+ .hmisctable362423 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable230668">
+<table data-quarto-disable-processing="true" class="hmisctable362423">
 <tbody><tr>
 <th>
 n
@@ -852,22 +854,22 @@ Gmd
 iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAMAAABFNRROAAAACVBMVEUAAADMzMz////1iUV5AAAAHUlEQVQImWNgYEQCDAxMSIB8HrXMRIiAzASbC8YAYdEBDX3AJfYAAAAASUVORK5CYII=" alt="image">
 </div>
 <style>
- .hmisctable942726 {
+ .hmisctable510435 {
  border: none;
  font-size: 85%;
  }
- .hmisctable942726 td {
+ .hmisctable510435 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable942726 th {
+ .hmisctable510435 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable942726">
+<table data-quarto-disable-processing="true" class="hmisctable510435">
 <tbody><tr>
 <th>
 n
@@ -901,22 +903,22 @@ distinct
 <hr class="thinhr">
 <span style="font-weight:bold">hx</span>: History of Cardiovascular Disease
 <style>
- .hmisctable363928 {
+ .hmisctable489160 {
  border: none;
  font-size: 85%;
  }
- .hmisctable363928 td {
+ .hmisctable489160 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable363928 th {
+ .hmisctable489160 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable363928">
+<table data-quarto-disable-processing="true" class="hmisctable489160">
 <tbody><tr>
 <th>
 n
@@ -971,22 +973,22 @@ Gmd
 iVBORw0KGgoAAAANSUhEUgAAADcAAAANCAMAAAA65Aa/AAAACVBMVEUAAADMzMz////1iUV5AAAAUElEQVQokbXQ2w4AEAwD0Nb/f7T7GMES9MEidhIpqALQFjgVDPdlnjikmHBbSeC/66vMzlTq23+eZV0QcOsOFKImt5WhPXZFyigH83Mcqk16CdcD+l/9r4QAAAAASUVORK5CYII=" alt="image">
 </div>
 <style>
- .hmisctable587751 {
+ .hmisctable534398 {
  border: none;
  font-size: 85%;
  }
- .hmisctable587751 td {
+ .hmisctable534398 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable587751 th {
+ .hmisctable534398 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable587751">
+<table data-quarto-disable-processing="true" class="hmisctable534398">
 <tbody><tr>
 <th>
 n
@@ -1085,22 +1087,22 @@ For the frequency table, variable is rounded to the nearest 0
 iVBORw0KGgoAAAANSUhEUgAAACUAAAANCAMAAAAZv1dqAAAACVBMVEUAAADMzMz////1iUV5AAAAQUlEQVQYlWNghAEGBkacgIEJBhgQTAxAC1UMDESrwqmQAe5DoB9xehPNLBymkaAKpoA+qhjA/oP5EcwFIQgN8yIAz7gCv9fQk/wAAAAASUVORK5CYII=" alt="image">
 </div>
 <style>
- .hmisctable971109 {
+ .hmisctable761457 {
  border: none;
  font-size: 85%;
  }
- .hmisctable971109 td {
+ .hmisctable761457 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable971109 th {
+ .hmisctable761457 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable971109">
+<table data-quarto-disable-processing="true" class="hmisctable761457">
 <tbody><tr>
 <th>
 n
@@ -1195,22 +1197,22 @@ For the frequency table, variable is rounded to the nearest 0
 iVBORw0KGgoAAAANSUhEUgAAABYAAAANCAMAAACae25RAAAACVBMVEUAAADMzMz////1iUV5AAAAMElEQVQYlWNgYMQGGBiYkACcR1thVAfgcglEAL8wgkIXBrFQhCEcNGGw/RAEoxgZAPb1AYOWRYEtAAAAAElFTkSuQmCC" alt="image">
 </div>
 <style>
- .hmisctable935371 {
+ .hmisctable336575 {
  border: none;
  font-size: 85%;
  }
- .hmisctable935371 td {
+ .hmisctable336575 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable935371 th {
+ .hmisctable336575 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable935371">
+<table data-quarto-disable-processing="true" class="hmisctable336575">
 <tbody><tr>
 <th>
 n
@@ -1235,22 +1237,22 @@ distinct
 </tr>
 </tbody></table>
 <style>
- .hmisctable475820 {
+ .hmisctable733515 {
  border: none;
  font-size: 85%;
  }
- .hmisctable475820 td {
+ .hmisctable733515 td {
  text-align: right;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable475820 th {
+ .hmisctable733515 th {
  color: Black;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: bold;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable475820">
+<table data-quarto-disable-processing="true" class="hmisctable733515">
 <tbody><tr>
 <td>
 <font color="MidnightBlue">lowest</font>&nbsp;:
@@ -1299,22 +1301,22 @@ recent MI
 iVBORw0KGgoAAAANSUhEUgAAAJcAAAANCAMAAACTvAxuAAAACVBMVEUAAADMzMz////1iUV5AAAAm0lEQVQ4jdWVgQ6AIAhEL///oxNxIkYthdy6Na2l9Dy9hSNKQL5yE1QtrQvQT0WOeqqaZ+6fuILAYrjoDk1J4a2ROrnKRxkDo3xc3gSWnroLl4zalcdqAfvV7d3FL/ZxxbOpCei2LVWae662tzu45FQbICNXx/cFF1c1rZiSm0svEQbXkmSNL7jo7KuI1bZGzMiZQ/IHfQopvTsBlzcKWUC1wQUAAAAASUVORK5CYII=" alt="image">
 </div>
 <style>
- .hmisctable375731 {
+ .hmisctable268998 {
  border: none;
  font-size: 85%;
  }
- .hmisctable375731 td {
+ .hmisctable268998 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable375731 th {
+ .hmisctable268998 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable375731">
+<table data-quarto-disable-processing="true" class="hmisctable268998">
 <tbody><tr>
 <th>
 n
@@ -1406,22 +1408,22 @@ Gmd
 iVBORw0KGgoAAAANSUhEUgAAAJcAAAANCAMAAACTvAxuAAAACVBMVEUAAADMzMz////1iUV5AAAAkklEQVQ4je2TUQ6AIAxDO+5/aMGNDYYSiQH8sEQQMeGlW0EmgD4jBBPKzWb9XGMSlIiEUyHwvFueK2svVQSS9gfBSZOxJaVgtxq/zLHzbbmB91ywEvNUs00m7XEpX4m6qAX1pmdcV4UOM8x7wSVsZmJVbtegw1wkQWzyaOodUXFO+qTBi/zAGZMvecnRI5f4tD0A+WALCJtNK28AAAAASUVORK5CYII=" alt="image">
 </div>
 <style>
- .hmisctable777171 {
+ .hmisctable588630 {
  border: none;
  font-size: 85%;
  }
- .hmisctable777171 td {
+ .hmisctable588630 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable777171 th {
+ .hmisctable588630 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable777171">
+<table data-quarto-disable-processing="true" class="hmisctable588630">
 <tbody><tr>
 <th>
 n
@@ -1513,22 +1515,22 @@ Gmd
 iVBORw0KGgoAAAANSUhEUgAAACIAAAANCAMAAAD7Y0wTAAAACVBMVEUAAADMzMz////1iUV5AAAAR0lEQVQYlbWPWwoAIAgEx+5/6LCHbVFQHy1CasPiYiKwjUgipim2G2QhfyMBonFaovpEPNTi4PKO+McdMiwvECh340Uv7XzITnQCY4XI7dUAAAAASUVORK5CYII=" alt="image">
 </div>
 <style>
- .hmisctable422588 {
+ .hmisctable438407 {
  border: none;
  font-size: 85%;
  }
- .hmisctable422588 td {
+ .hmisctable438407 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable422588 th {
+ .hmisctable438407 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable422588">
+<table data-quarto-disable-processing="true" class="hmisctable438407">
 <tbody><tr>
 <th>
 n
@@ -1623,22 +1625,22 @@ For the frequency table, variable is rounded to the nearest 0
 iVBORw0KGgoAAAANSUhEUgAAAHMAAAANCAMAAACttaFlAAAACVBMVEUAAADMzMz////1iUV5AAAAOklEQVQ4jWNgZGBgpDNgYGJgYKIzGLVzmNk5mm5H7aSCnfS2FJRuoYARBMEImpQRJBjjTt+kpHygWgDbrgoS6TJ9QAAAAABJRU5ErkJggg==" alt="image">
 </div>
 <style>
- .hmisctable717369 {
+ .hmisctable410715 {
  border: none;
  font-size: 74%;
  }
- .hmisctable717369 td {
+ .hmisctable410715 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable717369 th {
+ .hmisctable410715 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable717369">
+<table data-quarto-disable-processing="true" class="hmisctable410715">
 <tbody><tr>
 <th>
 n
@@ -1723,22 +1725,22 @@ Gmd
 </tr>
 </tbody></table>
 <style>
- .hmisctable239511 {
+ .hmisctable562485 {
  border: none;
  font-size: 85%;
  }
- .hmisctable239511 td {
+ .hmisctable562485 td {
  text-align: right;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable239511 th {
+ .hmisctable562485 th {
  color: Black;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: bold;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable239511">
+<table data-quarto-disable-processing="true" class="hmisctable562485">
 <tbody><tr>
 <td>
 <font color="MidnightBlue">lowest</font>&nbsp;:
@@ -1783,22 +1785,22 @@ Gmd
 <hr class="thinhr">
 <span style="font-weight:bold">bm</span>: Bone Metastases
 <style>
- .hmisctable484599 {
+ .hmisctable783296 {
  border: none;
  font-size: 85%;
  }
- .hmisctable484599 td {
+ .hmisctable783296 td {
  text-align: center;
  padding: 0 1ex 0 1ex;
  }
- .hmisctable484599 th {
+ .hmisctable783296 th {
  color: MidnightBlue;
  text-align: center;
  padding: 0 1ex 0 1ex;
  font-weight: normal;
  }
  </style>
-<table data-quarto-disable-processing="true" class="hmisctable484599">
+<table data-quarto-disable-processing="true" class="hmisctable783296">
 <tbody><tr>
 <th>
 n
@@ -1853,18 +1855,22 @@ Gmd
 :::
 
 
+
 We see that the variable ekg only has one observation in the last category and pf has two. So, we combine recent MI with old MI and call it MI, and we combine confined to bed
 with $&gt;50\%$ daytime. 
+
 
 
 ::: {.cell}
 
 ```{.r .cell-code}
 levels(prostate$ekg)[levels(prostate$ekg) %in%
-                       c('old MI', 'recent MI')] &lt;- 'MI'
+  c("old MI", "recent MI")] &lt;- "MI"
 
-levels(prostate$pf) &lt;- c(levels(prostate$pf)[1:3],
-                         levels(prostate$pf)[3])</code></pre>
+levels(prostate$pf) &lt;- c(
+  levels(prostate$pf)[1:3],
+  levels(prostate$pf)[3]
+)</code></pre>
 <p>:::</p>
 </details></section>
 <section id="imputing-missing-values" class="level2">
@@ -1883,16 +1889,19 @@ levels(prostate$pf) &lt;- c(levels(prostate$pf)[1:3],
    ekg     hg     sz     sg     ap     bm  sdate 
      8      0      5     11      0      0      0 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">transcan</span>(<span class="sc">~</span> sz <span class="sc">+</span> sg <span class="sc">+</span> ap <span class="sc">+</span> sbp <span class="sc">+</span> dbp <span class="sc">+</span> age <span class="sc">+</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                wt <span class="sc">+</span> hg <span class="sc">+</span> ekg <span class="sc">+</span> pf <span class="sc">+</span> bm <span class="sc">+</span> hx, <span class="at">imputed=</span> <span class="cn">TRUE</span>,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">data=</span>prostate, <span class="at">pl=</span> <span class="cn">FALSE</span>, <span class="at">pr=</span> <span class="cn">FALSE</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(prostate)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>sz <span class="ot">&lt;-</span> <span class="fu">impute</span>(w, sz, <span class="at">data =</span> prostate)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>sg <span class="ot">&lt;-</span> <span class="fu">impute</span> (w, sg , <span class="at">data =</span> prostate)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="fu">impute</span> (w, age ,<span class="at">data =</span> prostate)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>wt <span class="ot">&lt;-</span> <span class="fu">impute</span> (w, wt , <span class="at">data =</span> prostate)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>kg <span class="ot">&lt;-</span> <span class="fu">impute</span> (w, ekg ,<span class="at">data =</span> prostate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">transcan</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span> sz <span class="sc">+</span> sg <span class="sc">+</span> ap <span class="sc">+</span> sbp <span class="sc">+</span> dbp <span class="sc">+</span> age <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    wt <span class="sc">+</span> hg <span class="sc">+</span> ekg <span class="sc">+</span> pf <span class="sc">+</span> bm <span class="sc">+</span> hx,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">imputed =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> prostate, <span class="at">pl =</span> <span class="cn">FALSE</span>, <span class="at">pr =</span> <span class="cn">FALSE</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(prostate)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>sz <span class="ot">&lt;-</span> <span class="fu">impute</span>(w, sz, <span class="at">data =</span> prostate)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>sg <span class="ot">&lt;-</span> <span class="fu">impute</span>(w, sg, <span class="at">data =</span> prostate)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="fu">impute</span>(w, age, <span class="at">data =</span> prostate)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>wt <span class="ot">&lt;-</span> <span class="fu">impute</span>(w, wt, <span class="at">data =</span> prostate)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>kg <span class="ot">&lt;-</span> <span class="fu">impute</span>(w, ekg, <span class="at">data =</span> prostate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -1997,14 +2006,15 @@ levels(prostate$pf) &lt;- c(levels(prostate$pf)[1:3],
 </div>
 <p>We see that we have 36 degrees of freedom in our model, so about 1/10 of the amount of deaths there are. So there is some hope our model will validate.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">datadist</span>(prostate); <span class="fu">options</span>(<span class="at">datadist=</span><span class="st">'dd'</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">units</span>(dtime) <span class="ot">&lt;-</span> <span class="st">'Month'</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">Surv</span>(dtime , status <span class="sc">!=</span> <span class="st">'alive'</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">cph</span>(S <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">rcs</span>(age ,<span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(wt ,<span class="dv">4</span>) <span class="sc">+</span> pf <span class="sc">+</span> hx <span class="sc">+</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>          <span class="fu">rcs</span>(sbp ,<span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(dbp ,<span class="dv">4</span>) <span class="sc">+</span> ekg <span class="sc">+</span> <span class="fu">rcs</span>(hg ,<span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>          <span class="fu">rcs</span>(sg ,<span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sz ,<span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(<span class="fu">log</span>(ap),<span class="dv">4</span>) <span class="sc">+</span> bm)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(f, <span class="at">html=</span><span class="cn">TRUE</span>, <span class="at">coefs=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">datadist</span>(prostate)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">datadist =</span> <span class="st">"dd"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">units</span>(dtime) <span class="ot">&lt;-</span> <span class="st">"Month"</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">Surv</span>(dtime, status <span class="sc">!=</span> <span class="st">"alive"</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">cph</span>(S <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">rcs</span>(age, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(wt, <span class="dv">4</span>) <span class="sc">+</span> pf <span class="sc">+</span> hx <span class="sc">+</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rcs</span>(sbp, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(dbp, <span class="dv">4</span>) <span class="sc">+</span> ekg <span class="sc">+</span> <span class="fu">rcs</span>(hg, <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rcs</span>(sg, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sz, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(<span class="fu">log</span>(ap), <span class="dv">4</span>) <span class="sc">+</span> bm)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(f, <span class="at">html =</span> <span class="cn">TRUE</span>, <span class="at">coefs =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Frequencies of Missing Values Due to Each Variable
   S  rx age  wt  pf  hx sbp dbp ekg  hg  sg  sz  ap  bm 
@@ -2021,7 +2031,7 @@ cph(formula = S ~ rx + rcs(age, 4) + rcs(wt, 4) + pf + hx + rcs(sbp,
 Obs        494    LR chi2    136.04     R2       0.241    
 Events     348    d.f.           36    R2(36,494)0.183    
 Center -2.0435    Pr(&gt; chi2) 0.0000    R2(36,348)0.250    
-                  Score chi2 144.95     Dxy      0.338    
+                  Score chi2 144.95     Dxy     -0.338    
                   Pr(&gt; chi2) 0.0000                       </code></pre>
 </div>
 </div>
@@ -2038,11 +2048,11 @@ Center -2.0435    Pr(&gt; chi2) 0.0000    R2(36,348)0.250
 <li><p>Assume performance rating (pf) is linear.</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>map <span class="ot">&lt;-</span> (<span class="dv">2</span><span class="sc">*</span>dbp <span class="sc">+</span> sbp)<span class="sc">/</span><span class="dv">3</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(map) <span class="ot">&lt;-</span> <span class="st">'Mean Arterial Pressure/10'</span></span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>map <span class="ot">&lt;-</span> (<span class="dv">2</span> <span class="sc">*</span> dbp <span class="sc">+</span> sbp) <span class="sc">/</span> <span class="dv">3</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(map) <span class="ot">&lt;-</span> <span class="st">"Mean Arterial Pressure/10"</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>heart_d <span class="ot">&lt;-</span> hx <span class="sc">+</span> ekg <span class="sc">%nin%</span> <span class="fu">c</span>(<span class="st">'normal'</span>, <span class="st">'benign'</span>)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(heart_d) <span class="ot">&lt;-</span> <span class="st">'Heart Disease Code'</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>heart_d <span class="ot">&lt;-</span> hx <span class="sc">+</span> ekg <span class="sc">%nin%</span> <span class="fu">c</span>(<span class="st">"normal"</span>, <span class="st">"benign"</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(heart_d) <span class="ot">&lt;-</span> <span class="st">"Heart Disease Code"</span></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>pf_linear <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(pf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -2050,11 +2060,13 @@ Center -2.0435    Pr(&gt; chi2) 0.0000    R2(36,348)0.250
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">datadist</span>(dd, heart_d, map, pf_linear)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">cph</span>(S <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">rcs</span>(age, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(wt, <span class="dv">3</span>) <span class="sc">+</span> pf_linear <span class="sc">+</span> heart_d <span class="sc">+</span> <span class="fu">rcs</span>(map, <span class="dv">3</span>)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>         <span class="sc">+</span> <span class="fu">rcs</span>(hg, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sg, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sz, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(<span class="fu">log</span>(ap), <span class="dv">5</span>) <span class="sc">+</span> bm,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">x=</span><span class="cn">TRUE</span> , <span class="at">y=</span><span class="cn">TRUE</span> , <span class="at">surv=</span><span class="cn">TRUE</span> , <span class="at">time.inc =</span> <span class="dv">5</span><span class="sc">*</span><span class="dv">12</span>)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(f, <span class="at">html=</span><span class="cn">TRUE</span>, <span class="at">coefs =</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">cph</span>(</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  S <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">rcs</span>(age, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(wt, <span class="dv">3</span>) <span class="sc">+</span> pf_linear <span class="sc">+</span> heart_d <span class="sc">+</span> <span class="fu">rcs</span>(map, <span class="dv">3</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="sc">+</span> <span class="fu">rcs</span>(hg, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sg, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sz, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(<span class="fu">log</span>(ap), <span class="dv">5</span>) <span class="sc">+</span> bm,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="cn">TRUE</span>, <span class="at">y =</span> <span class="cn">TRUE</span>, <span class="at">surv =</span> <span class="cn">TRUE</span>, <span class="at">time.inc =</span> <span class="dv">5</span> <span class="sc">*</span> <span class="dv">12</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(f, <span class="at">html =</span> <span class="cn">TRUE</span>, <span class="at">coefs =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Cox Proportional Hazards Model
 
@@ -2068,7 +2080,7 @@ cph(formula = S ~ rx + rcs(age, 4) + rcs(wt, 3) + pf_linear +
 Obs        502    LR chi2    119.86     R2       0.212    
 Events     354    d.f.           24    R2(24,502)0.174    
 Center -2.3792    Pr(&gt; chi2) 0.0000    R2(24,354)0.237    
-                  Score chi2 126.89     Dxy      0.323    
+                  Score chi2 126.89     Dxy     -0.323    
                   Pr(&gt; chi2) 0.0000                       
 
                    Coef     S.E.    Wald Z Pr(&gt;|Z|)
@@ -2080,7 +2092,7 @@ rx=5.0 mg estrogen  -0.1044  0.1572 -0.66  0.5066
 </div>
 <p>LR 119.86 with 24 degrees of freedom. AIC is <span class="math inline">\(119.86-2 \cdot 24=71.86\)</span>. Rough shrinkage estimate of this is now better at <span class="math inline">\((119.86-24)/119.86=0.80\)</span>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(f, <span class="at">html=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(f, <span class="at">html =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                Wald Statistics          Response: S 
 
@@ -2113,9 +2125,9 @@ rx=5.0 mg estrogen  -0.1044  0.1572 -0.66  0.5066
 <h2 class="anchored" data-anchor-id="checking-proportional-hazards">Checking Proportional Hazards</h2>
 <p>A Cox model should have proportional hazards, since if we look at two individuals with covariate values <span class="math inline">\(\boldsymbol{X}\)</span> and <span class="math inline">\(\boldsymbol{X}^*\)</span> then the ratio of their hazard rates is <span class="math display">\[\frac{h(t \vert \boldsymbol{X})}{h(t \vert \boldsymbol{X}^*)}=\exp\Big[\sum_{k=1}^p \beta_k(X_k-X_{k^*})\Big],\]</span> which is a constant. We can test this assumption using scaled Schoenfeld residuals separately for each predictor and test the PH assumption using the “correlation with time” test. Smoothed trends in the residuals are also plotted.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">predict</span>(f, <span class="at">type =</span> <span class="st">'terms'</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>f.short <span class="ot">&lt;-</span> <span class="fu">cph</span>(S <span class="sc">~</span> z, <span class="at">x=</span><span class="cn">TRUE</span>, <span class="at">y=</span> <span class="cn">TRUE</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>phtest <span class="ot">&lt;-</span> <span class="fu">cox.zph</span>(f.short, <span class="at">transform =</span> <span class="st">'identity'</span>, <span class="at">terms=</span>F)</span>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">predict</span>(f, <span class="at">type =</span> <span class="st">"terms"</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>f.short <span class="ot">&lt;-</span> <span class="fu">cph</span>(S <span class="sc">~</span> z, <span class="at">x =</span> <span class="cn">TRUE</span>, <span class="at">y =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>phtest <span class="ot">&lt;-</span> <span class="fu">cox.zph</span>(f.short, <span class="at">transform =</span> <span class="st">"identity"</span>, <span class="at">terms =</span> F)</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>phtest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             chisq df     p
@@ -2135,11 +2147,11 @@ GLOBAL    7.813453 11 0.730</code></pre>
 </div>
 <p>We see that the p-value of the test for proportional hazards is below <span class="math inline">\(0.05\)</span> for dose of estrogen, indicating that it may not have constant relative hazard. We plot it and don’t find anything too worry-some, and the global test of proportional hazard by adjusting for the 11 tests gives a p-value of <span class="math inline">\(0.78\)</span>. So we accept our model and continue.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(phtest , <span class="at">var=</span> <span class="st">'rx'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(phtest, <span class="at">var =</span> <span class="st">"rx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="cox_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="cox_files/figure-html/plot proportional hazards-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2149,12 +2161,14 @@ GLOBAL    7.813453 11 0.730</code></pre>
 <h2 class="anchored" data-anchor-id="describing-effects">Describing Effects</h2>
 <p>We plot how each predictor is related to the log hazard of death with <span class="math inline">\(95\%\)</span>-confidence bands.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">Predict</span>(f), <span class="at">sepdiscrete=</span><span class="st">'vertical'</span>, <span class="at">nlevels=</span><span class="dv">4</span>,</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="at">vnames=</span><span class="st">'names'</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">Predict</span>(f),</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sepdiscrete =</span> <span class="st">"vertical"</span>, <span class="at">nlevels =</span> <span class="dv">4</span>,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">vnames =</span> <span class="st">"names"</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="cox_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="cox_files/figure-html/plot-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2165,11 +2179,21 @@ GLOBAL    7.813453 11 0.730</code></pre>
 <h1>Presenting the final model for inference</h1>
 <p>To present point and interval estimates of predictor effects we draw a hazard ratio chart. Since the ap relationship is so non-monotonic we use a 20:1 hazard ratio for this variable. The others use the default.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">summary</span>(f, <span class="at">ap=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">20</span>)), <span class="at">log=</span><span class="cn">TRUE</span>, <span class="at">main=</span><span class="st">''</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">summary</span>(f, <span class="at">ap =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">20</span>)), <span class="at">log =</span> <span class="cn">TRUE</span>, <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in formula.character(object, env = baseenv()): Using formula(x) is deprecated when x is a character vector of length &gt; 1.
+  Consider formula(paste(x, collapse = " ")) instead.
+Warning in formula.character(object, env = baseenv()): Using formula(x) is deprecated when x is a character vector of length &gt; 1.
+  Consider formula(paste(x, collapse = " ")) instead.
+Warning in formula.character(object, env = baseenv()): Using formula(x) is deprecated when x is a character vector of length &gt; 1.
+  Consider formula(paste(x, collapse = " ")) instead.
+Warning in formula.character(object, env = baseenv()): Using formula(x) is deprecated when x is a character vector of length &gt; 1.
+  Consider formula(paste(x, collapse = " ")) instead.</code></pre>
+</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="cox_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="cox_files/figure-html/plot hazard ratio-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2177,18 +2201,26 @@ GLOBAL    7.813453 11 0.730</code></pre>
 <p>This plot is interpreted as the hazard ratio for each variable if we went from for example age 70 to age 76. <span class="math inline">\(95\%, 97.5\%\)</span> and <span class="math inline">\(99\%\)</span> confidence bands are added.</p>
 <p>Finally we will also show a nomogram.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>surv <span class="ot">&lt;-</span> <span class="fu">Survival</span>(f)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>surv3 <span class="ot">&lt;-</span> <span class="cf">function</span> (x) <span class="fu">surv</span>(<span class="dv">3</span><span class="sc">*</span><span class="dv">12</span>,<span class="at">lp=</span>x)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>surv5 <span class="ot">&lt;-</span> <span class="cf">function</span> (x) <span class="fu">surv</span>(<span class="dv">5</span><span class="sc">*</span><span class="dv">12</span>,<span class="at">lp=</span>x)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>quan <span class="ot">&lt;-</span> <span class="fu">Quantile</span>(f)</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>med <span class="ot">&lt;-</span> <span class="cf">function</span> (x) <span class="fu">quan</span>(<span class="at">lp=</span>x)<span class="sc">/</span><span class="dv">12</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>ss <span class="ot">&lt;-</span> <span class="fu">c</span>(.<span class="dv">05</span> ,.<span class="dv">1</span>, .<span class="dv">2</span>, .<span class="dv">3</span>, .<span class="dv">4</span>, .<span class="dv">5</span>, .<span class="dv">6</span>, .<span class="dv">7</span>, .<span class="dv">8</span>, .<span class="dv">9</span>, .<span class="dv">95</span>)</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>nom <span class="ot">&lt;-</span> <span class="fu">nomogram</span> (f, <span class="at">ap=</span><span class="fu">c</span>(.<span class="dv">1</span>,.<span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>),</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fun=</span><span class="fu">list</span>(surv3, surv5, med),</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">funlabel=</span><span class="fu">c</span>(<span class="st">'3-year Survival'</span>, <span class="st">'5-year Survival'</span>,</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>                              <span class="st">'Median Survival Time (years)'</span>),</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fun.at=</span><span class="fu">list</span>(ss, ss, <span class="fu">c</span>(.<span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)))</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nom, <span class="at">cex.axis=</span><span class="fl">0.8</span>, <span class="at">cex.var=</span><span class="fl">0.7</span>, <span class="at">xfrac=</span>.<span class="dv">65</span>, <span class="at">lmgp=</span>.<span class="dv">35</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>surv <span class="ot">&lt;-</span> <span class="fu">Survival</span>(f)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>surv3 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">surv</span>(<span class="dv">3</span> <span class="sc">*</span> <span class="dv">12</span>, <span class="at">lp =</span> x)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>surv5 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">surv</span>(<span class="dv">5</span> <span class="sc">*</span> <span class="dv">12</span>, <span class="at">lp =</span> x)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>quan <span class="ot">&lt;-</span> <span class="fu">Quantile</span>(f)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>med <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">quan</span>(<span class="at">lp =</span> x) <span class="sc">/</span> <span class="dv">12</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>ss <span class="ot">&lt;-</span> <span class="fu">c</span>(.<span class="dv">05</span>, .<span class="dv">1</span>, .<span class="dv">2</span>, .<span class="dv">3</span>, .<span class="dv">4</span>, .<span class="dv">5</span>, .<span class="dv">6</span>, .<span class="dv">7</span>, .<span class="dv">8</span>, .<span class="dv">9</span>, .<span class="dv">95</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>nom <span class="ot">&lt;-</span> <span class="fu">nomogram</span>(f,</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">ap =</span> <span class="fu">c</span>(.<span class="dv">1</span>, .<span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>),</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">fun =</span> <span class="fu">list</span>(surv3, surv5, med),</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">funlabel =</span> <span class="fu">c</span>(</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"3-year Survival"</span>, <span class="st">"5-year Survival"</span>,</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Median Survival Time (years)"</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">fun.at =</span> <span class="fu">list</span>(ss, ss, <span class="fu">c</span>(.<span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>))</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in formula.character(object, env = baseenv()): Using formula(x) is deprecated when x is a character vector of length &gt; 1.
+  Consider formula(paste(x, collapse = " ")) instead.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nom, <span class="at">cex.axis =</span> <span class="fl">0.8</span>, <span class="at">cex.var =</span> <span class="fl">0.7</span>, <span class="at">xfrac =</span> .<span class="dv">65</span>, <span class="at">lmgp =</span> .<span class="dv">35</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="Nomogram1.png" class="img-fluid"></p>
 <p>This is interpreted by taking a value for each predictor and seeing how many points each value correspond to. Then the total amount of points can be used to find the probability of for example 5-year survival.</p>
@@ -2200,9 +2232,9 @@ GLOBAL    7.813453 11 0.730</code></pre>
 <h2 class="anchored" data-anchor-id="validating-the-model">Validating the model</h2>
 <p>We will use bootstrapping for validation. We first validate this model for Somers’ <span class="math inline">\(D_{xy}\)</span> rank correlation between predicted log hazard and observed survival time, and for slope shrinkage. The bootstrap is used (with 1000 resamples) to penalize for possible overfitting.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">validate</span>(f, <span class="at">B=</span><span class="dv">1000</span>)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">prType=</span><span class="st">'html'</span>)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>v</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">validate</span>(f, <span class="at">B =</span> <span class="dv">1000</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">prType =</span> <span class="st">"html"</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>v</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="gmisc_table caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <colgroup>
@@ -2233,37 +2265,37 @@ Resamples</th>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><em>D<sub>xy</sub></em></td>
-<td style="text-align: center;">0.3228</td>
-<td style="text-align: center;">0.3518</td>
-<td style="text-align: center;">0.2983</td>
-<td style="text-align: center;">0.0535</td>
-<td style="text-align: center;">0.2694</td>
+<td style="text-align: center;">-0.3228</td>
+<td style="text-align: center;">-0.3517</td>
+<td style="text-align: center;">-0.2979</td>
+<td style="text-align: center;">-0.0538</td>
+<td style="text-align: center;">-0.269</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><em>R<sup>2</sup></em></td>
 <td style="text-align: center;">0.2125</td>
-<td style="text-align: center;">0.2514</td>
-<td style="text-align: center;">0.1783</td>
-<td style="text-align: center;">0.0731</td>
-<td style="text-align: center;">0.1394</td>
+<td style="text-align: center;">0.2521</td>
+<td style="text-align: center;">0.1781</td>
+<td style="text-align: center;">0.074</td>
+<td style="text-align: center;">0.1385</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Slope</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: center;">1</td>
-<td style="text-align: center;">0.7859</td>
-<td style="text-align: center;">0.2141</td>
-<td style="text-align: center;">0.7859</td>
+<td style="text-align: center;">0.7849</td>
+<td style="text-align: center;">0.2151</td>
+<td style="text-align: center;">0.7849</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><em>D</em></td>
 <td style="text-align: center;">0.0296</td>
 <td style="text-align: center;">0.0361</td>
-<td style="text-align: center;">0.0243</td>
-<td style="text-align: center;">0.0118</td>
+<td style="text-align: center;">0.0242</td>
+<td style="text-align: center;">0.0119</td>
 <td style="text-align: center;">0.0177</td>
 <td style="text-align: center;">1000</td>
 </tr>
@@ -2280,18 +2312,18 @@ Resamples</th>
 <td style="text-align: left;"><em>Q</em></td>
 <td style="text-align: center;">0.0301</td>
 <td style="text-align: center;">0.0366</td>
-<td style="text-align: center;">0.0218</td>
-<td style="text-align: center;">0.0148</td>
-<td style="text-align: center;">0.0153</td>
+<td style="text-align: center;">0.0217</td>
+<td style="text-align: center;">0.0149</td>
+<td style="text-align: center;">0.0152</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; border-bottom: 2px solid grey;"><em>g</em></td>
 <td style="text-align: center; border-bottom: 2px solid grey;">0.7245</td>
-<td style="text-align: center; border-bottom: 2px solid grey;">0.8111</td>
-<td style="text-align: center; border-bottom: 2px solid grey;">0.6356</td>
-<td style="text-align: center; border-bottom: 2px solid grey;">0.1754</td>
-<td style="text-align: center; border-bottom: 2px solid grey;">0.5491</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">0.812</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">0.6359</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">0.1762</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">0.5483</td>
 <td style="text-align: center; border-bottom: 2px solid grey;">1000</td>
 </tr>
 </tbody>
@@ -2303,16 +2335,16 @@ Resamples</th>
 <h3 class="anchored" data-anchor-id="validate-the-model-for-predicting-the-probability-of-surviving-five-years">Validate the model for predicting the probability of surviving five years</h3>
 <p>We will use the non-shrinked estimates to show that this model will have some overfitting consistent with <em>regression to the mean</em>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>cal <span class="ot">&lt;-</span> <span class="fu">calibrate</span>(f, <span class="at">B =</span> <span class="dv">1000</span>, <span class="at">u=</span><span class="dv">5</span><span class="sc">*</span><span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>cal <span class="ot">&lt;-</span> <span class="fu">calibrate</span>(f, <span class="at">B =</span> <span class="dv">1000</span>, <span class="at">u =</span> <span class="dv">5</span> <span class="sc">*</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Using Cox survival estimates at 60 Months
 Convergence problems.... stopping addition</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cal, <span class="at">subtitles=</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cal, <span class="at">subtitles =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="cox_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="cox_files/figure-html/calibrate-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2324,7 +2356,7 @@ Convergence problems.... stopping addition</code></pre>
 <h2 class="anchored" data-anchor-id="final-model-for-prediction">Final model for prediction</h2>
 <p>For a better model for prediction one should multiply the coefficients in the model by the shrinkage estimate.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>v</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>v</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="gmisc_table caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <colgroup>
@@ -2355,37 +2387,37 @@ Resamples</th>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><em>D<sub>xy</sub></em></td>
-<td style="text-align: center;">0.3228</td>
-<td style="text-align: center;">0.3518</td>
-<td style="text-align: center;">0.2983</td>
-<td style="text-align: center;">0.0535</td>
-<td style="text-align: center;">0.2694</td>
+<td style="text-align: center;">-0.3228</td>
+<td style="text-align: center;">-0.3517</td>
+<td style="text-align: center;">-0.2979</td>
+<td style="text-align: center;">-0.0538</td>
+<td style="text-align: center;">-0.269</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><em>R<sup>2</sup></em></td>
 <td style="text-align: center;">0.2125</td>
-<td style="text-align: center;">0.2514</td>
-<td style="text-align: center;">0.1783</td>
-<td style="text-align: center;">0.0731</td>
-<td style="text-align: center;">0.1394</td>
+<td style="text-align: center;">0.2521</td>
+<td style="text-align: center;">0.1781</td>
+<td style="text-align: center;">0.074</td>
+<td style="text-align: center;">0.1385</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Slope</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: center;">1</td>
-<td style="text-align: center;">0.7859</td>
-<td style="text-align: center;">0.2141</td>
-<td style="text-align: center;">0.7859</td>
+<td style="text-align: center;">0.7849</td>
+<td style="text-align: center;">0.2151</td>
+<td style="text-align: center;">0.7849</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><em>D</em></td>
 <td style="text-align: center;">0.0296</td>
 <td style="text-align: center;">0.0361</td>
-<td style="text-align: center;">0.0243</td>
-<td style="text-align: center;">0.0118</td>
+<td style="text-align: center;">0.0242</td>
+<td style="text-align: center;">0.0119</td>
 <td style="text-align: center;">0.0177</td>
 <td style="text-align: center;">1000</td>
 </tr>
@@ -2402,28 +2434,28 @@ Resamples</th>
 <td style="text-align: left;"><em>Q</em></td>
 <td style="text-align: center;">0.0301</td>
 <td style="text-align: center;">0.0366</td>
-<td style="text-align: center;">0.0218</td>
-<td style="text-align: center;">0.0148</td>
-<td style="text-align: center;">0.0153</td>
+<td style="text-align: center;">0.0217</td>
+<td style="text-align: center;">0.0149</td>
+<td style="text-align: center;">0.0152</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; border-bottom: 2px solid grey;"><em>g</em></td>
 <td style="text-align: center; border-bottom: 2px solid grey;">0.7245</td>
-<td style="text-align: center; border-bottom: 2px solid grey;">0.8111</td>
-<td style="text-align: center; border-bottom: 2px solid grey;">0.6356</td>
-<td style="text-align: center; border-bottom: 2px solid grey;">0.1754</td>
-<td style="text-align: center; border-bottom: 2px solid grey;">0.5491</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">0.812</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">0.6359</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">0.1762</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">0.5483</td>
 <td style="text-align: center; border-bottom: 2px solid grey;">1000</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>shrinkage_est <span class="ot">&lt;-</span> v[<span class="dv">3</span>, <span class="dv">5</span>] <span class="co"># Extract bootstrap estimate of shrinkage</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>f_prediction <span class="ot">&lt;-</span> f</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>f_prediction<span class="sc">$</span>coefficients <span class="ot">&lt;-</span> f<span class="sc">$</span>coefficients<span class="sc">*</span>shrinkage_est</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(f_prediction, <span class="at">html=</span>T, <span class="at">coef=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>shrinkage_est <span class="ot">&lt;-</span> v[<span class="dv">3</span>, <span class="dv">5</span>] <span class="co"># Extract bootstrap estimate of shrinkage</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>f_prediction <span class="ot">&lt;-</span> f</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>f_prediction<span class="sc">$</span>coefficients <span class="ot">&lt;-</span> f<span class="sc">$</span>coefficients <span class="sc">*</span> shrinkage_est</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(f_prediction, <span class="at">html =</span> T, <span class="at">coef =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <p><strong>Cox Proportional Hazards Model</strong></p>
@@ -2468,7 +2500,7 @@ Indexes</th>
 <tr class="even">
 <td style="text-align: center; min-width: 9em; border-left: 1px solid black; border-right: 1px solid black;"></td>
 <td style="text-align: center; min-width: 9em; border-right: 1px solid black;">Score χ<sup>2</sup> 126.89</td>
-<td style="text-align: center; min-width: 9em; border-right: 1px solid black;"><em>D</em><sub>xy</sub> 0.323</td>
+<td style="text-align: center; min-width: 9em; border-right: 1px solid black;"><em>D</em><sub>xy</sub> -0.323</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center; min-width: 9em; border-bottom: 2px solid grey; border-left: 1px solid black; border-right: 1px solid black;"></td>
@@ -2477,6 +2509,10 @@ Indexes</th>
 </tr>
 </tbody>
 </table>
+
+
+
+
 <table class="gmisc_table caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
@@ -2497,17 +2533,17 @@ Indexes</th>
 </tr>
 <tr class="even">
 <td style="text-align: left; min-width: 7em;">rx=1.0 mg estrogen</td>
-<td style="text-align: right; min-width: 7em;">&nbsp; -0.3251</td>
+<td style="text-align: right; min-width: 7em;">&nbsp; -0.3246</td>
 <td style="text-align: right; min-width: 7em;">&nbsp; 0.1659</td>
 <td style="text-align: right; min-width: 7em;">-1.96</td>
-<td style="text-align: right; min-width: 7em;">0.0501</td>
+<td style="text-align: right; min-width: 7em;">0.0504</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; min-width: 7em;">rx=5.0 mg estrogen</td>
-<td style="text-align: right; min-width: 7em;">&nbsp; -0.0820</td>
+<td style="text-align: right; min-width: 7em;">&nbsp; -0.0819</td>
 <td style="text-align: right; min-width: 7em;">&nbsp; 0.1572</td>
 <td style="text-align: right; min-width: 7em;">-0.52</td>
-<td style="text-align: right; min-width: 7em;">0.6017</td>
+<td style="text-align: right; min-width: 7em;">0.6022</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; min-width: 7em; border-bottom: 2px solid grey;">…</td>
@@ -2524,14 +2560,17 @@ Indexes</th>
 <h3 class="anchored" data-anchor-id="approximating-the-full-model">Approximating the full model</h3>
 <p>If the client doesn’t want to collect all these variables for prediction we can do model approximation. The goal is to explain <code>f_prediction</code>with a trade off between parameters and <span class="math inline">\(R^2\)</span>. This can be done by backwards selection.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>Z <span class="ot">&lt;-</span> <span class="fu">predict</span>(f_prediction) <span class="co"># compute linear predictor from full model</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Force sigma to be 1 since perfect fit</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">ols</span>(Z <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">rcs</span>(age, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(wt, <span class="dv">3</span>) <span class="sc">+</span> pf_linear <span class="sc">+</span> heart_d <span class="sc">+</span> <span class="fu">rcs</span>(map, <span class="dv">3</span>)</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>         <span class="sc">+</span> <span class="fu">rcs</span>(hg, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sg, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sz, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(<span class="fu">log</span>(ap), <span class="dv">5</span>) <span class="sc">+</span> bm, <span class="at">sigma =</span><span class="dv">1</span>)</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>backwards <span class="ot">&lt;-</span> <span class="fu">fastbw</span>(a, <span class="at">aics=</span><span class="dv">10000</span>)</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(backwards, <span class="at">html=</span>T, <span class="at">digits=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>Z <span class="ot">&lt;-</span> <span class="fu">predict</span>(f_prediction) <span class="co"># compute linear predictor from full model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in formula.character(object, env = baseenv()): Using formula(x) is deprecated when x is a character vector of length &gt; 1.
+  Consider formula(paste(x, collapse = " ")) instead.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Force sigma to be 1 since perfect fit</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">ols</span>(Z <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">rcs</span>(age, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(wt, <span class="dv">3</span>) <span class="sc">+</span> pf_linear <span class="sc">+</span> heart_d <span class="sc">+</span> <span class="fu">rcs</span>(map, <span class="dv">3</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">rcs</span>(hg, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sg, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sz, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(<span class="fu">log</span>(ap), <span class="dv">5</span>) <span class="sc">+</span> bm, <span class="at">sigma =</span> <span class="dv">1</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>backwards <span class="ot">&lt;-</span> <span class="fu">fastbw</span>(a, <span class="at">aics =</span> <span class="dv">10000</span>)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(backwards, <span class="at">html =</span> T, <span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  Deleted   Chi-Sq d.f. P      Residual d.f. P      AIC    R2   
@@ -2550,7 +2589,7 @@ Indexes</th>
 Approximate Estimates after Deleting Factors
 
          Coef   S.E.  Wald Z P
-[1,] 6.68e-11 0.0446 1.5e-09 1
+[1,] 7.58e-11 0.0446 1.7e-09 1
 
 Factors in Final Model
 
@@ -2559,32 +2598,32 @@ None</code></pre>
 </div>
 <p>Now the client can choose the trade-off between predictive ability and number of predictors. We visualize this in the following plot</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(backwards<span class="sc">$</span>result)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>total_predictors <span class="ot">&lt;-</span> <span class="fu">nrow</span>(result)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>R2 <span class="ot">&lt;-</span> result<span class="sc">$</span>R2</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>predictors <span class="ot">&lt;-</span> <span class="fu">c</span>((total_predictors<span class="dv">-1</span>)<span class="sc">:</span><span class="dv">0</span>)</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(predictors,R2), <span class="fu">aes</span>(<span class="at">x =</span> predictors, <span class="at">y =</span> R2)) <span class="sc">+</span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span> </span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span>  </span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Predictors"</span>, <span class="at">y =</span> <span class="fu">TeX</span>(<span class="st">"$R^2$"</span>)) <span class="sc">+</span>  </span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"R-squared vs. Predictors"</span>) <span class="sc">+</span>  </span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks=</span> <span class="fu">pretty_breaks</span>()) <span class="sc">+</span></span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(backwards<span class="sc">$</span>result)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>total_predictors <span class="ot">&lt;-</span> <span class="fu">nrow</span>(result)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>R2 <span class="ot">&lt;-</span> result<span class="sc">$</span>R2</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>predictors <span class="ot">&lt;-</span> <span class="fu">c</span>((total_predictors <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">:</span><span class="dv">0</span>)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(predictors, R2), <span class="fu">aes</span>(<span class="at">x =</span> predictors, <span class="at">y =</span> R2)) <span class="sc">+</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Predictors"</span>, <span class="at">y =</span> <span class="fu">TeX</span>(<span class="st">"$R^2$"</span>)) <span class="sc">+</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"R-squared vs. Predictors"</span>) <span class="sc">+</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">pretty_breaks</span>()) <span class="sc">+</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="cox_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="cox_files/figure-html/plot predictive ability and number of predictors-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>A reasonable approach trade off would be to remove map, bm, sg and pf_linear from our model to get an approximate model which still has high <span class="math inline">\(R^2\)</span> of <span class="math inline">\(0.96\)</span> for explaining the full model.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>f_approx <span class="ot">&lt;-</span> <span class="fu">ols</span>(Z <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">rcs</span>(age, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(wt, <span class="dv">3</span>) <span class="sc">+</span> heart_d</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>         <span class="sc">+</span> <span class="fu">rcs</span>(hg, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sz, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(<span class="fu">log</span>(ap), <span class="dv">5</span>), <span class="at">x=</span>T)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(f_approx, <span class="at">html=</span>T, <span class="at">coefs=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>f_approx <span class="ot">&lt;-</span> <span class="fu">ols</span>(Z <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">rcs</span>(age, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(wt, <span class="dv">3</span>) <span class="sc">+</span> heart_d</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">rcs</span>(hg, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sz, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(<span class="fu">log</span>(ap), <span class="dv">5</span>), <span class="at">x =</span> T)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(f_approx, <span class="at">html =</span> T, <span class="at">coefs =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <p><strong>Linear Regression Model</strong></p>
@@ -2627,9 +2666,17 @@ Indexes</th>
 </tr>
 </tbody>
 </table>
+
+
+
 <p>Residuals</p>
-<pre><code>     Min       1Q   Median       3Q      Max 
--0.30962 -0.07092 -0.02333  0.04420  0.63137 </code></pre>
+
+<pre>     Min       1Q   Median       3Q      Max 
+-0.30962 -0.07092 -0.02333  0.04420  0.63137 
+</pre>
+
+
+
 <table class="gmisc_table caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
@@ -2721,18 +2768,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -2764,7 +2800,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -2772,7 +2830,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

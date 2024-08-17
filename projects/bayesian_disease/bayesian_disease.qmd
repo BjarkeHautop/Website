@@ -12,7 +12,7 @@ In this project we will consider a Bayesian approach to modelling disease outbre
 
 The data consists of the daily number of students in bed, spanning over a time interval of 14 days. There were 763 male students who were mostly full boarders and 512 of them became ill. The outbreak lasted from the 22nd of January to the 4th of February. It is reported that one infected boy started the epidemic, which spread rapidly in the relatively closed community of the boarding school.
 
-```{r, warning=FALSE, message=FALSE}
+```{r packages, warning=FALSE, message=FALSE}
 library(outbreaks)
 library(tidyverse)
 library(truncnorm)
@@ -24,18 +24,18 @@ rstan_options(auto_write = TRUE)
 options(mc.cores = parallel::detectCores())
 ```
 
-```{r, echo=FALSE}
+```{r stan path, echo=FALSE}
 file_path <- "C:/Users/bjark/Documents/Quarto website/Website/projects/bayesian_disease/stan_model.stan"
 ```
 
 We start by plotting the data.
 
-```{r}
+```{r data}
 head(influenza_england_1978_school)
 
 theme_set(theme_bw())
-ggplot(data = influenza_england_1978_school) + 
-  geom_point(mapping = aes(x = date, y = in_bed)) + 
+ggplot(data = influenza_england_1978_school) +
+  geom_point(mapping = aes(x = date, y = in_bed)) +
   labs(y = "Number of students in bed")
 ```
 
@@ -85,101 +85,34 @@ Using domain knowledge a reasonable choice is to have the mean be $2$ and $P(\be
 
 <summary>Click here to see code for solving for parameters in truncated normal</summary>
 
-```{r}
-solve_truncated_normal <- function(desired_mean, x_value, desired_prob, a = 0, 
-                                   b = Inf, initial_guess=c(desired_mean, 1), maxit=1000,
-                                   verbose=FALSE) {
-  "
-  This function solves for the parameters (mean and standard deviation) of a truncated normal distribution 
-  
-  such that the distribution aligns with a given desired mean and the cumulative probability at a specific value. 
+I made the function `solve_truncated_normal` in my package `solvetruncated`, which can be 
+downloaded by running the following code:
 
-  Args:
-  desired_mean (numeric): The desired mean E[X] of the truncated normal distribution.
-  desired_prob (numeric): The desired cumulative probability P(X <= x_value) of the truncated normal distribution.
-  x_value (numeric): The value x for which the cumulative probability is specified.
-  a (numeric, optional): The lower bound of the truncation interval. Default is 0.
-  b (numeric, optional): The upper bound of the truncation interval. Default is Inf.
-  Initial_guess: The initial guess for the parameters used for optimizing. Default 
-  is mean being the desired mean and sd being 1. 
-  maxit: The maximum number of iterations allowed for optim. See also ?optim.
+```{r solvetrunctaed package, eval = FALSE}
+# install.packages("devtools")
+devtools::install_github("BjarkeHautop/solvetruncated")
+```
 
-  Returns:
-  list: A list containing the optimal mean (mu) and standard deviation (sigma) of the truncated normal distribution.
-  "
-  
-  # Check for logical consistency and edge cases
-  if (a >= b) {
-    stop("Error: Lower bound 'a' must be less than upper bound 'b'.")
-  }
-  if (desired_mean <= a || desired_mean >= b) {
-    stop("Error: Desired mean must be within the bounds [a, b].")
-  }
-  if (desired_prob <= 0 || desired_prob >= 1) {
-    stop("Error: Desired probability must be between 0 and 1.")
-  }
-  if (x_value <= a || x_value >= b) {
-    stop("Error: x_value must be within the bounds [a, b].")
-  }
-  
-  # Define the objective function to minimize
-  objective_function <- function(params) {
-    mu <- params[1]
-    sigma <- params[2]
-    
-    # Penalize if parameters go out of bounds
-    if (mu <= a || mu >= b || sigma <= 0) {
-      return(Inf)
-    }
-    
-    # Following syntax given on https://en.wikipedia.org/wiki/Truncated_normal_distribution
-    xi <- (x_value - mu) / sigma
-    alpha <- (a - mu) / sigma
-    beta <- (b - mu) / sigma
-    Z <- pnorm(beta) - pnorm(alpha)
-    
-    mean_trunc <- mu + (dnorm(alpha) - dnorm(beta)) / Z * sigma
-    prob_trunc <- (pnorm(xi) - pnorm(alpha)) / Z
-    
-    # Calculate the sum of squared differences
-    error <- (mean_trunc - desired_mean)^2 + (prob_trunc - desired_prob)^2
-    
-    return(error)
-  }
-  
-  # Optimize the parameters
-  result <- optim(initial_guess, objective_function, 
-                    control = list(maxit=maxit))
-  # Check for convergence or failure
-  if (result$convergence != 0) {
-    warning("Optimization did not converge.")
-  }  
-  
-  if (verbose) {
-    print(result)
-  } 
-  
-  # Extract the optimal parameters
-  optimal_mu <- result$par[1]
-  optimal_sigma <- result$par[2]
-  
-  return(list(mu = optimal_mu, sigma = optimal_sigma))
-}
+We can then use the function to solve for the parameters. For example, to solve for the parameters of $$X \sim \text{Normal}^+(\mu, \sigma)$$ with desired mean $E[X]=0.5$ and $P(X\leq 0.75)=0.8$.
+
+```{r example solve_truncated_normal}
+library(solvetruncated)
+solve_truncated_normal(desired_mean = 0.5, x_value = 0.75, desired_prob = 0.8, a = 0, b = Inf)
 ```
 
 </details>
 
-Now we can solve for the parameters numerically.
+Now we can solve for the parameters for $\beta$ numerically.
 
-```{r}
-solve_truncated_normal(desired_mean = 2, x_value = 3, desired_prob = 1-0.2)
+```{r solve for parameters for beta}
+solve_truncated_normal(desired_mean = 2, x_value = 3, desired_prob = 1 - 0.2)
 ```
 
 Thus, $$\beta \sim \mathrm{Normal}^+(1.68,\; 1.42^2).$$ 
 
 For $\gamma$ we will also use truncated normal distribution, where we know that typically an influenza lasts a few days. In particular, we want the mean of $\gamma$ to be $0.5$, so the average length of the infectious disease is $1/\gamma=1/0.5=2$. We also want the recovery time to be more than $1$ day with probability $0.9$ (that is $P(\gamma\leq 1)=0.9$). We again solve for the parameters numerically.
 
-```{r}
+```{r solve for parameters for gamma}
 solve_truncated_normal(desired_mean = 0.5, x_value = 1, desired_prob = 0.9)
 ```
 
@@ -284,7 +217,7 @@ generated quantities {
 
 We now define the model. 
 
-```{r, warning=FALSE, message=FALSE}
+```{r define stan model, warning=FALSE, message=FALSE}
 model <- stan_model(file = file_path)
 ```
 
@@ -292,14 +225,13 @@ model <- stan_model(file = file_path)
 
 We run our model with default options.
 
-```{r}
-cases <- influenza_england_1978_school$in_bed 
+```{r run stan model}
+cases <- influenza_england_1978_school$in_bed
 
 # total count
-N <- 763;
-
+N <- 763
 # times
-n_days <- length(cases) 
+n_days <- length(cases)
 t <- seq(0, n_days, by = 1)
 t <- t[-1]
 
@@ -307,23 +239,27 @@ t <- t[-1]
 i0 <- 1
 s0 <- N - i0
 r0 <- 0
-y0 = c(S = s0, I = i0, R = r0)
+y0 <- c(S = s0, I = i0, R = r0)
 
 # data for Stan
-data_sir <- list(n_days = n_days, y0 = y0, t = t, N = N, 
-                 cases = cases)
+data_sir <- list(
+  n_days = n_days, y0 = y0, t = t, N = N,
+  cases = cases
+)
 
-fit_sir_negbin <- stan(file = file_path, 
-                       data = data_sir,
-                       seed = 1405,)
+fit_sir_negbin <- stan(
+  file = file_path,
+  data = data_sir,
+  seed = 1405,
+)
 ```
 
 # Checking the model
 
 We start by showing summary table of the parameters in our model.
 
-```{r}
-pars=c('beta', 'gamma', "R0", "recovery_time")
+```{r summary of model}
+pars <- c("beta", "gamma", "R0", "recovery_time")
 print(fit_sir_negbin, pars = pars)
 ```
 
@@ -331,22 +267,24 @@ In the summary we also see information about whether to trust the results. We se
 
 We also plot the marginal posterior densities for the 4 Markov Chains and confirm they are in agreement.
 
-```{r}
+```{r plot of posteriors}
 stan_dens(fit_sir_negbin, pars = pars, separate_chains = TRUE)
 ```
 
 We will check our model by doing posterior predictive checks. That is, we predict the data we would expect based on the model posterior, and we compare it with the actually observed data to see if they are consistent. We do this and add a $90\%$ credible interval.
 
-```{r}
+```{r posterior predictive checks}
 smr_pred <- cbind(as.data.frame(summary(
-  fit_sir_negbin, pars = "pred_cases", 
-  probs = c(0.05, 0.5, 0.95))$summary), t, cases)
+  fit_sir_negbin,
+  pars = "pred_cases",
+  probs = c(0.05, 0.5, 0.95)
+)$summary), t, cases)
 
 colnames(smr_pred) <- make.names(colnames(smr_pred)) # to remove % in the col names
 
 ggplot(smr_pred, mapping = aes(x = t)) +
-  geom_ribbon(aes(ymin = X5., ymax = X95.), fill="green", alpha = 0.35) +
-  geom_line(mapping = aes(x = t, y = X50.), color="blue") + 
+  geom_ribbon(aes(ymin = X5., ymax = X95.), fill = "green", alpha = 0.35) +
+  geom_line(mapping = aes(x = t, y = X50.), color = "blue") +
   geom_point(mapping = aes(y = cases)) +
   labs(x = "Day", y = "Number of students in bed")
 ```
@@ -365,10 +303,10 @@ We will perform prior sensitivity analysis, that is analyzing how much the prior
 
 Where we again solved for the parameters numerically, as seen below.
 
-```{r, eval=FALSE}
-solve_truncated_normal(1, 2, 1-0.2)
-solve_truncated_normal(3, 4, 1-0.2)
-solve_truncated_normal(4, 5, 1-0.2)
+```{r solve parameters sensitivity beta, eval=FALSE}
+solve_truncated_normal(desired_mean = 1, x_value = 2, desired_prob = 1 - 0.2)
+solve_truncated_normal(desired_mean = 3, x_value = 4, desired_prob = 1 - 0.2)
+solve_truncated_normal(desired_mean = 4, x_value = 5, desired_prob = 1 - 0.2)
 ```
 
 For $\gamma$ we will try the following other priors:
@@ -382,11 +320,12 @@ For $\gamma$ we will try the following other priors:
 Now we see how the posterior changes with these different priors. For $\beta$ 
 this can be done with following code.
 
-```{r}
-spec_beta = make_spec(beta ~ normal(mu, sd), 
-                      mu=c(1.6, 2.98, 4), sd=c(1.3, 1.2, 1.19))
+```{r prior sensitivity beta}
+spec_beta <- make_spec(beta ~ normal(mu, sd),
+  mu = c(1.6, 2.98, 4), sd = c(1.3, 1.2, 1.19)
+)
 
-adjusted_beta = adjust_weights(spec_beta, fit_sir_negbin)
+adjusted_beta <- adjust_weights(spec_beta, fit_sir_negbin)
 summarize(adjusted_beta, mean(beta), var(beta))
 ```
 
@@ -394,11 +333,12 @@ We see the posterior mean and variance didn't change for $\beta$ with those diff
 
 We do the same for $\gamma$. 
 
-```{r}
-spec_gamma = make_spec(beta ~ normal(mu, sd), 
-                       mu=c(1, 0.28, 0.24), sd=c(0.4, 0.24, 0.12))
+```{r prior sensitivity gamma}
+spec_gamma <- make_spec(beta ~ normal(mu, sd),
+  mu = c(1, 0.28, 0.24), sd = c(0.4, 0.24, 0.12)
+)
 
-adjusted_gamma = adjust_weights(spec_gamma, fit_sir_negbin)
+adjusted_gamma <- adjust_weights(spec_gamma, fit_sir_negbin)
 summarize(adjusted_gamma, mean(gamma), var(gamma))
 ```
 
@@ -408,34 +348,38 @@ We see that the posterior mean and variance barely changes for $\gamma$ with tho
 
 We show the marginal posterior (with chains combined) below.
 
-```{r}
-# Plot posterior
-
+```{r posterior distributions}
 posterior <- as.matrix(fit_sir_negbin)
 
-plot_title <- ggtitle("Posterior distributions",
-                      "with medians and 90% intervals")
+plot_title <- ggtitle(
+  "Posterior distributions",
+  "with medians and 90% intervals"
+)
 mcmc_areas(posterior,
-           pars = pars,
-           prob = 0.9) + plot_title
+  pars = pars,
+  prob = 0.9
+) + plot_title
 ```
 
 Of particular interest is that the distribution of the basic reproduction number, $R_0$, has all the mass way above $1$, so this infection would be sustainable.
 
 We can also access the true number of infected, which is a latent variable. We again add a $90\%$ credible interval.
 
-```{r}
-params <- lapply(t, function(i){sprintf("y[%s,2]", i)}) #number of infected for each day
+```{r true number of infected}
+params <- lapply(t, function(i) {
+  sprintf("y[%s,2]", i)
+}) # number of infected for each day
 
-smr_y <- as.data.frame(summary(fit_sir_negbin, 
-                               pars = params, 
-                               probs = c(0.05, 0.5,0.95))$summary)
+smr_y <- as.data.frame(summary(fit_sir_negbin,
+  pars = params,
+  probs = c(0.05, 0.5, 0.95)
+)$summary)
 
 colnames(smr_y) <- make.names(colnames(smr_y)) # to remove % in the col names
 
 ggplot(smr_y, mapping = aes(x = t)) +
   geom_ribbon(aes(ymin = X5., ymax = X95.), fill = "green", alpha = 0.35) +
-  geom_line(mapping = aes(x = t, y = X50.), color = "blue") + 
+  geom_line(mapping = aes(x = t, y = X50.), color = "blue") +
   labs(x = "Day", y = "Number of infected students")
 ```
 
