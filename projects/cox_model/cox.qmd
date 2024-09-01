@@ -35,22 +35,50 @@ library(ggplot2)
 library(latex2exp)
 library(knitr)
 library(kableExtra)
+library(modelsummary)
 getHdata(prostate)
 ```
 
 We start by showing summary of all the variables in the dataset
 
-```{r summary data hide, warning=F, results='hide'}
-d <- describe(prostate[2:17])
-html(d, file = "")
+<details><summary>Click here to see output</summary>
+
+Preprocess data for function `datasummary_skim`.
+
+```{r}
+prostate_summary <- prostate
+
+# Convert 'labelled' columns to numeric
+prostate_summary[] <- lapply(prostate_summary, function(x) {
+  if (inherits(x, "labelled")) {
+    as.numeric(x)
+  } else {
+    x
+  }
+})
+
+prostate_summary$bm <- as.factor(prostate$bm)
+prostate_summary$stage <- as.factor(prostate$stage)
+prostate_summary$hx <- as.factor(prostate$hx)
+
+prostate_summary <- prostate_summary[, !names(prostate) %in% c("patno", "sdate")]
+
+factors <- sapply(prostate_summary, is.factor)
 ```
 
-<details><summary>Click here to see output</summary
+Summary of factor variables in data
 
-```{r summary data show, warning=F, echo=F}
-d <- describe(prostate[2:17])
-html(d, file = "")
+```{r}
+datasummary_skim(prostate_summary[factors])
 ```
+
+Summary of continuous variables in data
+
+```{r}
+datasummary_skim(prostate_summary[!factors])
+```
+
+</details>
 
 We see that the variable ekg only has one observation in the last category and pf has two. So, we combine recent MI with old MI and call it MI, and we combine confined to bed
 with $>50\%$ daytime. 

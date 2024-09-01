@@ -265,1643 +265,730 @@ window.Quarto = {
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(latex2exp)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">getHdata</span>(prostate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">getHdata</span>(prostate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We start by showing summary of all the variables in the dataset</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">describe</span>(prostate[<span class="dv">2</span><span class="sc">:</span><span class="dv">17</span>])</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span>(d, <span class="at">file =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <details>
 <summary>
 Click here to see output
 </summary>
-<style>
-.earrows {color:silver;font-size:11px;}
+<p>Preprocess data for function <code>datasummary_skim</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>prostate_summary <span class="ot">&lt;-</span> prostate</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert 'labelled' columns to numeric</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>prostate_summary[] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(prostate_summary, <span class="cf">function</span>(x) {</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">inherits</span>(x, <span class="st">"labelled"</span>)) {</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.numeric</span>(x)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    x</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>prostate_summary<span class="sc">$</span>bm <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(prostate<span class="sc">$</span>bm)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>prostate_summary<span class="sc">$</span>stage <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(prostate<span class="sc">$</span>stage)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>prostate_summary<span class="sc">$</span>hx <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(prostate<span class="sc">$</span>hx)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>prostate_summary <span class="ot">&lt;-</span> prostate_summary[, <span class="sc">!</span><span class="fu">names</span>(prostate) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"patno"</span>, <span class="st">"sdate"</span>)]</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>factors <span class="ot">&lt;-</span> <span class="fu">sapply</span>(prostate_summary, is.factor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Summary of factor variables in data</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datasummary_skim</span>(prostate_summary[factors])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<!-- preamble start -->
 
-fcap {
- font-family: Verdana;
- font-size: 12px;
- color: MidnightBlue
- }
+    <script>
+      function styleCell_tlcdt7mw7306m6kuwihq(i, j, css_id) {
+        var table = document.getElementById("tinytable_tlcdt7mw7306m6kuwihq");
+        table.rows[i].cells[j].classList.add(css_id);
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_tlcdt7mw7306m6kuwihq');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_tlcdt7mw7306m6kuwihq(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_tlcdt7mw7306m6kuwihq");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(0, 0, 'tinytable_css_id1697xnt3hmncszc2ee04') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(0, 1, 'tinytable_css_id1697xnt3hmncszc2ee04') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(0, 2, 'tinytable_css_id5vl2kxvb06yahdyzmjdn') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(0, 3, 'tinytable_css_id5vl2kxvb06yahdyzmjdn') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(1, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(1, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(1, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(1, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(2, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(2, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(2, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(2, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(3, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(3, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(3, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(3, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(4, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(4, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(4, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(4, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(5, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(5, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(5, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(5, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(6, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(6, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(6, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(6, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(7, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(7, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(7, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(7, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(8, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(8, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(8, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(8, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(9, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(9, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(9, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(9, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(10, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(10, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(10, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(10, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(11, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(11, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(11, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(11, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(12, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(12, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(12, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(12, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(13, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(13, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(13, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(13, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(14, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(14, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(14, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(14, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(15, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(15, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(15, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(15, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(16, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(16, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(16, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(16, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(17, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(17, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(17, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(17, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(18, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(18, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(18, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(18, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(19, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(19, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(19, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(19, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(20, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(20, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(20, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(20, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(21, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(21, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(21, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(21, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(22, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(22, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(22, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(22, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(23, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(23, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(23, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(23, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(24, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(24, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(24, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(24, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(25, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(25, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(25, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(25, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(26, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(26, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(26, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(26, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(27, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(27, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(27, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(27, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(28, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(28, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(28, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(28, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(29, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(29, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(29, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(29, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(30, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(30, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(30, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(30, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(31, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(31, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(31, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(31, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+    </script>
 
-smg {
- font-family: Verdana;
- font-size: 10px;
- color: 󅒐
-}
+    <style>
+    .table td.tinytable_css_id1697xnt3hmncszc2ee04, .table th.tinytable_css_id1697xnt3hmncszc2ee04 {  text-align: left;  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_id5vl2kxvb06yahdyzmjdn, .table th.tinytable_css_id5vl2kxvb06yahdyzmjdn {  text-align: right;  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_idqou0781kvvgogbd3vflx, .table th.tinytable_css_idqou0781kvvgogbd3vflx {  text-align: left; }
+    .table td.tinytable_css_iddjd5f5hh305vvbwep9br, .table th.tinytable_css_iddjd5f5hh305vvbwep9br {  text-align: right; }
+    </style>
+    <div class="container">
+      <table class="table table-borderless" id="tinytable_tlcdt7mw7306m6kuwihq" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        <thead>
+        
+              <tr>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col">N</th>
+                <th scope="col">%</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td>stage</td>
+                  <td>3</td>
+                  <td>289</td>
+                  <td>57.6</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>4</td>
+                  <td>213</td>
+                  <td>42.4</td>
+                </tr>
+                <tr>
+                  <td>rx</td>
+                  <td>placebo</td>
+                  <td>127</td>
+                  <td>25.3</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>0.2 mg estrogen</td>
+                  <td>124</td>
+                  <td>24.7</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>1.0 mg estrogen</td>
+                  <td>126</td>
+                  <td>25.1</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>5.0 mg estrogen</td>
+                  <td>125</td>
+                  <td>24.9</td>
+                </tr>
+                <tr>
+                  <td>status</td>
+                  <td>alive</td>
+                  <td>148</td>
+                  <td>29.5</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>dead - prostatic ca</td>
+                  <td>130</td>
+                  <td>25.9</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>dead - heart or vascular</td>
+                  <td>96</td>
+                  <td>19.1</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>dead - cerebrovascular</td>
+                  <td>31</td>
+                  <td>6.2</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>dead - pulmonary embolus</td>
+                  <td>14</td>
+                  <td>2.8</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>dead - other ca</td>
+                  <td>25</td>
+                  <td>5.0</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>dead - respiratory disease</td>
+                  <td>16</td>
+                  <td>3.2</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>dead - other specific non-ca</td>
+                  <td>28</td>
+                  <td>5.6</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>dead - unspecified non-ca</td>
+                  <td>7</td>
+                  <td>1.4</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>dead - unknown cause</td>
+                  <td>7</td>
+                  <td>1.4</td>
+                </tr>
+                <tr>
+                  <td>pf</td>
+                  <td>normal activity</td>
+                  <td>450</td>
+                  <td>89.6</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>in bed &lt; 50% daytime</td>
+                  <td>37</td>
+                  <td>7.4</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>in bed &gt; 50% daytime</td>
+                  <td>13</td>
+                  <td>2.6</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>confined to bed</td>
+                  <td>2</td>
+                  <td>0.4</td>
+                </tr>
+                <tr>
+                  <td>hx</td>
+                  <td>0</td>
+                  <td>289</td>
+                  <td>57.6</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>1</td>
+                  <td>213</td>
+                  <td>42.4</td>
+                </tr>
+                <tr>
+                  <td>ekg</td>
+                  <td>normal</td>
+                  <td>168</td>
+                  <td>33.5</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>benign</td>
+                  <td>23</td>
+                  <td>4.6</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>rhythmic disturb &amp; electrolyte ch</td>
+                  <td>51</td>
+                  <td>10.2</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>heart block or conduction def</td>
+                  <td>26</td>
+                  <td>5.2</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>heart strain</td>
+                  <td>150</td>
+                  <td>29.9</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>old MI</td>
+                  <td>75</td>
+                  <td>14.9</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>recent MI</td>
+                  <td>1</td>
+                  <td>0.2</td>
+                </tr>
+                <tr>
+                  <td>bm</td>
+                  <td>0</td>
+                  <td>420</td>
+                  <td>83.7</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>1</td>
+                  <td>82</td>
+                  <td>16.3</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+<p>Summary of continuous variables in data</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datasummary_skim</span>(prostate_summary[<span class="sc">!</span>factors])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<!-- preamble start -->
 
-hr.thinhr { margin-top: 0.15em; margin-bottom: 0.15em; }
+    <script>
+      function styleCell_vmpzgpf27pw6hs0qerz8(i, j, css_id) {
+        var table = document.getElementById("tinytable_vmpzgpf27pw6hs0qerz8");
+        table.rows[i].cells[j].classList.add(css_id);
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_vmpzgpf27pw6hs0qerz8');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_vmpzgpf27pw6hs0qerz8(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_vmpzgpf27pw6hs0qerz8");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(0, 0, 'tinytable_css_idmhznb96hq3yzpio22fcy') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(0, 1, 'tinytable_css_idmhznb96hq3yzpio22fcy') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(0, 2, 'tinytable_css_idmhznb96hq3yzpio22fcy') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(0, 3, 'tinytable_css_idmhznb96hq3yzpio22fcy') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(0, 4, 'tinytable_css_idmhznb96hq3yzpio22fcy') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(0, 5, 'tinytable_css_idmhznb96hq3yzpio22fcy') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(0, 6, 'tinytable_css_idmhznb96hq3yzpio22fcy') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(0, 7, 'tinytable_css_idmhznb96hq3yzpio22fcy') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(0, 8, 'tinytable_css_idmhznb96hq3yzpio22fcy') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(1, 0, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(1, 1, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(1, 2, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(1, 3, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(1, 4, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(1, 5, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(1, 6, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(1, 7, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(1, 8, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(2, 0, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(2, 1, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(2, 2, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(2, 3, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(2, 4, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(2, 5, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(2, 6, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(2, 7, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(2, 8, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(3, 0, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(3, 1, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(3, 2, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(3, 3, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(3, 4, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(3, 5, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(3, 6, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(3, 7, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(3, 8, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(4, 0, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(4, 1, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(4, 2, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(4, 3, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(4, 4, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(4, 5, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(4, 6, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(4, 7, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(4, 8, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(5, 0, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(5, 1, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(5, 2, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(5, 3, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(5, 4, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(5, 5, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(5, 6, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(5, 7, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(5, 8, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(6, 0, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(6, 1, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(6, 2, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(6, 3, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(6, 4, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(6, 5, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(6, 6, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(6, 7, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(6, 8, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(7, 0, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(7, 1, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(7, 2, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(7, 3, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(7, 4, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(7, 5, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(7, 6, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(7, 7, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(7, 8, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(8, 0, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(8, 1, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(8, 2, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(8, 3, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(8, 4, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(8, 5, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(8, 6, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(8, 7, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(8, 8, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 0, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 1, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 2, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 3, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 4, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 5, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 6, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 7, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 8, 'tinytable_css_idbw4apak18do2uul2klva') })
+    </script>
 
-span.xscript {
-position: relative;
-}
-span.xscript sub {
-position: absolute;
-left: 0.1em;
-bottom: -1ex;
-}
-</style>
-<title>
-prostate[2:17] Descriptives
-</title>
-<font color="MidnightBlue">
-<div data-align="center">
-<span style="font-weight:bold">prostate[2:17] <br><br> 16 Variables   502 Observations</span>
+    <style>
+    .table td.tinytable_css_idmhznb96hq3yzpio22fcy, .table th.tinytable_css_idmhznb96hq3yzpio22fcy {  text-align: left;  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_idbw4apak18do2uul2klva, .table th.tinytable_css_idbw4apak18do2uul2klva {  text-align: left; }
+    </style>
+    <div class="container">
+      <table class="table table-borderless" id="tinytable_vmpzgpf27pw6hs0qerz8" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        <thead>
+        
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Unique</th>
+                <th scope="col">Missing Pct.</th>
+                <th scope="col">Mean</th>
+                <th scope="col">SD</th>
+                <th scope="col">Min</th>
+                <th scope="col">Median</th>
+                <th scope="col">Max</th>
+                <th scope="col">Histogram</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td>dtime</td>
+                  <td>76</td>
+                  <td>0</td>
+                  <td>36.1</td>
+                  <td>23.3</td>
+                  <td>0.0</td>
+                  <td>34.0</td>
+                  <td>76.0</td>
+                  <td><img src="./tinytable_assets/idq2mj67oq7wcaew7mxlb6.png" style="height: 1em;"></td>
+                </tr>
+                <tr>
+                  <td>age</td>
+                  <td>42</td>
+                  <td>0</td>
+                  <td>71.5</td>
+                  <td>7.1</td>
+                  <td>48.0</td>
+                  <td>73.0</td>
+                  <td>89.0</td>
+                  <td><img src="./tinytable_assets/idtdkaou8ayn52ii8sc1zw.png" style="height: 1em;"></td>
+                </tr>
+                <tr>
+                  <td>wt</td>
+                  <td>68</td>
+                  <td>0</td>
+                  <td>99.0</td>
+                  <td>13.4</td>
+                  <td>69.0</td>
+                  <td>98.0</td>
+                  <td>152.0</td>
+                  <td><img src="./tinytable_assets/idohytrjng37wtq773khow.png" style="height: 1em;"></td>
+                </tr>
+                <tr>
+                  <td>sbp</td>
+                  <td>18</td>
+                  <td>0</td>
+                  <td>14.4</td>
+                  <td>2.4</td>
+                  <td>8.0</td>
+                  <td>14.0</td>
+                  <td>30.0</td>
+                  <td><img src="./tinytable_assets/idyoi6th2t1nb3fzwzg9h7.png" style="height: 1em;"></td>
+                </tr>
+                <tr>
+                  <td>dbp</td>
+                  <td>12</td>
+                  <td>0</td>
+                  <td>8.1</td>
+                  <td>1.5</td>
+                  <td>4.0</td>
+                  <td>8.0</td>
+                  <td>18.0</td>
+                  <td><img src="./tinytable_assets/id02gj62xppmp98n601p3q.png" style="height: 1em;"></td>
+                </tr>
+                <tr>
+                  <td>hg</td>
+                  <td>91</td>
+                  <td>0</td>
+                  <td>13.4</td>
+                  <td>2.0</td>
+                  <td>5.9</td>
+                  <td>13.7</td>
+                  <td>21.2</td>
+                  <td><img src="./tinytable_assets/id34aap8igp8d8vm4qz9sc.png" style="height: 1em;"></td>
+                </tr>
+                <tr>
+                  <td>sz</td>
+                  <td>56</td>
+                  <td>1</td>
+                  <td>14.6</td>
+                  <td>12.3</td>
+                  <td>0.0</td>
+                  <td>11.0</td>
+                  <td>69.0</td>
+                  <td><img src="./tinytable_assets/idr4qbsl89b4twgvvn8hyz.png" style="height: 1em;"></td>
+                </tr>
+                <tr>
+                  <td>sg</td>
+                  <td>12</td>
+                  <td>2</td>
+                  <td>10.3</td>
+                  <td>2.0</td>
+                  <td>5.0</td>
+                  <td>10.0</td>
+                  <td>15.0</td>
+                  <td><img src="./tinytable_assets/idmi8wl7095pe250vxollw.png" style="height: 1em;"></td>
+                </tr>
+                <tr>
+                  <td>ap</td>
+                  <td>128</td>
+                  <td>0</td>
+                  <td>12.2</td>
+                  <td>62.2</td>
+                  <td>0.1</td>
+                  <td>0.7</td>
+                  <td>999.9</td>
+                  <td><img src="./tinytable_assets/id8ddjbm6bue8taj5u3wj9.png" style="height: 1em;"></td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
 </div>
-</font>
-<hr class="thinhr">
-<span style="font-weight:bold">stage</span>: Stage
-<style>
- .hmisctable182341 {
- border: none;
- font-size: 85%;
- }
- .hmisctable182341 td {
- text-align: center;
- padding: 0 1ex 0 1ex;
- }
- .hmisctable182341 th {
- color: MidnightBlue;
- text-align: center;
- padding: 0 1ex 0 1ex;
- font-weight: normal;
- }
- </style>
-<table data-quarto-disable-processing="true" class="hmisctable182341">
-<tbody><tr>
-<th>
-n
-</th>
-<th>
-missing
-</th>
-<th>
-distinct
-</th>
-<th>
-Info
-</th>
-<th>
-Mean
-</th>
-<th>
-Gmd
-</th>
-</tr>
-<tr>
-<td>
-502
-</td>
-<td>
-0
-</td>
-<td>
-2
-</td>
-<td>
-0.733
-</td>
-<td>
-3.424
-</td>
-<td>
-0.4895
-</td>
-</tr>
-</tbody></table>
-<pre style="font-size:85%;"> Value          3     4
- Frequency    289   213
- Proportion 0.576 0.424 </pre>
-<hr class="thinhr">
-<span style="font-weight:bold">rx</span>
-<div style="float: right; text-align: right;">
-<img src="data:image/png;base64,
-iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAMAAABFNRROAAAACVBMVEUAAADMzMz////1iUV5AAAAGElEQVQImWNgYGRkgGMGBiYmBCafR2szATIJAItKdysKAAAAAElFTkSuQmCC" alt="image">
 </div>
-<style>
- .hmisctable977383 {
- border: none;
- font-size: 85%;
- }
- .hmisctable977383 td {
- text-align: center;
- padding: 0 1ex 0 1ex;
- }
- .hmisctable977383 th {
- color: MidnightBlue;
- text-align: center;
- padding: 0 1ex 0 1ex;
- font-weight: normal;
- }
- </style>
-<table data-quarto-disable-processing="true" class="hmisctable977383">
-<tbody><tr>
-<th>
-n
-</th>
-<th>
-missing
-</th>
-<th>
-distinct
-</th>
-</tr>
-<tr>
-<td>
-502
-</td>
-<td>
-0
-</td>
-<td>
-4
-</td>
-</tr>
-</tbody></table>
-<pre style="font-size:85%;"> Value              placebo 0.2 mg estrogen 1.0 mg estrogen 5.0 mg estrogen
- Frequency              127             124             126             125
- Proportion           0.253           0.247           0.251           0.249 </pre>
-<hr class="thinhr">
-<span style="font-weight:bold">dtime</span>: Months of Follow-up
-<div style="float: right; text-align: right;">
-<img src="data:image/png;base64,
-iVBORw0KGgoAAAANSUhEUgAAAJcAAAANCAMAAACTvAxuAAAACVBMVEUAAADMzMz////1iUV5AAAAvklEQVQ4jd2TUQ7EIAhE0fsfurVVOgOoaaM/JdltQGGekyApiaS98UVAcpbztzW+CPS51uH+jquEG+CmQaGrFB7o/PB6fGi4rm8ASQV+xvgxhstAOC5NpKxLiXtxBBOzVFrmG3QvXD2xClyXaySrJOeXSfDJzZ6WgF+PHz2/WEGdgpT9yiADXOGA2kdJA3VcKBVxYWQ8H3CZjknJTNXEcYUKE65VUblQ6F3vJi4QGFrUb+N9XBq6eC/b6v+5jwdOEgevXeprNwAAAABJRU5ErkJggg==" alt="image">
+</details>
+<p>We see that the variable ekg only has one observation in the last category and pf has two. So, we combine recent MI with old MI and call it MI, and we combine confined to bed with <span class="math inline">\(&gt;50\%\)</span> daytime.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(prostate<span class="sc">$</span>ekg)[<span class="fu">levels</span>(prostate<span class="sc">$</span>ekg) <span class="sc">%in%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">"old MI"</span>, <span class="st">"recent MI"</span>)] <span class="ot">&lt;-</span> <span class="st">"MI"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(prostate<span class="sc">$</span>pf) <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">levels</span>(prostate<span class="sc">$</span>pf)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>],</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">levels</span>(prostate<span class="sc">$</span>pf)[<span class="dv">3</span>]</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<style>
- .hmisctable198000 {
- border: none;
- font-size: 85%;
- }
- .hmisctable198000 td {
- text-align: center;
- padding: 0 1ex 0 1ex;
- }
- .hmisctable198000 th {
- color: MidnightBlue;
- text-align: center;
- padding: 0 1ex 0 1ex;
- font-weight: normal;
- }
- </style>
-<table data-quarto-disable-processing="true" class="hmisctable198000">
-<tbody><tr>
-<th>
-n
-</th>
-<th>
-missing
-</th>
-<th>
-distinct
-</th>
-<th>
-Info
-</th>
-<th>
-Mean
-</th>
-<th>
-Gmd
-</th>
-<th>
-.05
-</th>
-<th>
-.10
-</th>
-<th>
-.25
-</th>
-<th>
-.50
-</th>
-<th>
-.75
-</th>
-<th>
-.90
-</th>
-<th>
-.95
-</th>
-</tr>
-<tr>
-<td>
-502
-</td>
-<td>
-0
-</td>
-<td>
-76
-</td>
-<td>
-1
-</td>
-<td>
-36.13
-</td>
-<td>
-26.89
-</td>
-<td>
-1.05
-</td>
-<td>
-5.00
-</td>
-<td>
-14.25
-</td>
-<td>
-34.00
-</td>
-<td>
-57.75
-</td>
-<td>
-67.00
-</td>
-<td>
-71.00
-</td>
-</tr>
-</tbody></table>
-<span style="font-size: 85%;"><font color="MidnightBlue">lowest</font>&nbsp;: 0 1 2 3 4 , <font color="MidnightBlue">highest</font>: 72 73 74 75 76</span>
-<hr class="thinhr">
-<span style="font-weight:bold">status</span>
-<div style="float: right; text-align: right;">
-<img src="data:image/png;base64,
-iVBORw0KGgoAAAANSUhEUgAAAB8AAAANCAMAAABmbkWbAAAACVBMVEUAAADMzMz////1iUV5AAAAOElEQVQYlWNgYMQLGBiYmEAYF6CSPE4lhOVBbgQhvO6nwHxi5aFKIBRcPYo8hmJk90N9gcQCOR8A8TUCOwBlw/UAAAAASUVORK5CYII=" alt="image">
-</div>
-<style>
- .hmisctable306056 {
- border: none;
- font-size: 85%;
- }
- .hmisctable306056 td {
- text-align: center;
- padding: 0 1ex 0 1ex;
- }
- .hmisctable306056 th {
- color: MidnightBlue;
- text-align: center;
- padding: 0 1ex 0 1ex;
- font-weight: normal;
- }
- </style>
-<table data-quarto-disable-processing="true" class="hmisctable306056">
-<tbody><tr>
-<th>
-n
-</th>
-<th>
-missing
-</th>
-<th>
-distinct
-</th>
-</tr>
-<tr>
-<td>
-502
-</td>
-<td>
-0
-</td>
-<td>
-10
-</td>
-</tr>
-</tbody></table>
-<style>
- .hmisctable254647 {
- border: none;
- font-size: 85%;
- }
- .hmisctable254647 td {
- text-align: right;
- padding: 0 1ex 0 1ex;
- }
- .hmisctable254647 th {
- color: Black;
- text-align: center;
- padding: 0 1ex 0 1ex;
- font-weight: bold;
- }
- </style>
-<table data-quarto-disable-processing="true" class="hmisctable254647">
-<tbody><tr>
-<td>
-<font color="MidnightBlue">lowest</font>&nbsp;:
-</td>
-<td>
-alive
-</td>
-<td>
-dead - prostatic ca
-</td>
-<td>
-dead - heart or vascular
-</td>
-<td>
-dead - cerebrovascular
-</td>
-<td>
-dead - pulmonary embolus
-</td>
-</tr>
-<tr>
-<td>
-<font color="MidnightBlue">highest</font>:
-</td>
-<td>
-dead - other ca
-</td>
-<td>
-dead - respiratory disease
-</td>
-<td>
-dead - other specific non-ca
-</td>
-<td>
-dead - unspecified non-ca
-</td>
-<td>
-dead - unknown cause
-</td>
-</tr>
-</tbody></table>
-<hr class="thinhr">
-<span style="font-weight:bold">age</span>: Age in Years
-<div style="float: right; text-align: right;">
-<img src="data:image/png;base64,
-iVBORw0KGgoAAAANSUhEUgAAAHwAAAANCAMAAABcvvroAAAACVBMVEUAAADMzMz////1iUV5AAAAhElEQVQ4jc2UgQ6AIAhE0f//6AiDTMUoyIU3czrvad2CFFMA3D3ZlGMKsLArQ/OmYLgcYRmciH+CW47ghzPxDTwi5yR+nlqQ9tHNjV/eA5f3q8Bv+U54pU/gnZd4GuBz/nWx8W39y4pC0aezln36JWMrgmqwq8vvONZK2nm6NqaQH8i0AT7eCR8ok+jnAAAAAElFTkSuQmCC" alt="image">
-</div>
-<style>
- .hmisctable727043 {
- border: none;
- font-size: 85%;
- }
- .hmisctable727043 td {
- text-align: center;
- padding: 0 1ex 0 1ex;
- }
- .hmisctable727043 th {
- color: MidnightBlue;
- text-align: center;
- padding: 0 1ex 0 1ex;
- font-weight: normal;
- }
- </style>
-<table data-quarto-disable-processing="true" class="hmisctable727043">
-<tbody><tr>
-<th>
-n
-</th>
-<th>
-missing
-</th>
-<th>
-distinct
-</th>
-<th>
-Info
-</th>
-<th>
-Mean
-</th>
-<th>
-Gmd
-</th>
-<th>
-.05
-</th>
-<th>
-.10
-</th>
-<th>
-.25
-</th>
-<th>
-.50
-</th>
-<th>
-.75
-</th>
-<th>
-.90
-</th>
-<th>
-.95
-</th>
-</tr>
-<tr>
-<td>
-501
-</td>
-<td>
-1
-</td>
-<td>
-41
-</td>
-<td>
-0.996
-</td>
-<td>
-71.46
-</td>
-<td>
-7.497
-</td>
-<td>
-56
-</td>
-<td>
-60
-</td>
-<td>
-70
-</td>
-<td>
-73
-</td>
-<td>
-76
-</td>
-<td>
-78
-</td>
-<td>
-80
-</td>
-</tr>
-</tbody></table>
-<span style="font-size: 85%;"><font color="MidnightBlue">lowest</font>&nbsp;: 48 49 50 51 52 , <font color="MidnightBlue">highest</font>: 84 85 87 88 89</span>
-<hr class="thinhr">
-<span style="font-weight:bold">wt</span>: Weight Index = wt(kg)-ht(cm)+200
-<div style="float: right; text-align: right;">
-<img src="data:image/png;base64,
-iVBORw0KGgoAAAANSUhEUgAAAJcAAAANCAMAAACTvAxuAAAACVBMVEUAAADMzMz////1iUV5AAAAmElEQVQ4jc2UjQ7AEAyEj/d/6A0tOvuprhK36JpgvpWDYBJgm6dfIM4K4LBS6u9XkjMBtuBKEOi4SCuxJrko25srb6gcNaZmLpX53pS72aLFpw5uffozKgYd8k9FUUCPeg04G3PxOnouwejNVW8mC82Fq6HZIMGT23bEP1AXwttrBQrUbKJquVCDi6SXQ3rI36E5Fl0s79QOmtwJ1iA1y4IAAAAASUVORK5CYII=" alt="image">
-</div>
-<style>
- .hmisctable362423 {
- border: none;
- font-size: 74%;
- }
- .hmisctable362423 td {
- text-align: center;
- padding: 0 1ex 0 1ex;
- }
- .hmisctable362423 th {
- color: MidnightBlue;
- text-align: center;
- padding: 0 1ex 0 1ex;
- font-weight: normal;
- }
- </style>
-<table data-quarto-disable-processing="true" class="hmisctable362423">
-<tbody><tr>
-<th>
-n
-</th>
-<th>
-missing
-</th>
-<th>
-distinct
-</th>
-<th>
-Info
-</th>
-<th>
-Mean
-</th>
-<th>
-Gmd
-</th>
-<th>
-.05
-</th>
-<th>
-.10
-</th>
-<th>
-.25
-</th>
-<th>
-.50
-</th>
-<th>
-.75
-</th>
-<th>
-.90
-</th>
-<th>
-.95
-</th>
-</tr>
-<tr>
-<td>
-500
-</td>
-<td>
-2
-</td>
-<td>
-67
-</td>
-<td>
-0.999
-</td>
-<td>
-99.03
-</td>
-<td>
-14.93
-</td>
-<td>
-77.95
-</td>
-<td>
-82.90
-</td>
-<td>
-90.00
-</td>
-<td>
-98.00
-</td>
-<td>
-107.00
-</td>
-<td>
-116.00
-</td>
-<td>
-123.00
-</td>
-</tr>
-</tbody></table>
-<span style="font-size: 85%;"><font color="MidnightBlue">lowest</font>&nbsp;: 69 71 72 73 74 , <font color="MidnightBlue">highest</font>: 136 142 145 150 152</span>
-<hr class="thinhr">
-<span style="font-weight:bold">pf</span>
-<div style="float: right; text-align: right;">
-<img src="data:image/png;base64,
-iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAMAAABFNRROAAAACVBMVEUAAADMzMz////1iUV5AAAAHUlEQVQImWNgYEQCDAxMSIB8HrXMRIiAzASbC8YAYdEBDX3AJfYAAAAASUVORK5CYII=" alt="image">
-</div>
-<style>
- .hmisctable510435 {
- border: none;
- font-size: 85%;
- }
- .hmisctable510435 td {
- text-align: center;
- padding: 0 1ex 0 1ex;
- }
- .hmisctable510435 th {
- color: MidnightBlue;
- text-align: center;
- padding: 0 1ex 0 1ex;
- font-weight: normal;
- }
- </style>
-<table data-quarto-disable-processing="true" class="hmisctable510435">
-<tbody><tr>
-<th>
-n
-</th>
-<th>
-missing
-</th>
-<th>
-distinct
-</th>
-</tr>
-<tr>
-<td>
-502
-</td>
-<td>
-0
-</td>
-<td>
-4
-</td>
-</tr>
-</tbody></table>
-<pre style="font-size:85%;"> Value           normal activity in bed &lt; 50% daytime in bed &gt; 50% daytime
- Frequency                   450                   37                   13
- Proportion                0.896                0.074                0.026
-                                
- Value           confined to bed
- Frequency                     2
- Proportion                0.004 </pre>
-<hr class="thinhr">
-<span style="font-weight:bold">hx</span>: History of Cardiovascular Disease
-<style>
- .hmisctable489160 {
- border: none;
- font-size: 85%;
- }
- .hmisctable489160 td {
- text-align: center;
- padding: 0 1ex 0 1ex;
- }
- .hmisctable489160 th {
- color: MidnightBlue;
- text-align: center;
- padding: 0 1ex 0 1ex;
- font-weight: normal;
- }
- </style>
-<table data-quarto-disable-processing="true" class="hmisctable489160">
-<tbody><tr>
-<th>
-n
-</th>
-<th>
-missing
-</th>
-<th>
-distinct
-</th>
-<th>
-Info
-</th>
-<th>
-Sum
-</th>
-<th>
-Mean
-</th>
-<th>
-Gmd
-</th>
-</tr>
-<tr>
-<td>
-502
-</td>
-<td>
-0
-</td>
-<td>
-2
-</td>
-<td>
-0.733
-</td>
-<td>
-213
-</td>
-<td>
-0.4243
-</td>
-<td>
-0.4895
-</td>
-</tr>
-</tbody></table>
-<hr class="thinhr">
-<span style="font-weight:bold">sbp</span>: Systolic Blood Pressure/10
-<div style="float: right; text-align: right;">
-<img src="data:image/png;base64,
-iVBORw0KGgoAAAANSUhEUgAAADcAAAANCAMAAAA65Aa/AAAACVBMVEUAAADMzMz////1iUV5AAAAUElEQVQokbXQ2w4AEAwD0Nb/f7T7GMES9MEidhIpqALQFjgVDPdlnjikmHBbSeC/66vMzlTq23+eZV0QcOsOFKImt5WhPXZFyigH83Mcqk16CdcD+l/9r4QAAAAASUVORK5CYII=" alt="image">
-</div>
-<style>
- .hmisctable534398 {
- border: none;
- font-size: 85%;
- }
- .hmisctable534398 td {
- text-align: center;
- padding: 0 1ex 0 1ex;
- }
- .hmisctable534398 th {
- color: MidnightBlue;
- text-align: center;
- padding: 0 1ex 0 1ex;
- font-weight: normal;
- }
- </style>
-<table data-quarto-disable-processing="true" class="hmisctable534398">
-<tbody><tr>
-<th>
-n
-</th>
-<th>
-missing
-</th>
-<th>
-distinct
-</th>
-<th>
-Info
-</th>
-<th>
-Mean
-</th>
-<th>
-Gmd
-</th>
-<th>
-.05
-</th>
-<th>
-.10
-</th>
-<th>
-.25
-</th>
-<th>
-.50
-</th>
-<th>
-.75
-</th>
-<th>
-.90
-</th>
-<th>
-.95
-</th>
-</tr>
-<tr>
-<td>
-502
-</td>
-<td>
-0
-</td>
-<td>
-18
-</td>
-<td>
-0.98
-</td>
-<td>
-14.35
-</td>
-<td>
-2.596
-</td>
-<td>
-11
-</td>
-<td>
-12
-</td>
-<td>
-13
-</td>
-<td>
-14
-</td>
-<td>
-16
-</td>
-<td>
-17
-</td>
-<td>
-18
-</td>
-</tr>
-</tbody></table>
-<pre style="font-size:85%;"> Value          8     9    10    11    12    13    14    15    16    17    18    19
- Frequency      1     3    14    27    65    74    98    74    72    34    17    12
- Proportion 0.002 0.006 0.028 0.054 0.129 0.147 0.195 0.147 0.143 0.068 0.034 0.024
-                                               
- Value         20    21    22    23    24    30
- Frequency      3     2     3     1     1     1
- Proportion 0.006 0.004 0.006 0.002 0.002 0.002 </pre>
-For the frequency table, variable is rounded to the nearest 0
-<hr class="thinhr">
-<span style="font-weight:bold">dbp</span>: Diastolic Blood Pressure/10
-<div style="float: right; text-align: right;">
-<img src="data:image/png;base64,
-iVBORw0KGgoAAAANSUhEUgAAACUAAAANCAMAAAAZv1dqAAAACVBMVEUAAADMzMz////1iUV5AAAAQUlEQVQYlWNghAEGBkacgIEJBhgQTAxAC1UMDESrwqmQAe5DoB9xehPNLBymkaAKpoA+qhjA/oP5EcwFIQgN8yIAz7gCv9fQk/wAAAAASUVORK5CYII=" alt="image">
-</div>
-<style>
- .hmisctable761457 {
- border: none;
- font-size: 85%;
- }
- .hmisctable761457 td {
- text-align: center;
- padding: 0 1ex 0 1ex;
- }
- .hmisctable761457 th {
- color: MidnightBlue;
- text-align: center;
- padding: 0 1ex 0 1ex;
- font-weight: normal;
- }
- </style>
-<table data-quarto-disable-processing="true" class="hmisctable761457">
-<tbody><tr>
-<th>
-n
-</th>
-<th>
-missing
-</th>
-<th>
-distinct
-</th>
-<th>
-Info
-</th>
-<th>
-Mean
-</th>
-<th>
-Gmd
-</th>
-<th>
-.05
-</th>
-<th>
-.10
-</th>
-<th>
-.25
-</th>
-<th>
-.50
-</th>
-<th>
-.75
-</th>
-<th>
-.90
-</th>
-<th>
-.95
-</th>
-</tr>
-<tr>
-<td>
-502
-</td>
-<td>
-0
-</td>
-<td>
-12
-</td>
-<td>
-0.945
-</td>
-<td>
-8.149
-</td>
-<td>
-1.553
-</td>
-<td>
-6
-</td>
-<td>
-6
-</td>
-<td>
-7
-</td>
-<td>
-8
-</td>
-<td>
-9
-</td>
-<td>
-10
-</td>
-<td>
-10
-</td>
-</tr>
-</tbody></table>
-<pre style="font-size:85%;"> Value          4     5     6     7     8     9    10    11    12    13    14    18
- Frequency      4     5    43   107   165    94    66     9     5     2     1     1
- Proportion 0.008 0.010 0.086 0.213 0.329 0.187 0.131 0.018 0.010 0.004 0.002 0.002 </pre>
-For the frequency table, variable is rounded to the nearest 0
-<hr class="thinhr">
-<span style="font-weight:bold">ekg</span>
-<div style="float: right; text-align: right;">
-<img src="data:image/png;base64,
-iVBORw0KGgoAAAANSUhEUgAAABYAAAANCAMAAACae25RAAAACVBMVEUAAADMzMz////1iUV5AAAAMElEQVQYlWNgYMQGGBiYkACcR1thVAfgcglEAL8wgkIXBrFQhCEcNGGw/RAEoxgZAPb1AYOWRYEtAAAAAElFTkSuQmCC" alt="image">
-</div>
-<style>
- .hmisctable336575 {
- border: none;
- font-size: 85%;
- }
- .hmisctable336575 td {
- text-align: center;
- padding: 0 1ex 0 1ex;
- }
- .hmisctable336575 th {
- color: MidnightBlue;
- text-align: center;
- padding: 0 1ex 0 1ex;
- font-weight: normal;
- }
- </style>
-<table data-quarto-disable-processing="true" class="hmisctable336575">
-<tbody><tr>
-<th>
-n
-</th>
-<th>
-missing
-</th>
-<th>
-distinct
-</th>
-</tr>
-<tr>
-<td>
-494
-</td>
-<td>
-8
-</td>
-<td>
-7
-</td>
-</tr>
-</tbody></table>
-<style>
- .hmisctable733515 {
- border: none;
- font-size: 85%;
- }
- .hmisctable733515 td {
- text-align: right;
- padding: 0 1ex 0 1ex;
- }
- .hmisctable733515 th {
- color: Black;
- text-align: center;
- padding: 0 1ex 0 1ex;
- font-weight: bold;
- }
- </style>
-<table data-quarto-disable-processing="true" class="hmisctable733515">
-<tbody><tr>
-<td>
-<font color="MidnightBlue">lowest</font>&nbsp;:
-</td>
-<td>
-normal
-</td>
-<td>
-benign
-</td>
-<td>
-rhythmic disturb &amp; electrolyte ch
-</td>
-<td>
-heart block or conduction def
-</td>
-<td>
-heart strain
-</td>
-</tr>
-<tr>
-<td>
-<font color="MidnightBlue">highest</font>:
-</td>
-<td>
-rhythmic disturb &amp; electrolyte ch
-</td>
-<td>
-heart block or conduction def
-</td>
-<td>
-heart strain
-</td>
-<td>
-old MI
-</td>
-<td>
-recent MI
-</td>
-</tr>
-</tbody></table>
-<hr class="thinhr">
-<span style="font-weight:bold">hg</span>: Serum Hemoglobin (g/100ml)
-<div style="float: right; text-align: right;">
-<img src="data:image/png;base64,
-iVBORw0KGgoAAAANSUhEUgAAAJcAAAANCAMAAACTvAxuAAAACVBMVEUAAADMzMz////1iUV5AAAAm0lEQVQ4jdWVgQ6AIAhEL///oxNxIkYthdy6Na2l9Dy9hSNKQL5yE1QtrQvQT0WOeqqaZ+6fuILAYrjoDk1J4a2ROrnKRxkDo3xc3gSWnroLl4zalcdqAfvV7d3FL/ZxxbOpCei2LVWae662tzu45FQbICNXx/cFF1c1rZiSm0svEQbXkmSNL7jo7KuI1bZGzMiZQ/IHfQopvTsBlzcKWUC1wQUAAAAASUVORK5CYII=" alt="image">
-</div>
-<style>
- .hmisctable268998 {
- border: none;
- font-size: 85%;
- }
- .hmisctable268998 td {
- text-align: center;
- padding: 0 1ex 0 1ex;
- }
- .hmisctable268998 th {
- color: MidnightBlue;
- text-align: center;
- padding: 0 1ex 0 1ex;
- font-weight: normal;
- }
- </style>
-<table data-quarto-disable-processing="true" class="hmisctable268998">
-<tbody><tr>
-<th>
-n
-</th>
-<th>
-missing
-</th>
-<th>
-distinct
-</th>
-<th>
-Info
-</th>
-<th>
-Mean
-</th>
-<th>
-Gmd
-</th>
-<th>
-.05
-</th>
-<th>
-.10
-</th>
-<th>
-.25
-</th>
-<th>
-.50
-</th>
-<th>
-.75
-</th>
-<th>
-.90
-</th>
-<th>
-.95
-</th>
-</tr>
-<tr>
-<td>
-502
-</td>
-<td>
-0
-</td>
-<td>
-91
-</td>
-<td>
-1
-</td>
-<td>
-13.45
-</td>
-<td>
-2.16
-</td>
-<td>
-10.2
-</td>
-<td>
-10.7
-</td>
-<td>
-12.3
-</td>
-<td>
-13.7
-</td>
-<td>
-14.7
-</td>
-<td>
-15.8
-</td>
-<td>
-16.4
-</td>
-</tr>
-</tbody></table>
-<span style="font-size: 85%;"><font color="MidnightBlue">lowest</font>&nbsp;: 5.89941 7 7.19922 7.7998 8.19922 , <font color="MidnightBlue">highest</font>: 17.2969 17.5 17.5977 18.1992 21.1992</span>
-<hr class="thinhr">
-<span style="font-weight:bold">sz</span>: Size of Primary Tumor (cm<sup>2</sup>)
-<div style="float: right; text-align: right;">
-<img src="data:image/png;base64,
-iVBORw0KGgoAAAANSUhEUgAAAJcAAAANCAMAAACTvAxuAAAACVBMVEUAAADMzMz////1iUV5AAAAkklEQVQ4je2TUQ6AIAxDO+5/aMGNDYYSiQH8sEQQMeGlW0EmgD4jBBPKzWb9XGMSlIiEUyHwvFueK2svVQSS9gfBSZOxJaVgtxq/zLHzbbmB91ywEvNUs00m7XEpX4m6qAX1pmdcV4UOM8x7wSVsZmJVbtegw1wkQWzyaOodUXFO+qTBi/zAGZMvecnRI5f4tD0A+WALCJtNK28AAAAASUVORK5CYII=" alt="image">
-</div>
-<style>
- .hmisctable588630 {
- border: none;
- font-size: 85%;
- }
- .hmisctable588630 td {
- text-align: center;
- padding: 0 1ex 0 1ex;
- }
- .hmisctable588630 th {
- color: MidnightBlue;
- text-align: center;
- padding: 0 1ex 0 1ex;
- font-weight: normal;
- }
- </style>
-<table data-quarto-disable-processing="true" class="hmisctable588630">
-<tbody><tr>
-<th>
-n
-</th>
-<th>
-missing
-</th>
-<th>
-distinct
-</th>
-<th>
-Info
-</th>
-<th>
-Mean
-</th>
-<th>
-Gmd
-</th>
-<th>
-.05
-</th>
-<th>
-.10
-</th>
-<th>
-.25
-</th>
-<th>
-.50
-</th>
-<th>
-.75
-</th>
-<th>
-.90
-</th>
-<th>
-.95
-</th>
-</tr>
-<tr>
-<td>
-497
-</td>
-<td>
-5
-</td>
-<td>
-55
-</td>
-<td>
-0.998
-</td>
-<td>
-14.63
-</td>
-<td>
-13.05
-</td>
-<td>
-2.0
-</td>
-<td>
-3.0
-</td>
-<td>
-5.0
-</td>
-<td>
-11.0
-</td>
-<td>
-21.0
-</td>
-<td>
-32.0
-</td>
-<td>
-39.2
-</td>
-</tr>
-</tbody></table>
-<span style="font-size: 85%;"><font color="MidnightBlue">lowest</font>&nbsp;: 0 1 2 3 4 , <font color="MidnightBlue">highest</font>: 54 55 61 62 69</span>
-<hr class="thinhr">
-<span style="font-weight:bold">sg</span>: Combined Index of Stage and Hist. Grade
-<div style="float: right; text-align: right;">
-<img src="data:image/png;base64,
-iVBORw0KGgoAAAANSUhEUgAAACIAAAANCAMAAAD7Y0wTAAAACVBMVEUAAADMzMz////1iUV5AAAAR0lEQVQYlbWPWwoAIAgEx+5/6LCHbVFQHy1CasPiYiKwjUgipim2G2QhfyMBonFaovpEPNTi4PKO+McdMiwvECh340Uv7XzITnQCY4XI7dUAAAAASUVORK5CYII=" alt="image">
-</div>
-<style>
- .hmisctable438407 {
- border: none;
- font-size: 85%;
- }
- .hmisctable438407 td {
- text-align: center;
- padding: 0 1ex 0 1ex;
- }
- .hmisctable438407 th {
- color: MidnightBlue;
- text-align: center;
- padding: 0 1ex 0 1ex;
- font-weight: normal;
- }
- </style>
-<table data-quarto-disable-processing="true" class="hmisctable438407">
-<tbody><tr>
-<th>
-n
-</th>
-<th>
-missing
-</th>
-<th>
-distinct
-</th>
-<th>
-Info
-</th>
-<th>
-Mean
-</th>
-<th>
-Gmd
-</th>
-<th>
-.05
-</th>
-<th>
-.10
-</th>
-<th>
-.25
-</th>
-<th>
-.50
-</th>
-<th>
-.75
-</th>
-<th>
-.90
-</th>
-<th>
-.95
-</th>
-</tr>
-<tr>
-<td>
-491
-</td>
-<td>
-11
-</td>
-<td>
-11
-</td>
-<td>
-0.959
-</td>
-<td>
-10.31
-</td>
-<td>
-2.245
-</td>
-<td>
-8
-</td>
-<td>
-8
-</td>
-<td>
-9
-</td>
-<td>
-10
-</td>
-<td>
-11
-</td>
-<td>
-13
-</td>
-<td>
-13
-</td>
-</tr>
-</tbody></table>
-<pre style="font-size:85%;"> Value          5     6     7     8     9    10    11    12    13    14    15
- Frequency      3     8     7    67   137    33   114    26    75     5    16
- Proportion 0.006 0.016 0.014 0.136 0.279 0.067 0.232 0.053 0.153 0.010 0.033 </pre>
-For the frequency table, variable is rounded to the nearest 0
-<hr class="thinhr">
-<span style="font-weight:bold">ap</span>: Serum Prostatic Acid Phosphatase
-<div style="float: right; text-align: right;">
-<img src="data:image/png;base64,
-iVBORw0KGgoAAAANSUhEUgAAAHMAAAANCAMAAACttaFlAAAACVBMVEUAAADMzMz////1iUV5AAAAOklEQVQ4jWNgZGBgpDNgYGJgYKIzGLVzmNk5mm5H7aSCnfS2FJRuoYARBMEImpQRJBjjTt+kpHygWgDbrgoS6TJ9QAAAAABJRU5ErkJggg==" alt="image">
-</div>
-<style>
- .hmisctable410715 {
- border: none;
- font-size: 74%;
- }
- .hmisctable410715 td {
- text-align: center;
- padding: 0 1ex 0 1ex;
- }
- .hmisctable410715 th {
- color: MidnightBlue;
- text-align: center;
- padding: 0 1ex 0 1ex;
- font-weight: normal;
- }
- </style>
-<table data-quarto-disable-processing="true" class="hmisctable410715">
-<tbody><tr>
-<th>
-n
-</th>
-<th>
-missing
-</th>
-<th>
-distinct
-</th>
-<th>
-Info
-</th>
-<th>
-Mean
-</th>
-<th>
-Gmd
-</th>
-<th>
-.05
-</th>
-<th>
-.10
-</th>
-<th>
-.25
-</th>
-<th>
-.50
-</th>
-<th>
-.75
-</th>
-<th>
-.90
-</th>
-<th>
-.95
-</th>
-</tr>
-<tr>
-<td>
-502
-</td>
-<td>
-0
-</td>
-<td>
-128
-</td>
-<td>
-0.996
-</td>
-<td>
-12.18
-</td>
-<td>
-21.71
-</td>
-<td>
-0.300
-</td>
-<td>
-0.300
-</td>
-<td>
-0.500
-</td>
-<td>
-0.700
-</td>
-<td>
-2.975
-</td>
-<td>
-21.689
-</td>
-<td>
-38.470
-</td>
-</tr>
-</tbody></table>
-<style>
- .hmisctable562485 {
- border: none;
- font-size: 85%;
- }
- .hmisctable562485 td {
- text-align: right;
- padding: 0 1ex 0 1ex;
- }
- .hmisctable562485 th {
- color: Black;
- text-align: center;
- padding: 0 1ex 0 1ex;
- font-weight: bold;
- }
- </style>
-<table data-quarto-disable-processing="true" class="hmisctable562485">
-<tbody><tr>
-<td>
-<font color="MidnightBlue">lowest</font>&nbsp;:
-</td>
-<td>
-0.0999908
-</td>
-<td>
-0.199982
-</td>
-<td>
-0.299988
-</td>
-<td>
-0.399963
-</td>
-<td>
-0.5
-</td>
-</tr>
-<tr>
-<td>
-<font color="MidnightBlue">highest</font>:
-</td>
-<td>
-316
-</td>
-<td>
-353.5
-</td>
-<td>
-367
-</td>
-<td>
-596
-</td>
-<td>
-999.875
-</td>
-</tr>
-</tbody></table>
-<hr class="thinhr">
-<span style="font-weight:bold">bm</span>: Bone Metastases
-<style>
- .hmisctable783296 {
- border: none;
- font-size: 85%;
- }
- .hmisctable783296 td {
- text-align: center;
- padding: 0 1ex 0 1ex;
- }
- .hmisctable783296 th {
- color: MidnightBlue;
- text-align: center;
- padding: 0 1ex 0 1ex;
- font-weight: normal;
- }
- </style>
-<table data-quarto-disable-processing="true" class="hmisctable783296">
-<tbody><tr>
-<th>
-n
-</th>
-<th>
-missing
-</th>
-<th>
-distinct
-</th>
-<th>
-Info
-</th>
-<th>
-Sum
-</th>
-<th>
-Mean
-</th>
-<th>
-Gmd
-</th>
-</tr>
-<tr>
-<td>
-502
-</td>
-<td>
-0
-</td>
-<td>
-2
-</td>
-<td>
-0.41
-</td>
-<td>
-82
-</td>
-<td>
-0.1633
-</td>
-<td>
-0.2739
-</td>
-</tr>
-</tbody></table>
-<hr class="thinhr">
-<pre><code>
-
-:::
-:::
-
-
-
-We see that the variable ekg only has one observation in the last category and pf has two. So, we combine recent MI with old MI and call it MI, and we combine confined to bed
-with $&gt;50\%$ daytime. 
-
-
-
-::: {.cell}
-
-```{.r .cell-code}
-levels(prostate$ekg)[levels(prostate$ekg) %in%
-  c("old MI", "recent MI")] &lt;- "MI"
-
-levels(prostate$pf) &lt;- c(
-  levels(prostate$pf)[1:3],
-  levels(prostate$pf)[3]
-)</code></pre>
-<p>:::</p>
-</details></section>
+</section>
 <section id="imputing-missing-values" class="level2">
 <h2 class="anchored" data-anchor-id="imputing-missing-values">Imputing missing values</h2>
 <p>We have 27 patients with missing values as seen below, so we do imputation on these.</p>
 <p>The proportion of missing values is <span class="math inline">\(0.05\)</span>, so we just do single imputation, since simpler to make plots and validation. However if the proportion were higher one should do multiple imputation.</p>
 <div class="cell" data-warn.conflicts="false">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(prostate))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(prostate))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 27</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(prostate))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(prostate))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> patno  stage     rx  dtime status    age     wt     pf     hx    sbp    dbp 
      0      0      0      0      0      1      2      0      0      0      0 
    ekg     hg     sz     sg     ap     bm  sdate 
      8      0      5     11      0      0      0 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">transcan</span>(</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span> sz <span class="sc">+</span> sg <span class="sc">+</span> ap <span class="sc">+</span> sbp <span class="sc">+</span> dbp <span class="sc">+</span> age <span class="sc">+</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    wt <span class="sc">+</span> hg <span class="sc">+</span> ekg <span class="sc">+</span> pf <span class="sc">+</span> bm <span class="sc">+</span> hx,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">imputed =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> prostate, <span class="at">pl =</span> <span class="cn">FALSE</span>, <span class="at">pr =</span> <span class="cn">FALSE</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(prostate)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>sz <span class="ot">&lt;-</span> <span class="fu">impute</span>(w, sz, <span class="at">data =</span> prostate)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>sg <span class="ot">&lt;-</span> <span class="fu">impute</span>(w, sg, <span class="at">data =</span> prostate)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="fu">impute</span>(w, age, <span class="at">data =</span> prostate)</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>wt <span class="ot">&lt;-</span> <span class="fu">impute</span>(w, wt, <span class="at">data =</span> prostate)</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>kg <span class="ot">&lt;-</span> <span class="fu">impute</span>(w, ekg, <span class="at">data =</span> prostate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">transcan</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span> sz <span class="sc">+</span> sg <span class="sc">+</span> ap <span class="sc">+</span> sbp <span class="sc">+</span> dbp <span class="sc">+</span> age <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    wt <span class="sc">+</span> hg <span class="sc">+</span> ekg <span class="sc">+</span> pf <span class="sc">+</span> bm <span class="sc">+</span> hx,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">imputed =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> prostate, <span class="at">pl =</span> <span class="cn">FALSE</span>, <span class="at">pr =</span> <span class="cn">FALSE</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(prostate)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>sz <span class="ot">&lt;-</span> <span class="fu">impute</span>(w, sz, <span class="at">data =</span> prostate)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>sg <span class="ot">&lt;-</span> <span class="fu">impute</span>(w, sg, <span class="at">data =</span> prostate)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="fu">impute</span>(w, age, <span class="at">data =</span> prostate)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>wt <span class="ot">&lt;-</span> <span class="fu">impute</span>(w, wt, <span class="at">data =</span> prostate)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>kg <span class="ot">&lt;-</span> <span class="fu">impute</span>(w, ekg, <span class="at">data =</span> prostate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -2006,15 +1093,15 @@ levels(prostate$pf) &lt;- c(
 </div>
 <p>We see that we have 36 degrees of freedom in our model, so about 1/10 of the amount of deaths there are. So there is some hope our model will validate.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">datadist</span>(prostate)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">datadist =</span> <span class="st">"dd"</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">units</span>(dtime) <span class="ot">&lt;-</span> <span class="st">"Month"</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">Surv</span>(dtime, status <span class="sc">!=</span> <span class="st">"alive"</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">cph</span>(S <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">rcs</span>(age, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(wt, <span class="dv">4</span>) <span class="sc">+</span> pf <span class="sc">+</span> hx <span class="sc">+</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rcs</span>(sbp, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(dbp, <span class="dv">4</span>) <span class="sc">+</span> ekg <span class="sc">+</span> <span class="fu">rcs</span>(hg, <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rcs</span>(sg, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sz, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(<span class="fu">log</span>(ap), <span class="dv">4</span>) <span class="sc">+</span> bm)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(f, <span class="at">html =</span> <span class="cn">TRUE</span>, <span class="at">coefs =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">datadist</span>(prostate)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">datadist =</span> <span class="st">"dd"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">units</span>(dtime) <span class="ot">&lt;-</span> <span class="st">"Month"</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">Surv</span>(dtime, status <span class="sc">!=</span> <span class="st">"alive"</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">cph</span>(S <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">rcs</span>(age, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(wt, <span class="dv">4</span>) <span class="sc">+</span> pf <span class="sc">+</span> hx <span class="sc">+</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rcs</span>(sbp, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(dbp, <span class="dv">4</span>) <span class="sc">+</span> ekg <span class="sc">+</span> <span class="fu">rcs</span>(hg, <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rcs</span>(sg, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sz, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(<span class="fu">log</span>(ap), <span class="dv">4</span>) <span class="sc">+</span> bm)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(f, <span class="at">html =</span> <span class="cn">TRUE</span>, <span class="at">coefs =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Frequencies of Missing Values Due to Each Variable
   S  rx age  wt  pf  hx sbp dbp ekg  hg  sg  sz  ap  bm 
@@ -2048,25 +1135,25 @@ Center -2.0435    Pr(&gt; chi2) 0.0000    R2(36,348)0.250
 <li><p>Assume performance rating (pf) is linear.</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>map <span class="ot">&lt;-</span> (<span class="dv">2</span> <span class="sc">*</span> dbp <span class="sc">+</span> sbp) <span class="sc">/</span> <span class="dv">3</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(map) <span class="ot">&lt;-</span> <span class="st">"Mean Arterial Pressure/10"</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>heart_d <span class="ot">&lt;-</span> hx <span class="sc">+</span> ekg <span class="sc">%nin%</span> <span class="fu">c</span>(<span class="st">"normal"</span>, <span class="st">"benign"</span>)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(heart_d) <span class="ot">&lt;-</span> <span class="st">"Heart Disease Code"</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>pf_linear <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(pf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>map <span class="ot">&lt;-</span> (<span class="dv">2</span> <span class="sc">*</span> dbp <span class="sc">+</span> sbp) <span class="sc">/</span> <span class="dv">3</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(map) <span class="ot">&lt;-</span> <span class="st">"Mean Arterial Pressure/10"</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>heart_d <span class="ot">&lt;-</span> hx <span class="sc">+</span> ekg <span class="sc">%nin%</span> <span class="fu">c</span>(<span class="st">"normal"</span>, <span class="st">"benign"</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(heart_d) <span class="ot">&lt;-</span> <span class="st">"Heart Disease Code"</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>pf_linear <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(pf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>So all in all we save 3 degrees of freedom from defining map, 5 for defining Heart Disease Code, and 3 for dropping knots, 1 for assuming performance rating is linear and gain 1 from ap. For a total reduction of 11 degrees of freedom.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">datadist</span>(dd, heart_d, map, pf_linear)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">cph</span>(</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  S <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">rcs</span>(age, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(wt, <span class="dv">3</span>) <span class="sc">+</span> pf_linear <span class="sc">+</span> heart_d <span class="sc">+</span> <span class="fu">rcs</span>(map, <span class="dv">3</span>)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="sc">+</span> <span class="fu">rcs</span>(hg, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sg, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sz, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(<span class="fu">log</span>(ap), <span class="dv">5</span>) <span class="sc">+</span> bm,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="cn">TRUE</span>, <span class="at">y =</span> <span class="cn">TRUE</span>, <span class="at">surv =</span> <span class="cn">TRUE</span>, <span class="at">time.inc =</span> <span class="dv">5</span> <span class="sc">*</span> <span class="dv">12</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(f, <span class="at">html =</span> <span class="cn">TRUE</span>, <span class="at">coefs =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">datadist</span>(dd, heart_d, map, pf_linear)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">cph</span>(</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  S <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">rcs</span>(age, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(wt, <span class="dv">3</span>) <span class="sc">+</span> pf_linear <span class="sc">+</span> heart_d <span class="sc">+</span> <span class="fu">rcs</span>(map, <span class="dv">3</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="sc">+</span> <span class="fu">rcs</span>(hg, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sg, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sz, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(<span class="fu">log</span>(ap), <span class="dv">5</span>) <span class="sc">+</span> bm,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="cn">TRUE</span>, <span class="at">y =</span> <span class="cn">TRUE</span>, <span class="at">surv =</span> <span class="cn">TRUE</span>, <span class="at">time.inc =</span> <span class="dv">5</span> <span class="sc">*</span> <span class="dv">12</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(f, <span class="at">html =</span> <span class="cn">TRUE</span>, <span class="at">coefs =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Cox Proportional Hazards Model
 
@@ -2092,7 +1179,7 @@ rx=5.0 mg estrogen  -0.1044  0.1572 -0.66  0.5066
 </div>
 <p>LR 119.86 with 24 degrees of freedom. AIC is <span class="math inline">\(119.86-2 \cdot 24=71.86\)</span>. Rough shrinkage estimate of this is now better at <span class="math inline">\((119.86-24)/119.86=0.80\)</span>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(f, <span class="at">html =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(f, <span class="at">html =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                Wald Statistics          Response: S 
 
@@ -2125,10 +1212,10 @@ rx=5.0 mg estrogen  -0.1044  0.1572 -0.66  0.5066
 <h2 class="anchored" data-anchor-id="checking-proportional-hazards">Checking Proportional Hazards</h2>
 <p>A Cox model should have proportional hazards, since if we look at two individuals with covariate values <span class="math inline">\(\boldsymbol{X}\)</span> and <span class="math inline">\(\boldsymbol{X}^*\)</span> then the ratio of their hazard rates is <span class="math display">\[\frac{h(t \vert \boldsymbol{X})}{h(t \vert \boldsymbol{X}^*)}=\exp\Big[\sum_{k=1}^p \beta_k(X_k-X_{k^*})\Big],\]</span> which is a constant. We can test this assumption using scaled Schoenfeld residuals separately for each predictor and test the PH assumption using the “correlation with time” test. Smoothed trends in the residuals are also plotted.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">predict</span>(f, <span class="at">type =</span> <span class="st">"terms"</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>f.short <span class="ot">&lt;-</span> <span class="fu">cph</span>(S <span class="sc">~</span> z, <span class="at">x =</span> <span class="cn">TRUE</span>, <span class="at">y =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>phtest <span class="ot">&lt;-</span> <span class="fu">cox.zph</span>(f.short, <span class="at">transform =</span> <span class="st">"identity"</span>, <span class="at">terms =</span> F)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>phtest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">predict</span>(f, <span class="at">type =</span> <span class="st">"terms"</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>f.short <span class="ot">&lt;-</span> <span class="fu">cph</span>(S <span class="sc">~</span> z, <span class="at">x =</span> <span class="cn">TRUE</span>, <span class="at">y =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>phtest <span class="ot">&lt;-</span> <span class="fu">cox.zph</span>(f.short, <span class="at">transform =</span> <span class="st">"identity"</span>, <span class="at">terms =</span> F)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>phtest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             chisq df     p
 rx        3.906254  1 0.048
@@ -2147,7 +1234,7 @@ GLOBAL    7.813453 11 0.730</code></pre>
 </div>
 <p>We see that the p-value of the test for proportional hazards is below <span class="math inline">\(0.05\)</span> for dose of estrogen, indicating that it may not have constant relative hazard. We plot it and don’t find anything too worry-some, and the global test of proportional hazard by adjusting for the 11 tests gives a p-value of <span class="math inline">\(0.78\)</span>. So we accept our model and continue.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(phtest, <span class="at">var =</span> <span class="st">"rx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(phtest, <span class="at">var =</span> <span class="st">"rx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2161,10 +1248,10 @@ GLOBAL    7.813453 11 0.730</code></pre>
 <h2 class="anchored" data-anchor-id="describing-effects">Describing Effects</h2>
 <p>We plot how each predictor is related to the log hazard of death with <span class="math inline">\(95\%\)</span>-confidence bands.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">Predict</span>(f),</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sepdiscrete =</span> <span class="st">"vertical"</span>, <span class="at">nlevels =</span> <span class="dv">4</span>,</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">vnames =</span> <span class="st">"names"</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">Predict</span>(f),</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sepdiscrete =</span> <span class="st">"vertical"</span>, <span class="at">nlevels =</span> <span class="dv">4</span>,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">vnames =</span> <span class="st">"names"</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2179,7 +1266,7 @@ GLOBAL    7.813453 11 0.730</code></pre>
 <h1>Presenting the final model for inference</h1>
 <p>To present point and interval estimates of predictor effects we draw a hazard ratio chart. Since the ap relationship is so non-monotonic we use a 20:1 hazard ratio for this variable. The others use the default.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">summary</span>(f, <span class="at">ap =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">20</span>)), <span class="at">log =</span> <span class="cn">TRUE</span>, <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">summary</span>(f, <span class="at">ap =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">20</span>)), <span class="at">log =</span> <span class="cn">TRUE</span>, <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in formula.character(object, env = baseenv()): Using formula(x) is deprecated when x is a character vector of length &gt; 1.
   Consider formula(paste(x, collapse = " ")) instead.
@@ -2201,26 +1288,26 @@ Warning in formula.character(object, env = baseenv()): Using formula(x) is depre
 <p>This plot is interpreted as the hazard ratio for each variable if we went from for example age 70 to age 76. <span class="math inline">\(95\%, 97.5\%\)</span> and <span class="math inline">\(99\%\)</span> confidence bands are added.</p>
 <p>Finally we will also show a nomogram.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>surv <span class="ot">&lt;-</span> <span class="fu">Survival</span>(f)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>surv3 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">surv</span>(<span class="dv">3</span> <span class="sc">*</span> <span class="dv">12</span>, <span class="at">lp =</span> x)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>surv5 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">surv</span>(<span class="dv">5</span> <span class="sc">*</span> <span class="dv">12</span>, <span class="at">lp =</span> x)</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>quan <span class="ot">&lt;-</span> <span class="fu">Quantile</span>(f)</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>med <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">quan</span>(<span class="at">lp =</span> x) <span class="sc">/</span> <span class="dv">12</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>ss <span class="ot">&lt;-</span> <span class="fu">c</span>(.<span class="dv">05</span>, .<span class="dv">1</span>, .<span class="dv">2</span>, .<span class="dv">3</span>, .<span class="dv">4</span>, .<span class="dv">5</span>, .<span class="dv">6</span>, .<span class="dv">7</span>, .<span class="dv">8</span>, .<span class="dv">9</span>, .<span class="dv">95</span>)</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>nom <span class="ot">&lt;-</span> <span class="fu">nomogram</span>(f,</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">ap =</span> <span class="fu">c</span>(.<span class="dv">1</span>, .<span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>),</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">fun =</span> <span class="fu">list</span>(surv3, surv5, med),</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">funlabel =</span> <span class="fu">c</span>(</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"3-year Survival"</span>, <span class="st">"5-year Survival"</span>,</span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Median Survival Time (years)"</span></span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">fun.at =</span> <span class="fu">list</span>(ss, ss, <span class="fu">c</span>(.<span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>))</span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>surv <span class="ot">&lt;-</span> <span class="fu">Survival</span>(f)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>surv3 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">surv</span>(<span class="dv">3</span> <span class="sc">*</span> <span class="dv">12</span>, <span class="at">lp =</span> x)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>surv5 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">surv</span>(<span class="dv">5</span> <span class="sc">*</span> <span class="dv">12</span>, <span class="at">lp =</span> x)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>quan <span class="ot">&lt;-</span> <span class="fu">Quantile</span>(f)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>med <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">quan</span>(<span class="at">lp =</span> x) <span class="sc">/</span> <span class="dv">12</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>ss <span class="ot">&lt;-</span> <span class="fu">c</span>(.<span class="dv">05</span>, .<span class="dv">1</span>, .<span class="dv">2</span>, .<span class="dv">3</span>, .<span class="dv">4</span>, .<span class="dv">5</span>, .<span class="dv">6</span>, .<span class="dv">7</span>, .<span class="dv">8</span>, .<span class="dv">9</span>, .<span class="dv">95</span>)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>nom <span class="ot">&lt;-</span> <span class="fu">nomogram</span>(f,</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">ap =</span> <span class="fu">c</span>(.<span class="dv">1</span>, .<span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>),</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">fun =</span> <span class="fu">list</span>(surv3, surv5, med),</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">funlabel =</span> <span class="fu">c</span>(</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"3-year Survival"</span>, <span class="st">"5-year Survival"</span>,</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Median Survival Time (years)"</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">fun.at =</span> <span class="fu">list</span>(ss, ss, <span class="fu">c</span>(.<span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>))</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in formula.character(object, env = baseenv()): Using formula(x) is deprecated when x is a character vector of length &gt; 1.
   Consider formula(paste(x, collapse = " ")) instead.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nom, <span class="at">cex.axis =</span> <span class="fl">0.8</span>, <span class="at">cex.var =</span> <span class="fl">0.7</span>, <span class="at">xfrac =</span> .<span class="dv">65</span>, <span class="at">lmgp =</span> .<span class="dv">35</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nom, <span class="at">cex.axis =</span> <span class="fl">0.8</span>, <span class="at">cex.var =</span> <span class="fl">0.7</span>, <span class="at">xfrac =</span> .<span class="dv">65</span>, <span class="at">lmgp =</span> .<span class="dv">35</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="Nomogram1.png" class="img-fluid"></p>
 <p>This is interpreted by taking a value for each predictor and seeing how many points each value correspond to. Then the total amount of points can be used to find the probability of for example 5-year survival.</p>
@@ -2232,9 +1319,9 @@ Warning in formula.character(object, env = baseenv()): Using formula(x) is depre
 <h2 class="anchored" data-anchor-id="validating-the-model">Validating the model</h2>
 <p>We will use bootstrapping for validation. We first validate this model for Somers’ <span class="math inline">\(D_{xy}\)</span> rank correlation between predicted log hazard and observed survival time, and for slope shrinkage. The bootstrap is used (with 1000 resamples) to penalize for possible overfitting.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">validate</span>(f, <span class="at">B =</span> <span class="dv">1000</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">prType =</span> <span class="st">"html"</span>)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>v</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">validate</span>(f, <span class="at">B =</span> <span class="dv">1000</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">prType =</span> <span class="st">"html"</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>v</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="gmisc_table caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <colgroup>
@@ -2335,12 +1422,12 @@ Resamples</th>
 <h3 class="anchored" data-anchor-id="validate-the-model-for-predicting-the-probability-of-surviving-five-years">Validate the model for predicting the probability of surviving five years</h3>
 <p>We will use the non-shrinked estimates to show that this model will have some overfitting consistent with <em>regression to the mean</em>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>cal <span class="ot">&lt;-</span> <span class="fu">calibrate</span>(f, <span class="at">B =</span> <span class="dv">1000</span>, <span class="at">u =</span> <span class="dv">5</span> <span class="sc">*</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>cal <span class="ot">&lt;-</span> <span class="fu">calibrate</span>(f, <span class="at">B =</span> <span class="dv">1000</span>, <span class="at">u =</span> <span class="dv">5</span> <span class="sc">*</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Using Cox survival estimates at 60 Months
 Convergence problems.... stopping addition</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cal, <span class="at">subtitles =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cal, <span class="at">subtitles =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2356,7 +1443,7 @@ Convergence problems.... stopping addition</code></pre>
 <h2 class="anchored" data-anchor-id="final-model-for-prediction">Final model for prediction</h2>
 <p>For a better model for prediction one should multiply the coefficients in the model by the shrinkage estimate.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>v</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>v</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="gmisc_table caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <colgroup>
@@ -2451,11 +1538,11 @@ Resamples</th>
 </tbody>
 </table>
 </div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>shrinkage_est <span class="ot">&lt;-</span> v[<span class="dv">3</span>, <span class="dv">5</span>] <span class="co"># Extract bootstrap estimate of shrinkage</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>f_prediction <span class="ot">&lt;-</span> f</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>f_prediction<span class="sc">$</span>coefficients <span class="ot">&lt;-</span> f<span class="sc">$</span>coefficients <span class="sc">*</span> shrinkage_est</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(f_prediction, <span class="at">html =</span> T, <span class="at">coef =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>shrinkage_est <span class="ot">&lt;-</span> v[<span class="dv">3</span>, <span class="dv">5</span>] <span class="co"># Extract bootstrap estimate of shrinkage</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>f_prediction <span class="ot">&lt;-</span> f</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>f_prediction<span class="sc">$</span>coefficients <span class="ot">&lt;-</span> f<span class="sc">$</span>coefficients <span class="sc">*</span> shrinkage_est</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(f_prediction, <span class="at">html =</span> T, <span class="at">coef =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <p><strong>Cox Proportional Hazards Model</strong></p>
@@ -2560,17 +1647,17 @@ Indexes</th>
 <h3 class="anchored" data-anchor-id="approximating-the-full-model">Approximating the full model</h3>
 <p>If the client doesn’t want to collect all these variables for prediction we can do model approximation. The goal is to explain <code>f_prediction</code>with a trade off between parameters and <span class="math inline">\(R^2\)</span>. This can be done by backwards selection.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>Z <span class="ot">&lt;-</span> <span class="fu">predict</span>(f_prediction) <span class="co"># compute linear predictor from full model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>Z <span class="ot">&lt;-</span> <span class="fu">predict</span>(f_prediction) <span class="co"># compute linear predictor from full model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in formula.character(object, env = baseenv()): Using formula(x) is deprecated when x is a character vector of length &gt; 1.
   Consider formula(paste(x, collapse = " ")) instead.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Force sigma to be 1 since perfect fit</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">ols</span>(Z <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">rcs</span>(age, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(wt, <span class="dv">3</span>) <span class="sc">+</span> pf_linear <span class="sc">+</span> heart_d <span class="sc">+</span> <span class="fu">rcs</span>(map, <span class="dv">3</span>)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">rcs</span>(hg, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sg, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sz, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(<span class="fu">log</span>(ap), <span class="dv">5</span>) <span class="sc">+</span> bm, <span class="at">sigma =</span> <span class="dv">1</span>)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>backwards <span class="ot">&lt;-</span> <span class="fu">fastbw</span>(a, <span class="at">aics =</span> <span class="dv">10000</span>)</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(backwards, <span class="at">html =</span> T, <span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Force sigma to be 1 since perfect fit</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">ols</span>(Z <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">rcs</span>(age, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(wt, <span class="dv">3</span>) <span class="sc">+</span> pf_linear <span class="sc">+</span> heart_d <span class="sc">+</span> <span class="fu">rcs</span>(map, <span class="dv">3</span>)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">rcs</span>(hg, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sg, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sz, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(<span class="fu">log</span>(ap), <span class="dv">5</span>) <span class="sc">+</span> bm, <span class="at">sigma =</span> <span class="dv">1</span>)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>backwards <span class="ot">&lt;-</span> <span class="fu">fastbw</span>(a, <span class="at">aics =</span> <span class="dv">10000</span>)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(backwards, <span class="at">html =</span> T, <span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  Deleted   Chi-Sq d.f. P      Residual d.f. P      AIC    R2   
@@ -2598,18 +1685,18 @@ None</code></pre>
 </div>
 <p>Now the client can choose the trade-off between predictive ability and number of predictors. We visualize this in the following plot</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(backwards<span class="sc">$</span>result)</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>total_predictors <span class="ot">&lt;-</span> <span class="fu">nrow</span>(result)</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>R2 <span class="ot">&lt;-</span> result<span class="sc">$</span>R2</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>predictors <span class="ot">&lt;-</span> <span class="fu">c</span>((total_predictors <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">:</span><span class="dv">0</span>)</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(predictors, R2), <span class="fu">aes</span>(<span class="at">x =</span> predictors, <span class="at">y =</span> R2)) <span class="sc">+</span></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Predictors"</span>, <span class="at">y =</span> <span class="fu">TeX</span>(<span class="st">"$R^2$"</span>)) <span class="sc">+</span></span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"R-squared vs. Predictors"</span>) <span class="sc">+</span></span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">pretty_breaks</span>()) <span class="sc">+</span></span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(backwards<span class="sc">$</span>result)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>total_predictors <span class="ot">&lt;-</span> <span class="fu">nrow</span>(result)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>R2 <span class="ot">&lt;-</span> result<span class="sc">$</span>R2</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>predictors <span class="ot">&lt;-</span> <span class="fu">c</span>((total_predictors <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">:</span><span class="dv">0</span>)</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(predictors, R2), <span class="fu">aes</span>(<span class="at">x =</span> predictors, <span class="at">y =</span> R2)) <span class="sc">+</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Predictors"</span>, <span class="at">y =</span> <span class="fu">TeX</span>(<span class="st">"$R^2$"</span>)) <span class="sc">+</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"R-squared vs. Predictors"</span>) <span class="sc">+</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">pretty_breaks</span>()) <span class="sc">+</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2620,10 +1707,10 @@ None</code></pre>
 </div>
 <p>A reasonable approach trade off would be to remove map, bm, sg and pf_linear from our model to get an approximate model which still has high <span class="math inline">\(R^2\)</span> of <span class="math inline">\(0.96\)</span> for explaining the full model.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>f_approx <span class="ot">&lt;-</span> <span class="fu">ols</span>(Z <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">rcs</span>(age, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(wt, <span class="dv">3</span>) <span class="sc">+</span> heart_d</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">rcs</span>(hg, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sz, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(<span class="fu">log</span>(ap), <span class="dv">5</span>), <span class="at">x =</span> T)</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(f_approx, <span class="at">html =</span> T, <span class="at">coefs =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>f_approx <span class="ot">&lt;-</span> <span class="fu">ols</span>(Z <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">rcs</span>(age, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(wt, <span class="dv">3</span>) <span class="sc">+</span> heart_d</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">rcs</span>(hg, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sz, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(<span class="fu">log</span>(ap), <span class="dv">5</span>), <span class="at">x =</span> T)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(f_approx, <span class="at">html =</span> T, <span class="at">coefs =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <p><strong>Linear Regression Model</strong></p>
