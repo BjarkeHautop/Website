@@ -1,7 +1,8 @@
 ---
 title: "Post With Code"
-author: "Harlow Malloc"
-date: "2022-10-25"
+author: "Bjarke Hautop"
+date: 07/3/2024
+date-format: "MMMM, YYYY"
 categories: [news, code, analysis]
 image: "image.jpg"
 ---

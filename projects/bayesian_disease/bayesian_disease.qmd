@@ -25,7 +25,10 @@ options(mc.cores = parallel::detectCores())
 ```
 
 ```{r stan path, echo=FALSE}
-file_path <- "C:/Users/bjark/Documents/Quarto website/Website/projects/bayesian_disease/stan_model.stan"
+file_path <- file.path(
+  "C:/Users/bjark/Documents/Quarto website/Website/projects/",
+  "bayesian_disease/stan_model.stan"
+)
 ```
 
 We start by plotting the data.
@@ -97,7 +100,11 @@ We can then use the function to solve for the parameters. For example, to solve 
 
 ```{r example solve_truncated_normal}
 library(solvetruncated)
-solve_truncated_normal(desired_mean = 0.5, x_value = 0.75, desired_prob = 0.8, a = 0, b = Inf)
+solve_truncated_normal(desired_mean = 0.5,
+                       x_value = 0.75,
+                       desired_prob = 0.8,
+                       a = 0,
+                       b = Inf)
 ```
 
 </details>
@@ -229,7 +236,7 @@ We run our model with default options.
 cases <- influenza_england_1978_school$in_bed
 
 # total count
-N <- 763
+total_count <- 763
 # times
 n_days <- length(cases)
 t <- seq(0, n_days, by = 1)
@@ -243,7 +250,7 @@ y0 <- c(S = s0, I = i0, R = r0)
 
 # data for Stan
 data_sir <- list(
-  n_days = n_days, y0 = y0, t = t, N = N,
+  n_days = n_days, y0 = y0, t = t, N = total_count,
   cases = cases
 )
 
@@ -280,7 +287,7 @@ smr_pred <- cbind(as.data.frame(summary(
   probs = c(0.05, 0.5, 0.95)
 )$summary), t, cases)
 
-colnames(smr_pred) <- make.names(colnames(smr_pred)) # to remove % in the col names
+colnames(smr_pred) <- make.names(colnames(smr_pred)) # to remove %
 
 ggplot(smr_pred, mapping = aes(x = t)) +
   geom_ribbon(aes(ymin = X5., ymax = X95.), fill = "green", alpha = 0.35) +
@@ -370,10 +377,13 @@ params <- lapply(t, function(i) {
   sprintf("y[%s,2]", i)
 }) # number of infected for each day
 
-smr_y <- as.data.frame(summary(fit_sir_negbin,
-  pars = params,
-  probs = c(0.05, 0.5, 0.95)
-)$summary)
+smr_y <- as.data.frame(
+  summary(
+    fit_sir_negbin,
+    pars = params,
+    probs = c(0.05, 0.5, 0.95)
+  )$summary
+)
 
 colnames(smr_y) <- make.names(colnames(smr_y)) # to remove % in the col names
 
