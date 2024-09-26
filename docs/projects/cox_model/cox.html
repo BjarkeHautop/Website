@@ -290,9 +290,12 @@ Click here to see output
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>prostate_summary<span class="sc">$</span>stage <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(prostate<span class="sc">$</span>stage)</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>prostate_summary<span class="sc">$</span>hx <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(prostate<span class="sc">$</span>hx)</span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>prostate_summary <span class="ot">&lt;-</span> prostate_summary[, <span class="sc">!</span><span class="fu">names</span>(prostate) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"patno"</span>, <span class="st">"sdate"</span>)]</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>factors <span class="ot">&lt;-</span> <span class="fu">sapply</span>(prostate_summary, is.factor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>prostate_summary <span class="ot">&lt;-</span> prostate_summary[</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  ,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="sc">!</span><span class="fu">names</span>(prostate) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"patno"</span>, <span class="st">"sdate"</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>factors <span class="ot">&lt;-</span> <span class="fu">sapply</span>(prostate_summary, is.factor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Summary of factor variables in data</p>
 <div class="cell">
@@ -301,12 +304,12 @@ Click here to see output
 <!-- preamble start -->
 
     <script>
-      function styleCell_tlcdt7mw7306m6kuwihq(i, j, css_id) {
-        var table = document.getElementById("tinytable_tlcdt7mw7306m6kuwihq");
+      function styleCell_6865g9yaecckioxnm5zc(i, j, css_id) {
+        var table = document.getElementById("tinytable_6865g9yaecckioxnm5zc");
         table.rows[i].cells[j].classList.add(css_id);
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_tlcdt7mw7306m6kuwihq');
+        var table = document.getElementById('tinytable_6865g9yaecckioxnm5zc');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -314,8 +317,8 @@ Click here to see output
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_tlcdt7mw7306m6kuwihq(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_tlcdt7mw7306m6kuwihq");
+      function spanCell_6865g9yaecckioxnm5zc(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_6865g9yaecckioxnm5zc");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -341,144 +344,144 @@ Click here to see output
         targetCell.rowSpan = rowspan;
         targetCell.colSpan = colspan;
       }
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(0, 0, 'tinytable_css_id1697xnt3hmncszc2ee04') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(0, 1, 'tinytable_css_id1697xnt3hmncszc2ee04') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(0, 2, 'tinytable_css_id5vl2kxvb06yahdyzmjdn') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(0, 3, 'tinytable_css_id5vl2kxvb06yahdyzmjdn') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(1, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(1, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(1, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(1, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(2, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(2, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(2, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(2, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(3, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(3, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(3, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(3, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(4, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(4, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(4, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(4, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(5, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(5, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(5, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(5, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(6, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(6, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(6, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(6, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(7, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(7, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(7, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(7, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(8, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(8, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(8, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(8, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(9, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(9, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(9, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(9, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(10, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(10, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(10, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(10, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(11, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(11, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(11, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(11, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(12, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(12, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(12, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(12, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(13, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(13, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(13, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(13, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(14, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(14, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(14, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(14, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(15, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(15, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(15, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(15, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(16, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(16, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(16, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(16, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(17, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(17, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(17, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(17, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(18, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(18, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(18, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(18, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(19, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(19, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(19, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(19, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(20, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(20, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(20, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(20, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(21, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(21, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(21, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(21, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(22, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(22, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(22, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(22, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(23, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(23, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(23, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(23, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(24, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(24, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(24, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(24, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(25, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(25, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(25, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(25, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(26, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(26, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(26, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(26, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(27, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(27, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(27, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(27, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(28, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(28, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(28, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(28, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(29, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(29, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(29, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(29, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(30, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(30, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(30, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(30, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(31, 0, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(31, 1, 'tinytable_css_idqou0781kvvgogbd3vflx') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(31, 2, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
-window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(31, 3, 'tinytable_css_iddjd5f5hh305vvbwep9br') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(0, 0, 'tinytable_css_idguuyc90fzn5vzuvfd2fo') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(0, 1, 'tinytable_css_idguuyc90fzn5vzuvfd2fo') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(0, 2, 'tinytable_css_idyhhih3ipt9a3xxy6zfps') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(0, 3, 'tinytable_css_idyhhih3ipt9a3xxy6zfps') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(1, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(1, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(1, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(1, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(2, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(2, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(2, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(2, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(3, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(3, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(3, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(3, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(4, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(4, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(4, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(4, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(5, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(5, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(5, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(5, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(6, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(6, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(6, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(6, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(7, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(7, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(7, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(7, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(8, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(8, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(8, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(8, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(9, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(9, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(9, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(9, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(10, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(10, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(10, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(10, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(11, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(11, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(11, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(11, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(12, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(12, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(12, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(12, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(13, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(13, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(13, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(13, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(14, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(14, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(14, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(14, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(15, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(15, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(15, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(15, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(16, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(16, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(16, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(16, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(17, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(17, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(17, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(17, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(18, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(18, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(18, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(18, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(19, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(19, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(19, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(19, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(20, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(20, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(20, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(20, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(21, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(21, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(21, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(21, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(22, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(22, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(22, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(22, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(23, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(23, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(23, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(23, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(24, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(24, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(24, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(24, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(25, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(25, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(25, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(25, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(26, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(26, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(26, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(26, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(27, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(27, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(27, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(27, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(28, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(28, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(28, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(28, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(29, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(29, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(29, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(29, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(30, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(30, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(30, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(30, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(31, 0, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(31, 1, 'tinytable_css_idry50udwytb1zr0af3r6j') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(31, 2, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
+window.addEventListener('load', function () { styleCell_6865g9yaecckioxnm5zc(31, 3, 'tinytable_css_idujrzjz1fyydbp4tpcb7f') })
     </script>
 
     <style>
-    .table td.tinytable_css_id1697xnt3hmncszc2ee04, .table th.tinytable_css_id1697xnt3hmncszc2ee04 {  text-align: left;  border-bottom: solid 0.1em #d3d8dc; }
-    .table td.tinytable_css_id5vl2kxvb06yahdyzmjdn, .table th.tinytable_css_id5vl2kxvb06yahdyzmjdn {  text-align: right;  border-bottom: solid 0.1em #d3d8dc; }
-    .table td.tinytable_css_idqou0781kvvgogbd3vflx, .table th.tinytable_css_idqou0781kvvgogbd3vflx {  text-align: left; }
-    .table td.tinytable_css_iddjd5f5hh305vvbwep9br, .table th.tinytable_css_iddjd5f5hh305vvbwep9br {  text-align: right; }
+    .table td.tinytable_css_idguuyc90fzn5vzuvfd2fo, .table th.tinytable_css_idguuyc90fzn5vzuvfd2fo {  text-align: left;  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_idyhhih3ipt9a3xxy6zfps, .table th.tinytable_css_idyhhih3ipt9a3xxy6zfps {  text-align: right;  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_idry50udwytb1zr0af3r6j, .table th.tinytable_css_idry50udwytb1zr0af3r6j {  text-align: left; }
+    .table td.tinytable_css_idujrzjz1fyydbp4tpcb7f, .table th.tinytable_css_idujrzjz1fyydbp4tpcb7f {  text-align: right; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_tlcdt7mw7306m6kuwihq" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_6865g9yaecckioxnm5zc" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
@@ -689,12 +692,12 @@ window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(31,
 <!-- preamble start -->
 
     <script>
-      function styleCell_vmpzgpf27pw6hs0qerz8(i, j, css_id) {
-        var table = document.getElementById("tinytable_vmpzgpf27pw6hs0qerz8");
+      function styleCell_hc2lxz1unuq8toqoez74(i, j, css_id) {
+        var table = document.getElementById("tinytable_hc2lxz1unuq8toqoez74");
         table.rows[i].cells[j].classList.add(css_id);
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_vmpzgpf27pw6hs0qerz8');
+        var table = document.getElementById('tinytable_hc2lxz1unuq8toqoez74');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -702,8 +705,8 @@ window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(31,
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_vmpzgpf27pw6hs0qerz8(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_vmpzgpf27pw6hs0qerz8");
+      function spanCell_hc2lxz1unuq8toqoez74(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_hc2lxz1unuq8toqoez74");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -729,104 +732,104 @@ window.addEventListener('load', function () { styleCell_tlcdt7mw7306m6kuwihq(31,
         targetCell.rowSpan = rowspan;
         targetCell.colSpan = colspan;
       }
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(0, 0, 'tinytable_css_idmhznb96hq3yzpio22fcy') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(0, 1, 'tinytable_css_idmhznb96hq3yzpio22fcy') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(0, 2, 'tinytable_css_idmhznb96hq3yzpio22fcy') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(0, 3, 'tinytable_css_idmhznb96hq3yzpio22fcy') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(0, 4, 'tinytable_css_idmhznb96hq3yzpio22fcy') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(0, 5, 'tinytable_css_idmhznb96hq3yzpio22fcy') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(0, 6, 'tinytable_css_idmhznb96hq3yzpio22fcy') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(0, 7, 'tinytable_css_idmhznb96hq3yzpio22fcy') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(0, 8, 'tinytable_css_idmhznb96hq3yzpio22fcy') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(1, 0, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(1, 1, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(1, 2, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(1, 3, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(1, 4, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(1, 5, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(1, 6, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(1, 7, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(1, 8, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(2, 0, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(2, 1, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(2, 2, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(2, 3, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(2, 4, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(2, 5, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(2, 6, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(2, 7, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(2, 8, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(3, 0, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(3, 1, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(3, 2, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(3, 3, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(3, 4, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(3, 5, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(3, 6, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(3, 7, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(3, 8, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(4, 0, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(4, 1, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(4, 2, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(4, 3, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(4, 4, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(4, 5, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(4, 6, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(4, 7, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(4, 8, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(5, 0, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(5, 1, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(5, 2, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(5, 3, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(5, 4, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(5, 5, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(5, 6, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(5, 7, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(5, 8, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(6, 0, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(6, 1, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(6, 2, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(6, 3, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(6, 4, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(6, 5, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(6, 6, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(6, 7, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(6, 8, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(7, 0, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(7, 1, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(7, 2, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(7, 3, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(7, 4, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(7, 5, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(7, 6, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(7, 7, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(7, 8, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(8, 0, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(8, 1, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(8, 2, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(8, 3, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(8, 4, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(8, 5, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(8, 6, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(8, 7, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(8, 8, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 0, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 1, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 2, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 3, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 4, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 5, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 6, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 7, 'tinytable_css_idbw4apak18do2uul2klva') })
-window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 8, 'tinytable_css_idbw4apak18do2uul2klva') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(0, 0, 'tinytable_css_idzysuvbqenl5g0dib2y6j') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(0, 1, 'tinytable_css_idzysuvbqenl5g0dib2y6j') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(0, 2, 'tinytable_css_idzysuvbqenl5g0dib2y6j') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(0, 3, 'tinytable_css_idzysuvbqenl5g0dib2y6j') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(0, 4, 'tinytable_css_idzysuvbqenl5g0dib2y6j') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(0, 5, 'tinytable_css_idzysuvbqenl5g0dib2y6j') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(0, 6, 'tinytable_css_idzysuvbqenl5g0dib2y6j') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(0, 7, 'tinytable_css_idzysuvbqenl5g0dib2y6j') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(0, 8, 'tinytable_css_idzysuvbqenl5g0dib2y6j') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(1, 0, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(1, 1, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(1, 2, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(1, 3, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(1, 4, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(1, 5, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(1, 6, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(1, 7, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(1, 8, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(2, 0, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(2, 1, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(2, 2, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(2, 3, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(2, 4, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(2, 5, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(2, 6, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(2, 7, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(2, 8, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(3, 0, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(3, 1, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(3, 2, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(3, 3, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(3, 4, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(3, 5, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(3, 6, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(3, 7, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(3, 8, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(4, 0, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(4, 1, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(4, 2, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(4, 3, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(4, 4, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(4, 5, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(4, 6, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(4, 7, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(4, 8, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(5, 0, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(5, 1, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(5, 2, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(5, 3, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(5, 4, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(5, 5, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(5, 6, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(5, 7, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(5, 8, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(6, 0, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(6, 1, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(6, 2, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(6, 3, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(6, 4, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(6, 5, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(6, 6, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(6, 7, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(6, 8, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(7, 0, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(7, 1, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(7, 2, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(7, 3, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(7, 4, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(7, 5, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(7, 6, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(7, 7, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(7, 8, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(8, 0, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(8, 1, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(8, 2, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(8, 3, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(8, 4, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(8, 5, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(8, 6, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(8, 7, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(8, 8, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(9, 0, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(9, 1, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(9, 2, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(9, 3, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(9, 4, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(9, 5, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(9, 6, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(9, 7, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
+window.addEventListener('load', function () { styleCell_hc2lxz1unuq8toqoez74(9, 8, 'tinytable_css_idocwt8g614a0ykk8vnnt5') })
     </script>
 
     <style>
-    .table td.tinytable_css_idmhznb96hq3yzpio22fcy, .table th.tinytable_css_idmhznb96hq3yzpio22fcy {  text-align: left;  border-bottom: solid 0.1em #d3d8dc; }
-    .table td.tinytable_css_idbw4apak18do2uul2klva, .table th.tinytable_css_idbw4apak18do2uul2klva {  text-align: left; }
+    .table td.tinytable_css_idzysuvbqenl5g0dib2y6j, .table th.tinytable_css_idzysuvbqenl5g0dib2y6j {  text-align: left;  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_idocwt8g614a0ykk8vnnt5, .table th.tinytable_css_idocwt8g614a0ykk8vnnt5 {  text-align: left; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_vmpzgpf27pw6hs0qerz8" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_hc2lxz1unuq8toqoez74" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
@@ -852,7 +855,7 @@ window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 
                   <td>0.0</td>
                   <td>34.0</td>
                   <td>76.0</td>
-                  <td><img src="./tinytable_assets/idq2mj67oq7wcaew7mxlb6.png" style="height: 1em;"></td>
+                  <td><img src="./tinytable_assets/idbjg42buh20wef87x7jqp.png" style="height: 1em;"></td>
                 </tr>
                 <tr>
                   <td>age</td>
@@ -863,7 +866,7 @@ window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 
                   <td>48.0</td>
                   <td>73.0</td>
                   <td>89.0</td>
-                  <td><img src="./tinytable_assets/idtdkaou8ayn52ii8sc1zw.png" style="height: 1em;"></td>
+                  <td><img src="./tinytable_assets/idsy90icn51l98asanna9o.png" style="height: 1em;"></td>
                 </tr>
                 <tr>
                   <td>wt</td>
@@ -874,7 +877,7 @@ window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 
                   <td>69.0</td>
                   <td>98.0</td>
                   <td>152.0</td>
-                  <td><img src="./tinytable_assets/idohytrjng37wtq773khow.png" style="height: 1em;"></td>
+                  <td><img src="./tinytable_assets/ida5a6md9hfew9dmrvsgwv.png" style="height: 1em;"></td>
                 </tr>
                 <tr>
                   <td>sbp</td>
@@ -885,7 +888,7 @@ window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 
                   <td>8.0</td>
                   <td>14.0</td>
                   <td>30.0</td>
-                  <td><img src="./tinytable_assets/idyoi6th2t1nb3fzwzg9h7.png" style="height: 1em;"></td>
+                  <td><img src="./tinytable_assets/idc48z5z9qgn0612nm0ax1.png" style="height: 1em;"></td>
                 </tr>
                 <tr>
                   <td>dbp</td>
@@ -896,7 +899,7 @@ window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 
                   <td>4.0</td>
                   <td>8.0</td>
                   <td>18.0</td>
-                  <td><img src="./tinytable_assets/id02gj62xppmp98n601p3q.png" style="height: 1em;"></td>
+                  <td><img src="./tinytable_assets/idnwsq6xd9hd8ixahrro7o.png" style="height: 1em;"></td>
                 </tr>
                 <tr>
                   <td>hg</td>
@@ -907,7 +910,7 @@ window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 
                   <td>5.9</td>
                   <td>13.7</td>
                   <td>21.2</td>
-                  <td><img src="./tinytable_assets/id34aap8igp8d8vm4qz9sc.png" style="height: 1em;"></td>
+                  <td><img src="./tinytable_assets/id5ve4bu60u0y2ujg2fgcp.png" style="height: 1em;"></td>
                 </tr>
                 <tr>
                   <td>sz</td>
@@ -918,7 +921,7 @@ window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 
                   <td>0.0</td>
                   <td>11.0</td>
                   <td>69.0</td>
-                  <td><img src="./tinytable_assets/idr4qbsl89b4twgvvn8hyz.png" style="height: 1em;"></td>
+                  <td><img src="./tinytable_assets/idz01zc4o456s78dr3o4qd.png" style="height: 1em;"></td>
                 </tr>
                 <tr>
                   <td>sg</td>
@@ -929,7 +932,7 @@ window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 
                   <td>5.0</td>
                   <td>10.0</td>
                   <td>15.0</td>
-                  <td><img src="./tinytable_assets/idmi8wl7095pe250vxollw.png" style="height: 1em;"></td>
+                  <td><img src="./tinytable_assets/idf5sqvxld98fov8kg5qed.png" style="height: 1em;"></td>
                 </tr>
                 <tr>
                   <td>ap</td>
@@ -940,7 +943,7 @@ window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 
                   <td>0.1</td>
                   <td>0.7</td>
                   <td>999.9</td>
-                  <td><img src="./tinytable_assets/id8ddjbm6bue8taj5u3wj9.png" style="height: 1em;"></td>
+                  <td><img src="./tinytable_assets/idmd5luljjd5emtiu6gpzp.png" style="height: 1em;"></td>
                 </tr>
         </tbody>
       </table>
@@ -951,13 +954,12 @@ window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 
 </details>
 <p>We see that the variable ekg only has one observation in the last category and pf has two. So, we combine recent MI with old MI and call it MI, and we combine confined to bed with <span class="math inline">\(&gt;50\%\)</span> daytime.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(prostate<span class="sc">$</span>ekg)[<span class="fu">levels</span>(prostate<span class="sc">$</span>ekg) <span class="sc">%in%</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">"old MI"</span>, <span class="st">"recent MI"</span>)] <span class="ot">&lt;-</span> <span class="st">"MI"</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(prostate<span class="sc">$</span>pf) <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">levels</span>(prostate<span class="sc">$</span>pf)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>],</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">levels</span>(prostate<span class="sc">$</span>pf)[<span class="dv">3</span>]</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(prostate<span class="sc">$</span>ekg)[<span class="fu">levels</span>(prostate<span class="sc">$</span>ekg) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"old MI"</span>, <span class="st">"recent MI"</span>)] <span class="ot">&lt;-</span> <span class="st">"MI"</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(prostate<span class="sc">$</span>pf) <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">levels</span>(prostate<span class="sc">$</span>pf)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>],</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">levels</span>(prostate<span class="sc">$</span>pf)[<span class="dv">3</span>]</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="imputing-missing-values" class="level2">
@@ -1096,20 +1098,20 @@ window.addEventListener('load', function () { styleCell_vmpzgpf27pw6hs0qerz8(9, 
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">datadist</span>(prostate)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">datadist =</span> <span class="st">"dd"</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">units</span>(dtime) <span class="ot">&lt;-</span> <span class="st">"Month"</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">Surv</span>(dtime, status <span class="sc">!=</span> <span class="st">"alive"</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">Surv</span>(dtime, status <span class="sc">!=</span> <span class="st">"alive"</span>)</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">cph</span>(S <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">rcs</span>(age, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(wt, <span class="dv">4</span>) <span class="sc">+</span> pf <span class="sc">+</span> hx <span class="sc">+</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rcs</span>(sbp, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(dbp, <span class="dv">4</span>) <span class="sc">+</span> ekg <span class="sc">+</span> <span class="fu">rcs</span>(hg, <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rcs</span>(sg, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sz, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(<span class="fu">log</span>(ap), <span class="dv">4</span>) <span class="sc">+</span> bm)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">cph</span>(s <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">rcs</span>(age, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(wt, <span class="dv">4</span>) <span class="sc">+</span> pf <span class="sc">+</span> hx <span class="sc">+</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>           <span class="fu">rcs</span>(sbp, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(dbp, <span class="dv">4</span>) <span class="sc">+</span> ekg <span class="sc">+</span> <span class="fu">rcs</span>(hg, <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>           <span class="fu">rcs</span>(sg, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sz, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(<span class="fu">log</span>(ap), <span class="dv">4</span>) <span class="sc">+</span> bm)</span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(f, <span class="at">html =</span> <span class="cn">TRUE</span>, <span class="at">coefs =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Frequencies of Missing Values Due to Each Variable
-  S  rx age  wt  pf  hx sbp dbp ekg  hg  sg  sz  ap  bm 
+  s  rx age  wt  pf  hx sbp dbp ekg  hg  sg  sz  ap  bm 
   0   0   0   0   0   0   0   0   8   0   0   0   0   0 
 
 Cox Proportional Hazards Model
 
-cph(formula = S ~ rx + rcs(age, 4) + rcs(wt, 4) + pf + hx + rcs(sbp, 
+cph(formula = s ~ rx + rcs(age, 4) + rcs(wt, 4) + pf + hx + rcs(sbp, 
     4) + rcs(dbp, 4) + ekg + rcs(hg, 4) + rcs(sg, 4) + rcs(sz, 
     4) + rcs(log(ap), 4) + bm)
 
@@ -1118,7 +1120,7 @@ cph(formula = S ~ rx + rcs(age, 4) + rcs(wt, 4) + pf + hx + rcs(sbp,
 Obs        494    LR chi2    136.04     R2       0.241    
 Events     348    d.f.           36    R2(36,494)0.183    
 Center -2.0435    Pr(&gt; chi2) 0.0000    R2(36,348)0.250    
-                  Score chi2 144.95     Dxy     -0.338    
+                  Score chi2 144.95     Dxy      0.338    
                   Pr(&gt; chi2) 0.0000                       </code></pre>
 </div>
 </div>
@@ -1148,8 +1150,8 @@ Center -2.0435    Pr(&gt; chi2) 0.0000    R2(36,348)0.250
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">datadist</span>(dd, heart_d, map, pf_linear)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">cph</span>(</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  S <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">rcs</span>(age, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(wt, <span class="dv">3</span>) <span class="sc">+</span> pf_linear <span class="sc">+</span> heart_d <span class="sc">+</span> <span class="fu">rcs</span>(map, <span class="dv">3</span>)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="sc">+</span> <span class="fu">rcs</span>(hg, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sg, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sz, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(<span class="fu">log</span>(ap), <span class="dv">5</span>) <span class="sc">+</span> bm,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  s <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">rcs</span>(age, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(wt, <span class="dv">3</span>) <span class="sc">+</span> pf_linear <span class="sc">+</span> heart_d <span class="sc">+</span> <span class="fu">rcs</span>(map, <span class="dv">3</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">rcs</span>(hg, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sg, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sz, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(<span class="fu">log</span>(ap), <span class="dv">5</span>) <span class="sc">+</span> bm,</span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="cn">TRUE</span>, <span class="at">y =</span> <span class="cn">TRUE</span>, <span class="at">surv =</span> <span class="cn">TRUE</span>, <span class="at">time.inc =</span> <span class="dv">5</span> <span class="sc">*</span> <span class="dv">12</span></span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
@@ -1157,7 +1159,7 @@ Center -2.0435    Pr(&gt; chi2) 0.0000    R2(36,348)0.250
 <div class="cell-output cell-output-stdout">
 <pre><code>Cox Proportional Hazards Model
 
-cph(formula = S ~ rx + rcs(age, 4) + rcs(wt, 3) + pf_linear + 
+cph(formula = s ~ rx + rcs(age, 4) + rcs(wt, 3) + pf_linear + 
     heart_d + rcs(map, 3) + rcs(hg, 4) + rcs(sg, 3) + rcs(sz, 
     3) + rcs(log(ap), 5) + bm, x = TRUE, y = TRUE, surv = TRUE, 
     time.inc = 5 * 12)
@@ -1167,7 +1169,7 @@ cph(formula = S ~ rx + rcs(age, 4) + rcs(wt, 3) + pf_linear +
 Obs        502    LR chi2    119.86     R2       0.212    
 Events     354    d.f.           24    R2(24,502)0.174    
 Center -2.3792    Pr(&gt; chi2) 0.0000    R2(24,354)0.237    
-                  Score chi2 126.89     Dxy     -0.323    
+                  Score chi2 126.89     Dxy      0.323    
                   Pr(&gt; chi2) 0.0000                       
 
                    Coef     S.E.    Wald Z Pr(&gt;|Z|)
@@ -1179,9 +1181,9 @@ rx=5.0 mg estrogen  -0.1044  0.1572 -0.66  0.5066
 </div>
 <p>LR 119.86 with 24 degrees of freedom. AIC is <span class="math inline">\(119.86-2 \cdot 24=71.86\)</span>. Rough shrinkage estimate of this is now better at <span class="math inline">\((119.86-24)/119.86=0.80\)</span>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(f, <span class="at">html =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(f, <span class="at">html =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                Wald Statistics          Response: S 
+<pre><code>                Wald Statistics          Response: s 
 
  Factor          Chi-Square d.f. P     
  rx                7.92      3   0.0476
@@ -1213,8 +1215,8 @@ rx=5.0 mg estrogen  -0.1044  0.1572 -0.66  0.5066
 <p>A Cox model should have proportional hazards, since if we look at two individuals with covariate values <span class="math inline">\(\boldsymbol{X}\)</span> and <span class="math inline">\(\boldsymbol{X}^*\)</span> then the ratio of their hazard rates is <span class="math display">\[\frac{h(t \vert \boldsymbol{X})}{h(t \vert \boldsymbol{X}^*)}=\exp\Big[\sum_{k=1}^p \beta_k(X_k-X_{k^*})\Big],\]</span> which is a constant. We can test this assumption using scaled Schoenfeld residuals separately for each predictor and test the PH assumption using the “correlation with time” test. Smoothed trends in the residuals are also plotted.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">predict</span>(f, <span class="at">type =</span> <span class="st">"terms"</span>)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>f.short <span class="ot">&lt;-</span> <span class="fu">cph</span>(S <span class="sc">~</span> z, <span class="at">x =</span> <span class="cn">TRUE</span>, <span class="at">y =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>phtest <span class="ot">&lt;-</span> <span class="fu">cox.zph</span>(f.short, <span class="at">transform =</span> <span class="st">"identity"</span>, <span class="at">terms =</span> F)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>f_short <span class="ot">&lt;-</span> <span class="fu">cph</span>(s <span class="sc">~</span> z, <span class="at">x =</span> <span class="cn">TRUE</span>, <span class="at">y =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>phtest <span class="ot">&lt;-</span> <span class="fu">cox.zph</span>(f_short, <span class="at">transform =</span> <span class="st">"identity"</span>, <span class="at">terms =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>phtest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             chisq df     p
@@ -1352,38 +1354,38 @@ Resamples</th>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><em>D<sub>xy</sub></em></td>
-<td style="text-align: center;">-0.3228</td>
-<td style="text-align: center;">-0.3517</td>
-<td style="text-align: center;">-0.2979</td>
-<td style="text-align: center;">-0.0538</td>
-<td style="text-align: center;">-0.269</td>
+<td style="text-align: center;">0.3228</td>
+<td style="text-align: center;">0.3514</td>
+<td style="text-align: center;">0.298</td>
+<td style="text-align: center;">0.0533</td>
+<td style="text-align: center;">0.2695</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><em>R<sup>2</sup></em></td>
 <td style="text-align: center;">0.2125</td>
-<td style="text-align: center;">0.2521</td>
-<td style="text-align: center;">0.1781</td>
-<td style="text-align: center;">0.074</td>
-<td style="text-align: center;">0.1385</td>
+<td style="text-align: center;">0.2513</td>
+<td style="text-align: center;">0.1779</td>
+<td style="text-align: center;">0.0735</td>
+<td style="text-align: center;">0.139</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Slope</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: center;">1</td>
-<td style="text-align: center;">0.7849</td>
-<td style="text-align: center;">0.2151</td>
-<td style="text-align: center;">0.7849</td>
+<td style="text-align: center;">0.7844</td>
+<td style="text-align: center;">0.2156</td>
+<td style="text-align: center;">0.7844</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><em>D</em></td>
 <td style="text-align: center;">0.0296</td>
-<td style="text-align: center;">0.0361</td>
+<td style="text-align: center;">0.036</td>
 <td style="text-align: center;">0.0242</td>
-<td style="text-align: center;">0.0119</td>
-<td style="text-align: center;">0.0177</td>
+<td style="text-align: center;">0.0118</td>
+<td style="text-align: center;">0.0178</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="odd">
@@ -1398,19 +1400,19 @@ Resamples</th>
 <tr class="even">
 <td style="text-align: left;"><em>Q</em></td>
 <td style="text-align: center;">0.0301</td>
-<td style="text-align: center;">0.0366</td>
+<td style="text-align: center;">0.0365</td>
 <td style="text-align: center;">0.0217</td>
-<td style="text-align: center;">0.0149</td>
+<td style="text-align: center;">0.0148</td>
 <td style="text-align: center;">0.0152</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; border-bottom: 2px solid grey;"><em>g</em></td>
 <td style="text-align: center; border-bottom: 2px solid grey;">0.7245</td>
-<td style="text-align: center; border-bottom: 2px solid grey;">0.812</td>
-<td style="text-align: center; border-bottom: 2px solid grey;">0.6359</td>
-<td style="text-align: center; border-bottom: 2px solid grey;">0.1762</td>
-<td style="text-align: center; border-bottom: 2px solid grey;">0.5483</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">0.8108</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">0.6345</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">0.1763</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">0.5482</td>
 <td style="text-align: center; border-bottom: 2px solid grey;">1000</td>
 </tr>
 </tbody>
@@ -1425,6 +1427,9 @@ Resamples</th>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>cal <span class="ot">&lt;-</span> <span class="fu">calibrate</span>(f, <span class="at">B =</span> <span class="dv">1000</span>, <span class="at">u =</span> <span class="dv">5</span> <span class="sc">*</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Using Cox survival estimates at 60 Months
+Convergence problems.... stopping addition
+Convergence problems.... stopping addition
+Convergence problems.... stopping addition
 Convergence problems.... stopping addition</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cal, <span class="at">subtitles =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1474,38 +1479,38 @@ Resamples</th>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><em>D<sub>xy</sub></em></td>
-<td style="text-align: center;">-0.3228</td>
-<td style="text-align: center;">-0.3517</td>
-<td style="text-align: center;">-0.2979</td>
-<td style="text-align: center;">-0.0538</td>
-<td style="text-align: center;">-0.269</td>
+<td style="text-align: center;">0.3228</td>
+<td style="text-align: center;">0.3514</td>
+<td style="text-align: center;">0.298</td>
+<td style="text-align: center;">0.0533</td>
+<td style="text-align: center;">0.2695</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><em>R<sup>2</sup></em></td>
 <td style="text-align: center;">0.2125</td>
-<td style="text-align: center;">0.2521</td>
-<td style="text-align: center;">0.1781</td>
-<td style="text-align: center;">0.074</td>
-<td style="text-align: center;">0.1385</td>
+<td style="text-align: center;">0.2513</td>
+<td style="text-align: center;">0.1779</td>
+<td style="text-align: center;">0.0735</td>
+<td style="text-align: center;">0.139</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Slope</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: center;">1</td>
-<td style="text-align: center;">0.7849</td>
-<td style="text-align: center;">0.2151</td>
-<td style="text-align: center;">0.7849</td>
+<td style="text-align: center;">0.7844</td>
+<td style="text-align: center;">0.2156</td>
+<td style="text-align: center;">0.7844</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><em>D</em></td>
 <td style="text-align: center;">0.0296</td>
-<td style="text-align: center;">0.0361</td>
+<td style="text-align: center;">0.036</td>
 <td style="text-align: center;">0.0242</td>
-<td style="text-align: center;">0.0119</td>
-<td style="text-align: center;">0.0177</td>
+<td style="text-align: center;">0.0118</td>
+<td style="text-align: center;">0.0178</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="odd">
@@ -1520,19 +1525,19 @@ Resamples</th>
 <tr class="even">
 <td style="text-align: left;"><em>Q</em></td>
 <td style="text-align: center;">0.0301</td>
-<td style="text-align: center;">0.0366</td>
+<td style="text-align: center;">0.0365</td>
 <td style="text-align: center;">0.0217</td>
-<td style="text-align: center;">0.0149</td>
+<td style="text-align: center;">0.0148</td>
 <td style="text-align: center;">0.0152</td>
 <td style="text-align: center;">1000</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; border-bottom: 2px solid grey;"><em>g</em></td>
 <td style="text-align: center; border-bottom: 2px solid grey;">0.7245</td>
-<td style="text-align: center; border-bottom: 2px solid grey;">0.812</td>
-<td style="text-align: center; border-bottom: 2px solid grey;">0.6359</td>
-<td style="text-align: center; border-bottom: 2px solid grey;">0.1762</td>
-<td style="text-align: center; border-bottom: 2px solid grey;">0.5483</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">0.8108</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">0.6345</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">0.1763</td>
+<td style="text-align: center; border-bottom: 2px solid grey;">0.5482</td>
 <td style="text-align: center; border-bottom: 2px solid grey;">1000</td>
 </tr>
 </tbody>
@@ -1542,12 +1547,12 @@ Resamples</th>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>f_prediction <span class="ot">&lt;-</span> f</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>f_prediction<span class="sc">$</span>coefficients <span class="ot">&lt;-</span> f<span class="sc">$</span>coefficients <span class="sc">*</span> shrinkage_est</span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(f_prediction, <span class="at">html =</span> T, <span class="at">coef =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(f_prediction, <span class="at">html =</span> <span class="cn">TRUE</span>, <span class="at">coef =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <p><strong>Cox Proportional Hazards Model</strong></p>
 
-<pre>cph(formula = S ~ rx + rcs(age, 4) + rcs(wt, 3) + pf_linear + 
+<pre>cph(formula = s ~ rx + rcs(age, 4) + rcs(wt, 3) + pf_linear + 
     heart_d + rcs(map, 3) + rcs(hg, 4) + rcs(sg, 3) + rcs(sz, 
     3) + rcs(log(ap), 5) + bm, x = TRUE, y = TRUE, surv = TRUE, 
     time.inc = 5 * 12)
@@ -1587,7 +1592,7 @@ Indexes</th>
 <tr class="even">
 <td style="text-align: center; min-width: 9em; border-left: 1px solid black; border-right: 1px solid black;"></td>
 <td style="text-align: center; min-width: 9em; border-right: 1px solid black;">Score χ<sup>2</sup> 126.89</td>
-<td style="text-align: center; min-width: 9em; border-right: 1px solid black;"><em>D</em><sub>xy</sub> -0.323</td>
+<td style="text-align: center; min-width: 9em; border-right: 1px solid black;"><em>D</em><sub>xy</sub> 0.323</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center; min-width: 9em; border-bottom: 2px solid grey; border-left: 1px solid black; border-right: 1px solid black;"></td>
@@ -1620,17 +1625,17 @@ Indexes</th>
 </tr>
 <tr class="even">
 <td style="text-align: left; min-width: 7em;">rx=1.0 mg estrogen</td>
-<td style="text-align: right; min-width: 7em;">&nbsp; -0.3246</td>
+<td style="text-align: right; min-width: 7em;">&nbsp; -0.3244</td>
 <td style="text-align: right; min-width: 7em;">&nbsp; 0.1659</td>
 <td style="text-align: right; min-width: 7em;">-1.96</td>
-<td style="text-align: right; min-width: 7em;">0.0504</td>
+<td style="text-align: right; min-width: 7em;">0.0506</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; min-width: 7em;">rx=5.0 mg estrogen</td>
 <td style="text-align: right; min-width: 7em;">&nbsp; -0.0819</td>
 <td style="text-align: right; min-width: 7em;">&nbsp; 0.1572</td>
 <td style="text-align: right; min-width: 7em;">-0.52</td>
-<td style="text-align: right; min-width: 7em;">0.6022</td>
+<td style="text-align: right; min-width: 7em;">0.6024</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; min-width: 7em; border-bottom: 2px solid grey;">…</td>
@@ -1647,17 +1652,18 @@ Indexes</th>
 <h3 class="anchored" data-anchor-id="approximating-the-full-model">Approximating the full model</h3>
 <p>If the client doesn’t want to collect all these variables for prediction we can do model approximation. The goal is to explain <code>f_prediction</code>with a trade off between parameters and <span class="math inline">\(R^2\)</span>. This can be done by backwards selection.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>Z <span class="ot">&lt;-</span> <span class="fu">predict</span>(f_prediction) <span class="co"># compute linear predictor from full model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">predict</span>(f_prediction) <span class="co"># compute linear predictor from full model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in formula.character(object, env = baseenv()): Using formula(x) is deprecated when x is a character vector of length &gt; 1.
   Consider formula(paste(x, collapse = " ")) instead.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Force sigma to be 1 since perfect fit</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">ols</span>(Z <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">rcs</span>(age, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(wt, <span class="dv">3</span>) <span class="sc">+</span> pf_linear <span class="sc">+</span> heart_d <span class="sc">+</span> <span class="fu">rcs</span>(map, <span class="dv">3</span>)</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">rcs</span>(hg, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sg, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sz, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(<span class="fu">log</span>(ap), <span class="dv">5</span>) <span class="sc">+</span> bm, <span class="at">sigma =</span> <span class="dv">1</span>)</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>backwards <span class="ot">&lt;-</span> <span class="fu">fastbw</span>(a, <span class="at">aics =</span> <span class="dv">10000</span>)</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(backwards, <span class="at">html =</span> T, <span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">ols</span>(z <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">rcs</span>(age, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(wt, <span class="dv">3</span>) <span class="sc">+</span> pf_linear <span class="sc">+</span> heart_d <span class="sc">+</span> <span class="fu">rcs</span>(map, <span class="dv">3</span>)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>         <span class="sc">+</span> <span class="fu">rcs</span>(hg, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sg, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sz, <span class="dv">3</span>)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>         <span class="sc">+</span> <span class="fu">rcs</span>(<span class="fu">log</span>(ap), <span class="dv">5</span>) <span class="sc">+</span> bm, <span class="at">sigma =</span> <span class="dv">1</span>)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>backwards <span class="ot">&lt;-</span> <span class="fu">fastbw</span>(a, <span class="at">aics =</span> <span class="dv">10000</span>)</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(backwards, <span class="at">html =</span> <span class="cn">TRUE</span>, <span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  Deleted   Chi-Sq d.f. P      Residual d.f. P      AIC    R2   
@@ -1687,10 +1693,10 @@ None</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(backwards<span class="sc">$</span>result)</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>total_predictors <span class="ot">&lt;-</span> <span class="fu">nrow</span>(result)</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>R2 <span class="ot">&lt;-</span> result<span class="sc">$</span>R2</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>r_squared <span class="ot">&lt;-</span> result<span class="sc">$</span>R2</span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>predictors <span class="ot">&lt;-</span> <span class="fu">c</span>((total_predictors <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">:</span><span class="dv">0</span>)</span>
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(predictors, R2), <span class="fu">aes</span>(<span class="at">x =</span> predictors, <span class="at">y =</span> R2)) <span class="sc">+</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(predictors, r_squared), <span class="fu">aes</span>(<span class="at">x =</span> predictors, <span class="at">y =</span> r_squared)) <span class="sc">+</span></span>
 <span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
 <span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
 <span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Predictors"</span>, <span class="at">y =</span> <span class="fu">TeX</span>(<span class="st">"$R^2$"</span>)) <span class="sc">+</span></span>
@@ -1707,16 +1713,16 @@ None</code></pre>
 </div>
 <p>A reasonable approach trade off would be to remove map, bm, sg and pf_linear from our model to get an approximate model which still has high <span class="math inline">\(R^2\)</span> of <span class="math inline">\(0.96\)</span> for explaining the full model.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>f_approx <span class="ot">&lt;-</span> <span class="fu">ols</span>(Z <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">rcs</span>(age, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(wt, <span class="dv">3</span>) <span class="sc">+</span> heart_d</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">rcs</span>(hg, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sz, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(<span class="fu">log</span>(ap), <span class="dv">5</span>), <span class="at">x =</span> T)</span>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>f_approx <span class="ot">&lt;-</span> <span class="fu">ols</span>(z <span class="sc">~</span> rx <span class="sc">+</span> <span class="fu">rcs</span>(age, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(wt, <span class="dv">3</span>) <span class="sc">+</span> heart_d</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>                <span class="sc">+</span> <span class="fu">rcs</span>(hg, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">rcs</span>(sz, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">rcs</span>(<span class="fu">log</span>(ap), <span class="dv">5</span>), <span class="at">x =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(f_approx, <span class="at">html =</span> T, <span class="at">coefs =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(f_approx, <span class="at">html =</span> <span class="cn">TRUE</span>, <span class="at">coefs =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <p><strong>Linear Regression Model</strong></p>
 
-<pre>ols(formula = Z ~ rx + rcs(age, 4) + rcs(wt, 3) + heart_d + rcs(hg, 
-    4) + rcs(sz, 3) + rcs(log(ap), 5), x = T)
+<pre>ols(formula = z ~ rx + rcs(age, 4) + rcs(wt, 3) + heart_d + rcs(hg, 
+    4) + rcs(sz, 3) + rcs(log(ap), 5), x = TRUE)
 </pre>
 
 
