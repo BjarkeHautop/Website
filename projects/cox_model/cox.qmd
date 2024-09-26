@@ -45,7 +45,7 @@ We start by showing summary of all the variables in the dataset
 
 Preprocess data for function `datasummary_skim`.
 
-```{r}
+```{r summary data}
 prostate_summary <- prostate
 
 # Convert 'labelled' columns to numeric
@@ -71,13 +71,13 @@ factors <- sapply(prostate_summary, is.factor)
 
 Summary of factor variables in data
 
-```{r}
+```{r summary of factor}
 datasummary_skim(prostate_summary[factors])
 ```
 
 Summary of continuous variables in data
 
-```{r}
+```{r summary of continuous}
 datasummary_skim(prostate_summary[!factors])
 ```
 

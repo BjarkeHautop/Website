@@ -143,7 +143,7 @@ The other quantities we will track is recovery time and predicted number of case
 
 The full code for our Stan model is
 
-```{stan, output.var = "not_used"}
+```{stan stan model, output.var = "not_used"}
 // Code for ODE
 functions {
   vector sir(real t, vector y, array[] real theta, 
@@ -244,7 +244,7 @@ t <- t[-1]
 
 # initial conditions
 i0 <- 1
-s0 <- N - i0
+s0 <- total_count - i0
 r0 <- 0
 y0 <- c(S = s0, I = i0, R = r0)
 
