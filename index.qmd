@@ -4,7 +4,8 @@ title: "My website"
 
 ## Welcome!
 
-Welcome to my website dedicated to statistics. Here, you'll find information, resources, and insights on some of my interests.
+Welcome to my website dedicated to statistics. Here, you'll find information, 
+resources, and insights on some of my interests.
 
 ### Contact me
 

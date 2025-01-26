@@ -24,10 +24,10 @@ rstan_options(auto_write = TRUE)
 options(mc.cores = parallel::detectCores())
 ```
 
+
 ```{r stan path, echo=FALSE}
 file_path <- file.path(
-  "C:/Users/bjark/Documents/Quarto website/Website/projects/",
-  "bayesian_disease/stan_model.stan"
+  "~/GitHub/Website/projects/bayesian_disease/stan_model.stan"
 )
 ```
 

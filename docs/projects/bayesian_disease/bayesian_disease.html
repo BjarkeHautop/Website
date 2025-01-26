@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.54">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -166,6 +166,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../../projects/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Projects</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../blog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Blog</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -506,12 +512,12 @@ Click here to see details about how to code the model in Stan
 post-warmup draws per chain=1000, total post-warmup draws=4000.
 
               mean se_mean   sd 2.5%  25%  50%  75% 97.5% n_eff Rhat
-beta          1.73    0.00 0.05 1.63 1.70 1.73 1.77  1.85  2041    1
-gamma         0.54    0.00 0.05 0.45 0.51 0.54 0.57  0.63  2409    1
-R0            3.23    0.01 0.29 2.74 3.05 3.22 3.39  3.87  2109    1
-recovery_time 1.86    0.00 0.16 1.58 1.76 1.86 1.96  2.20  2394    1
+beta          1.73    0.00 0.06 1.63 1.70 1.73 1.77  1.85  2167    1
+gamma         0.54    0.00 0.05 0.45 0.51 0.54 0.57  0.64  2529    1
+R0            3.24    0.01 0.29 2.73 3.05 3.22 3.40  3.87  2189    1
+recovery_time 1.87    0.00 0.16 1.57 1.77 1.86 1.96  2.22  2347    1
 
-Samples were drawn using NUTS(diag_e) at Thu Sep 26 12:48:06 2024.
+Samples were drawn using NUTS(diag_e) at Thu Jan 23 12:47:02 2025.
 For each parameter, n_eff is a crude measure of effective sample size,
 and Rhat is the potential scale reduction factor on split chains (at 
 convergence, Rhat=1).</code></pre>
@@ -586,10 +592,10 @@ convergence, Rhat=1).</code></pre>
 <pre><code># A tibble: 4 × 7
      mu    sd .samp                 .weights .pareto_k `mean(beta)` `var(beta)`
   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;                 &lt;list&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
-1  1.6   1.3  beta ~ normal(mu, sd) &lt;dbl&gt;      -0.0420         1.73     0.00299
-2  2.98  1.2  beta ~ normal(mu, sd) &lt;dbl&gt;       0.115          1.73     0.00299
-3  4     1.19 beta ~ normal(mu, sd) &lt;dbl&gt;       0.148          1.73     0.00299
-4 NA    NA    &lt;original model&gt;      &lt;dbl&gt;    -Inf              1.73     0.00299</code></pre>
+1  1.6   1.3  beta ~ normal(mu, sd) &lt;dbl&gt;      -0.0709         1.73     0.00303
+2  2.98  1.2  beta ~ normal(mu, sd) &lt;dbl&gt;      -0.0735         1.73     0.00303
+3  4     1.19 beta ~ normal(mu, sd) &lt;dbl&gt;      -0.0496         1.73     0.00303
+4 NA    NA    &lt;original model&gt;      &lt;dbl&gt;    -Inf              1.73     0.00303</code></pre>
 </div>
 </div>
 <p>We see the posterior mean and variance didn’t change for <span class="math inline">\(\beta\)</span> with those different priors. So the posterior is being dominated by the data, which is a good thing.</p>
@@ -605,10 +611,10 @@ convergence, Rhat=1).</code></pre>
 <pre><code># A tibble: 4 × 7
      mu    sd .samp                .weights .pareto_k `mean(gamma)` `var(gamma)`
   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;                &lt;list&gt;       &lt;dbl&gt;         &lt;dbl&gt;        &lt;dbl&gt;
-1  1     0.4  beta ~ normal(mu, s… &lt;dbl&gt;       0.0440         0.540      0.00204
-2  0.28  0.24 beta ~ normal(mu, s… &lt;dbl&gt;       0.465          0.539      0.00194
-3  0.24  0.12 beta ~ normal(mu, s… &lt;dbl&gt;       2.02          NA         NA      
-4 NA    NA    &lt;original model&gt;     &lt;dbl&gt;    -Inf              0.540      0.00206</code></pre>
+1  1     0.4  beta ~ normal(mu, s… &lt;dbl&gt;       0.0171         0.539      0.00211
+2  0.28  0.24 beta ~ normal(mu, s… &lt;dbl&gt;       0.492          0.537      0.00196
+3  0.24  0.12 beta ~ normal(mu, s… &lt;dbl&gt;       2.03          NA         NA      
+4 NA    NA    &lt;original model&gt;     &lt;dbl&gt;    -Inf              0.539      0.00213</code></pre>
 </div>
 </div>
 <p>We see that the posterior mean and variance barely changes for <span class="math inline">\(\gamma\)</span> with those different priors. So the posterior is being dominated by the data, which is a good thing.</p>

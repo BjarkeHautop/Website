@@ -1,7 +1,7 @@
 project:
   type: website
   output-dir: docs
-  
+
 execute:
   cache: true
 
@@ -22,20 +22,20 @@ website:
       - text: "Projects"
         href: projects/index.qmd
 
-      #- text: "Blog"
-      #  href: blog.qmd
-      
+      - text: "Blog"
+        href: blog.qmd
+
       - text: "About me"
         href: about.qmd
-      
+
       #- section: "About"
       #  contents:
       #    - text: "About me"
       #      href: about.qmd
-      #     
+      #
       #    - text: "This template"
       #      href: about_template.qmd
-          
+
 format:
   html:
     theme: cosmo

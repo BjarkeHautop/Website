@@ -160,12 +160,12 @@ We see that we have 36 degrees of freedom in our model, so about 1/10 of the amo
 ```{r model, warning=F}
 dd <- datadist(prostate)
 options(datadist = "dd")
-units(dtime) <- "Month"
-s <- Surv(dtime, status != "alive")
+units(prostate$dtime) <- "Month"
+s <- Surv(prostate$dtime, prostate$status != "alive")
 
 f <- cph(s ~ rx + rcs(age, 4) + rcs(wt, 4) + pf + hx +
            rcs(sbp, 4) + rcs(dbp, 4) + ekg + rcs(hg, 4) +
-           rcs(sg, 4) + rcs(sz, 4) + rcs(log(ap), 4) + bm)
+           rcs(sg, 4) + rcs(sz, 4) + rcs(log(ap), 4) + bm, data = prostate)
 print(f, html = TRUE, coefs = FALSE)
 ```
 
@@ -195,25 +195,26 @@ only 3 knots each.
 * Assume performance rating (pf) is linear. 
 
 ```{r data reduction}
-map <- (2 * dbp + sbp) / 3
-label(map) <- "Mean Arterial Pressure/10"
+prostate$map <- (2 * prostate$dbp + prostate$sbp) / 3
+label(prostate$map) <- "Mean Arterial Pressure/10"
 
-heart_d <- hx + ekg %nin% c("normal", "benign")
-label(heart_d) <- "Heart Disease Code"
+prostate$heart_d <- prostate$hx + prostate$ekg %nin% c("normal", "benign")
+label(prostate$heart_d) <- "Heart Disease Code"
 
-pf_linear <- as.numeric(pf)
+prostate$pf_linear <- as.numeric(prostate$pf)
 ```
 
 So all in all we save 3 degrees of freedom from defining map, 5 for defining 
 Heart Disease Code, and 3 for dropping knots, 1 for assuming performance rating is linear and gain 1 from ap. For a total reduction of 11 degrees of freedom.
 
 ```{r model reduced, warning=F}
-dd <- datadist(dd, heart_d, map, pf_linear)
+dd <- datadist(prostate)
+options(datadist = "dd")
 
 f <- cph(
   s ~ rx + rcs(age, 4) + rcs(wt, 3) + pf_linear + heart_d + rcs(map, 3)
   + rcs(hg, 4) + rcs(sg, 3) + rcs(sz, 3) + rcs(log(ap), 5) + bm,
-  x = TRUE, y = TRUE, surv = TRUE, time.inc = 5 * 12
+  x = TRUE, y = TRUE, surv = TRUE, time.inc = 5 * 12, data = prostate
 )
 
 print(f, html = TRUE, coefs = 3)
@@ -236,8 +237,8 @@ which is a constant. We can test this assumption using scaled Schoenfeld residua
 Smoothed trends in the residuals are also plotted.
 
 ```{r proportional hazards, warning=F}
-z <- predict(f, type = "terms")
-f_short <- cph(s ~ z, x = TRUE, y = TRUE)
+z <- predict(f, type = "terms", data = prostate)
+f_short <- cph(s ~ z, x = TRUE, y = TRUE, data = prostate)
 phtest <- cox.zph(f_short, transform = "identity", terms = FALSE)
 phtest
 ```
@@ -354,7 +355,7 @@ z <- predict(f_prediction) # compute linear predictor from full model
 # Force sigma to be 1 since perfect fit
 a <- ols(z ~ rx + rcs(age, 4) + rcs(wt, 3) + pf_linear + heart_d + rcs(map, 3)
          + rcs(hg, 4) + rcs(sg, 3) + rcs(sz, 3)
-         + rcs(log(ap), 5) + bm, sigma = 1)
+         + rcs(log(ap), 5) + bm, sigma = 1, data = prostate)
 
 backwards <- fastbw(a, aics = 10000)
 print(backwards, html = TRUE, digits = 3)
@@ -381,7 +382,8 @@ A reasonable approach trade off would be to remove map, bm, sg and pf_linear fro
 
 ```{r approximate model}
 f_approx <- ols(z ~ rx + rcs(age, 4) + rcs(wt, 3) + heart_d
-                + rcs(hg, 4) + rcs(sz, 3) + rcs(log(ap), 5), x = TRUE)
+                + rcs(hg, 4) + rcs(sz, 3) + rcs(log(ap), 5)
+                , x = TRUE, data = prostate)
 
 print(f_approx, html = TRUE, coefs = 3)
 ```
