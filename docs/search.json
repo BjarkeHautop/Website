@@ -88,7 +88,7 @@
     "href": "blog.html",
     "title": "Blog",
     "section": "",
-    "text": "Metrics for comparing models.\n\n\n\n\n\n\n\n\n\n\n\nJan 26, 2025\n\n\n\n\n\n\nNo matching items",
+    "text": "Metrics for comparing models\n\n\n\n\n\n\n\n\nJan 26, 2025\n\n\n\n\n\nNo matching items",
     "crumbs": [
       "Blog"
     ]
@@ -98,7 +98,7 @@
     "href": "about.html",
     "title": "Bjarke Hautop Kristensen",
     "section": "",
-    "text": "LinkedIn\n  \n  \n    \n     Github\n  \n  \n      email\n  \n\n  \n  \nWelcome to my website!\n\n\nAarhus University | Aarhus, Denmark.\nStudying a master in Statistics | 2023-2025\n\n\n\nClick here to download my CV\n\n\n\n\nChess\nPowerlifting",
+    "text": "LinkedIn\n  \n  \n    \n     Github\n  \n  \n      email\n  \n\n  \n  \nWelcome to my website!\n\n\nMaster in Statistics | 2023-2025\nBachelor in Mathematics (Statistics) | 2020-2023\n\n\n\nClick here to view my CV\n\n\n\n\nChess\nPowerlifting",
     "crumbs": [
       "About me"
     ]
@@ -108,7 +108,7 @@
     "href": "about.html#education",
     "title": "Bjarke Hautop Kristensen",
     "section": "",
-    "text": "Aarhus University | Aarhus, Denmark.\nStudying a master in Statistics | 2023-2025",
+    "text": "Master in Statistics | 2023-2025\nBachelor in Mathematics (Statistics) | 2020-2023",
     "crumbs": [
       "About me"
     ]
@@ -118,7 +118,7 @@
     "href": "about.html#cv",
     "title": "Bjarke Hautop Kristensen",
     "section": "",
-    "text": "Click here to download my CV",
+    "text": "Click here to view my CV",
     "crumbs": [
       "About me"
     ]
@@ -201,7 +201,7 @@
     "href": "projects/index.html",
     "title": "Projects",
     "section": "",
-    "text": "Bayesian approach to disease outbreaks\n\n\n\n\n\n\nBayesian\n\n\nR\n\n\nStan\n\n\n\n\n\n\n\n\n\nJuly, 2024\n\n\n\n\n\n\n\n\n\n\n\n\nNotes to Regression Modelling Strategies by Frank Harrell\n\n\n\n\n\n\nNotes\n\n\nR\n\n\n\n\n\n\n\n\n\nJuly, 2024\n\n\n\n\n\n\n\n\n\n\n\n\nCox model case study\n\n\n\n\n\n\nSurvival analysis\n\n\nR\n\n\n\n\n\n\n\n\n\nJuly, 2024\n\n\n\n\n\n\n\n\n\n\n\n\nBachelor Thesis: Asymptotic Normality for Tessellation-based Betti Numbers\n\n\n\n\n\n\nTDA\n\n\nBachelor Thesis\n\n\nPython\n\n\n\n\n\n\n\n\n\nJune, 2023\n\n\n\n\n\n\nNo matching items",
+    "text": "Master’s thesis: Particle Markov Chain Monte Carlo\n\n\n\nBayesian\n\nR\n\nR-Package\n\nSSM\n\n\n\n\n\n\n\n\n\nJune, 2025\n\n\n\n\n\n\n\n\n\n\n\n\nBayesian approach to disease outbreaks\n\n\n\nBayesian\n\nR\n\nStan\n\n\n\n\n\n\n\n\n\nJuly, 2024\n\n\n\n\n\n\n\n\n\n\n\n\nCox model case study\n\n\n\nSurvival analysis\n\nR\n\n\n\n\n\n\n\n\n\nJuly, 2024\n\n\n\n\n\n\n\n\n\n\n\n\nBachelor Thesis: Asymptotic Normality for Tessellation-based Betti Numbers\n\n\n\nTDA\n\nBachelor Thesis\n\nPython\n\n\n\n\n\n\n\n\n\nJune, 2023\n\n\n\n\n\nNo matching items",
     "crumbs": [
       "Projects"
     ]
@@ -247,5 +247,12 @@
     "title": "Metrics for comparing models.",
     "section": "Misclassification loss (Accuracy)",
     "text": "Misclassification loss (Accuracy)\n\nDefinition\nAccuracy in itself is even a scoring rule. It is common practice to use the \\(\\arg\\max\\) of predicted probabilities to turn it into a scoring rule by selecting the class with the highest predicted probability. This might not always be ideal though, see also Misclassification cost.\nTo define accuracy more formally, we first define the predicted class \\(\\hat{y}\\) as:\n\\[\n\\hat{y} = \\arg\\max_{y \\in \\Omega} P(y | \\mathbf{x}),\n\\]\nwhere \\(P(y | \\mathbf{x})\\) is the predicted probability for class \\(y\\), and \\(\\Omega\\) is the set of all possible classes.\nTo turn this into a scoring rule where lower scores are better we assign a score of 0 when the predicted class matches the true class, and a score of 1 otherwise. Formally, this can be written as:\n\\[\nS(P, y) = \\mathbb{I}(\\hat{y} \\neq y),\n\\]\nwhere \\(\\mathbb{I}(\\cdot)\\) is the indicator function, \\(\\hat{y}\\) is the predicted class, and \\(y\\) is the true class. I will refer to this as the misclassification loss.\n\n\nProperties\nMisclassification loss is\n\nProper but not strictly proper,\nMonotone in errors but not strictly monotone in errors,\nNot continuous.\n\nSo, misclassification loss actually has most of the desirable properties (just not strictly), however there is another big one it doesn’t take into account, which is misclassification cost.\n\n\nMisclassification cost\nThe misclassification cost takes into account not just whether a prediction is correct or incorrect, but also the severity or cost associated with different types of errors. In some contexts, certain types of misclassifications are more costly than others. For instance, in medical diagnoses, a false negative (failing to identify a disease) might be more costly than a false positive (incorrectly diagnosing a disease).\nMisclassification loss thus assumes the costs are the same for all misclassifications, and any version related to accuracy such as \\(F_1\\)-score, \\(\\dots\\) also assumes a specific cost, which might be hard to agree on the true costs.\nThus, a fair evaluation of performance should not be based on accuracy or related metrics such as \\(F_1\\)-score, but instead on the actual probabilities."
+  },
+  {
+    "objectID": "projects/master_thesis/Msc_thesis.html",
+    "href": "projects/master_thesis/Msc_thesis.html",
+    "title": "Master’s thesis: Particle Markov Chain Monte Carlo",
+    "section": "",
+    "text": "I wrote my Master’s thesis on the topic of Particle Markov Chain Monte Carlo (PMCMC) methods, which are used for Bayesian inference in state space models.\n\nClick here to view the thesis\nAlongside the thesis, I also developed an R package called bayesSSM, which implements PMCMC methods for state space models. The package is available on CRAN and can be installed using the following command:\n\ninstall.packages(\"bayesSSM\")\n\nView it on GitHub here."
   }
 ]

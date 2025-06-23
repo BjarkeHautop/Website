@@ -11,4 +11,4 @@ some Central Limit Theorems for Tessellation based Betti numbers.
 
 <!--more--> 
 
-[Click here to download the thesis](BachelorEnglish.pdf)
+[Click here to view the thesis](BachelorEnglish.pdf)

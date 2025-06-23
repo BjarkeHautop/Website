@@ -12,7 +12,8 @@ listing:
       - cox_model
       - bachelor_thesis
       - bayesian_disease
-      - notes_rms
+      # - notes_rms
+      - master_thesis
     type: default
     categories: true
     sort: "date desc"

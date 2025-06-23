@@ -20,7 +20,7 @@ are preferred over accuracy and related metrics, such as
 [here]( https://stats.stackexchange.com/questions/312780/why-is-accuracy-not-the-best-measure-for-assessing-classification-models). 
 However, it being a proper
 score function is not sufficient for it to be a useful scoring rule, thus
-I will define other desireable properties of a score function. 
+I will define other desirable properties of a score function. 
 
 # Desireable properties of a score function
 

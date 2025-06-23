@@ -24,13 +24,13 @@ Welcome to my website!
 
 ## Education 
 
-Aarhus University | Aarhus, Denmark.
+Master in Statistics | 2023-2025
 
-Studying a master in Statistics | 2023-2025
+Bachelor in Mathematics (Statistics) | 2020-2023
 
 ## CV
 
-[Click here to download my CV](CV.pdf)
+[Click here to view my CV](CV.pdf)
 
 ## Hobbies
 
