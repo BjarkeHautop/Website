@@ -14,6 +14,7 @@ listing:
       - bayesian_disease
       # - notes_rms
       - master_thesis
+      - chess_engine
     type: default
     categories: true
     sort: "date desc"

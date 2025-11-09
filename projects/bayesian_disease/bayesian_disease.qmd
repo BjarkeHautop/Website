@@ -4,6 +4,8 @@ categories: [Bayesian, R, Stan]
 image: "image.jpg"
 date: 07/18/2024
 date-format: "MMMM, YYYY"
+lua-filters:
+  - ../sort-categories.lua
 ---
 
 In this project we will consider a Bayesian approach to modelling disease outbreaks inspired by [this Stan case study](https://mc-stan.org/users/documentation/case-studies/boarding_school_case_study.html). We will do this using a Susceptible-Infected-Recovered (SIR) model. The main objective is to estimate epidemiological parameters of interest.

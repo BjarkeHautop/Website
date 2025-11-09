@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.27">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,10 +70,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-985aa47af68dae11cd4d235c71fb941e.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-0508618caa1d256af916c83e0797e277.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-a096bb295e8723a2ad97442cec796688.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -170,8 +170,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="quarto-categories">
     <div class="quarto-category">Bayesian</div>
     <div class="quarto-category">R</div>
-    <div class="quarto-category">R-Package</div>
-    <div class="quarto-category">SSM</div>
+    <div class="quarto-category">R Package</div>
+    <div class="quarto-category">State Space Models</div>
+    <div class="quarto-category">Thesis</div>
   </div>
   </div>
 
@@ -195,14 +196,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>I wrote my Master’s thesis on the topic of Particle Markov Chain Monte Carlo (PMCMC) methods, which are used for Bayesian inference in state space models.</p>
-<!--more-->
+<p>I wrote my Master’s thesis on Particle Markov Chain Monte Carlo (PMCMC) methods, which are used for Bayesian inference in state space models when standard methods are not feasible. The thesis provides an introduction to state space models, sequential Monte Carlo methods, and MCMC methods. It explains situations where standard MCMC approaches, such as Hamiltonian Monte Carlo (HMC) used in Stan, are not applicable, specifically in cases where the latent dynamics can only be simulated and the transition density is intractable.</p>
+<p>The thesis then introduces PMCMC methods, including the Particle Marginal Metropolis-Hastings (PMMH) algorithm, which allows for Bayesian parameter inference in cases where the transition density is unavailable. Finally, it illustrates the application of PMMH on a real data set involving the spread of an infectious disease.</p>
+<p>For those interested, the full thesis can be found below:</p>
 <p><a href="Thesis.pdf">Click here to view the thesis</a></p>
-<p>Alongside the thesis, I also developed an R package called <code>bayesSSM</code>, which implements PMCMC methods for state space models. The package is available on CRAN and can be installed using the following command:</p>
+<p>Alongside the thesis, I developed an R package called <code>bayesSSM</code>, which implements PMCMC methods for state space models. The package is available on CRAN and can be installed using:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"bayesSSM"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>View it on GitHub <a href="https://github.com/BjarkeHautop/bayesSSM">here</a>.</p>
+<p>The package documentation elaborates further on the methods described above and includes usage examples.</p>
+<p>View it on GitHub <a href="https://github.com/BjarkeHautop/bayesSSM">here</a> and the documentation is available at <a href="https://bjarkehautop.github.io/bayesSSM/">bayesSSM docs</a>.</p>
 
 
 

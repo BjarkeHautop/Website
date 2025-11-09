@@ -1,6 +1,6 @@
 ---
 title: "Cox model case study"
-categories: [Survival analysis, R]
+categories: [R, Survival analysis]
 image: "image.jpg"
 date: 07/3/2024
 date-format: "MMMM, YYYY"

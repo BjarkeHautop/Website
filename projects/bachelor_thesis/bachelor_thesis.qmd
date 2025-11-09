@@ -1,6 +1,6 @@
 ---
 title: "Bachelor Thesis: Asymptotic Normality for Tessellation-based Betti Numbers"
-categories: [TDA, Bachelor Thesis, Python]
+categories: [Python, TDA, Thesis]
 image: "image.jpg"
 date: 06/29/2023
 date-format: "MMMM, YYYY"

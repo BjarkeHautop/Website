@@ -1,0 +1,32 @@
+---
+title: "Chess Engine written in Julia"
+categories: [Chess, Julia, Julia Package]
+image: ChessSet.jpeg
+date: 09/11/2025
+date-format: "MMMM, YYYY"
+---
+
+A Julia package that implements chess from scratch alongside a chess engine,
+**Orbis**.
+It provides functionalities to represent the chessboard, validate moves,
+and evaluate positions. Particularly, OrbisChessEngine implements:
+
+- All chess rules
+- Bitboard representation
+- Legal move generation (tested with [perft](https://www.chessprogramming.org/Perft))
+- [FEN](https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation) parsing
+- Opening book support
+- Minimax search with alpha–beta pruning, iterative deepening, quiescence search, transposition tables, null move pruning, and move ordering heuristics
+- Evaluation function based on piece-square tables
+
+A lot of effort was spent on optimizing the engine for speed and efficiency.
+
+It is a part of the Julia package system and can be installed with
+
+```julia
+import Pkg
+Pkg.add("OrbisChessEngine")
+```
+
+The source code can be found on [GitHub](https://github.com/BjarkeHautop/OrbisChessEngine.jl)
+and the documentation is available at [OrbisChessEngine.jl docs](https://bjarkehautop.github.io/OrbisChessEngine.jl/stable/).
