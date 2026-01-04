@@ -4,7 +4,7 @@
     "href": "about.html",
     "title": "Bjarke Hautop Kristensen",
     "section": "",
-    "text": "LinkedIn\n  \n  \n    \n     Github\n  \n  \n      email\n  \n\n  \n  \nWelcome to my website!\n\n\nMaster in Statistics | 2023-2025\nBachelor in Mathematics (Statistics) | 2020-2023\n\n\n\n\nChess\nPowerlifting",
+    "text": "LinkedIn\n  \n  \n    \n     Github\n  \n  \n      email\n  \n\n  \n  \nWelcome to my website!\n\n\nResearch Assistant at the Section of Biostatistics, University of Copenhagen | 2025-Present\n\n\n\nMaster in Statistics | 2023-2025\nBachelor in Mathematics (Statistics) | 2020-2023\n\n\n\n\nChess\nPowerlifting",
     "crumbs": [
       "About me"
     ]
@@ -251,5 +251,15 @@
     "title": "My website",
     "section": "",
     "text": "Welcome to my website dedicated to statistics. Here, you’ll find information, resources, and insights on some of my interests.\n\n\nContact me at bjarke.hautop@gmail.com."
+  },
+  {
+    "objectID": "about.html#work-experience",
+    "href": "about.html#work-experience",
+    "title": "Bjarke Hautop Kristensen",
+    "section": "",
+    "text": "Research Assistant at the Section of Biostatistics, University of Copenhagen | 2025-Present",
+    "crumbs": [
+      "About me"
+    ]
   }
 ]

@@ -22,6 +22,10 @@ about:
 
 Welcome to my website!
 
+## Work Experience
+
+Research Assistant at the Section of Biostatistics, University of Copenhagen | 2025-Present
+
 ## Education 
 
 Master in Statistics | 2023-2025
