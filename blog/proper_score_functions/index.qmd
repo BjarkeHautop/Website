@@ -1,7 +1,6 @@
 ---
 title: "Metrics for comparing models"
 categories: [Model comparison]
-image: "image.jpg"
 date: 01/26/2025
 date-format: "MMMM, YYYY"
 ---
