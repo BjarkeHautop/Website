@@ -9,12 +9,12 @@ listing:
     fields: [image, title, categories, description, date]
     date-format: "MMMM, YYYY"
     contents: 
-      - cox_model
-      - bachelor_thesis
-      - bayesian_disease
+      - cox-model
+      - bachelor-thesis
+      - bayesian-disease
       # - notes_rms
-      - master_thesis
-      - chess_engine
+      - master-thesis
+      - chess-engine
     type: default
     categories: true
     sort: "date desc"

@@ -3,6 +3,8 @@ title: "Hierarchical Bayesian Multinomial Models for Partial Pooling"
 categories: [Bayesian, R, Stan]
 date: 01/04/2026
 date-format: "MMMM, YYYY"
+aliases:
+  - "/blog/hierarchical-bayesian-models.html"
 ---
 
 ```{r setup, message=FALSE}

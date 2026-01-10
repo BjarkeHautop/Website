@@ -1,7 +1,6 @@
 project:
   type: website
   output-dir: docs
-
 execute:
   cache: true
 
