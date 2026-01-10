@@ -64,7 +64,7 @@ forecasted distribution matches the true distribution, it alone is not
 sufficient to guarantee a good score function. For example, consider the 
 following score function:
 
-```{r}
+```{r custom score function}
 score_function <- function(p) {
   if (p == 0.5) {
     score <- 0

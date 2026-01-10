@@ -14,10 +14,9 @@ library(cmdstanr)
 library(ggplot2)
 ```
 
+Consider the problem of finding the best player or deck in a game based on match outcomes. A naive approach is to rank by their win rates, without taking anything else (other than possibly computing marginal confidence intervals) into account. This can be misleading, particularly when some candidates have few matches: observed differences may simply reflect chance rather than true differences in quality, which will not be properly accounted for in a marginal confidence interval.
 
-Consider the problem of finding the best restaurant in a city based on user reviews or best player in a game based on match outcomes. A naive approach is to rank restaurants by their average ratings or players by their win rates. This can be misleading, particularly when some candidates have few reviews or matches: observed differences may simply reflect chance rather than true differences in quality.
-The proposed solution in this blog is to consider all candidates simultaneously using a hierarchical Bayesian multinomial model, which allows for partial pooling of information across candidates. This model will shrink extreme estimates
-towards the overall mean, with the shrinkage amount depending on the amount of data available for each candidate.
+The proposed solution in this blog is to consider all candidates simultaneously using a hierarchical Bayesian multinomial model, which allows for partial pooling of information across candidates. This model will shrink extreme estimates towards the overall mean, with the shrinkage amount depending on the amount of data available for each candidate.
 
 ::: {.callout-note}
 Note, that these types of questions are typically framed as is "A better than B?", ignoring the process that led to
@@ -45,14 +44,13 @@ data.frame(
 ```
 
 We see, that the candidate with true winrate $0.7$ is not even in top $5$ of the observed winrates. Thus, asking a
-question like "Is candidate A better than candidate B?" without considering the full data generating process (DGP)
-can lead to misleading conclusions.
+question like "Is candidate A better than candidate B?" without considering the full data generating process (DGP) can lead to misleading conclusions.
 :::
 
 # Setup
 
-Suppose we observe $K$ candidates (e.g., restaurants, players, decks, etc.). Each observation falls into one of $C$
-categories, such as "win", "loss", or "tie" in a game context or 1 to 5-star ratings for restaurants. For each
+Suppose we observe $K$ candidates (e.g., players, decks, etc.). Each observation falls into one of $C$
+categories, such as "win", "loss", or "tie" in a game context. For each
 candidate $k \in \{1, \ldots, K\}$, let
 $$y_{k} = (y_{k1}, y_{k2}, \ldots, y_{kC})$$
 denote the observed counts in each category, with total
