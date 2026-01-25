@@ -1,0 +1,40 @@
+---
+title: "Master's thesis: Particle Markov Chain Monte Carlo"
+categories: [Bayesian, R, R Package, State Space Models, Thesis]
+image: "master-thesis/image.png"
+date: 06/23/2025
+date-format: "MMMM, YYYY"
+---
+
+I wrote my Master's thesis on Particle Markov Chain Monte Carlo (PMCMC) methods,
+which are used for Bayesian inference in state space models when standard
+methods are not feasible. The thesis provides an introduction to state space
+models, sequential Monte Carlo methods, and MCMC methods.
+It explains situations where standard MCMC approaches, such as Hamiltonian Monte
+Carlo (HMC) used in Stan, are not applicable, specifically in cases where the
+latent dynamics can only be simulated and the transition density is intractable.
+
+The thesis then introduces PMCMC methods, including the Particle Marginal
+Metropolis-Hastings (PMMH) algorithm, which allows for Bayesian parameter
+inference in cases where the transition density is unavailable. Finally, it
+illustrates the application of PMMH on a real data set involving the spread of
+an infectious disease.
+
+For those interested, the full thesis can be found below:
+
+[Click here to view the thesis](master-thesis/Thesis.pdf)
+
+Alongside the thesis, I developed an R package called `bayesSSM`,
+which implements PMCMC methods for state space models. The package is available
+on CRAN and can be installed using:
+
+```{r, eval=FALSE}
+install.packages("bayesSSM")
+```
+
+The package documentation elaborates further on the methods described above and
+includes usage examples.
+
+View it on GitHub [here](https://github.com/BjarkeHautop/bayesSSM) and the
+documentation is available at
+[bayesSSM docs](https://bjarkehautop.github.io/bayesSSM/).

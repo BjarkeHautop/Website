@@ -19,7 +19,7 @@ website:
     contents:
 
       - text: "Projects"
-        href: projects/index.qmd
+        href: projects.qmd
 
       - text: "Blog"
         href: blog.qmd

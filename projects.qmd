@@ -1,0 +1,27 @@
+---
+title: "Projects"
+description: |
+  Here are some of my projects. 
+listing:
+  - id: ehr
+    max-description-length: 500
+    image-height: 200px # hard fix for now
+    fields: [image, title, categories, description, date]
+    date-format: "MMMM, YYYY"
+    contents: projects
+    type: default
+    categories: true
+    sort: "date desc"
+
+#  - id: packages
+#    max-description-length: 80
+#    image-height: 250px
+#    fields: [title, description]
+#    contents: 
+#      - pkg_1
+#      - pkg_2
+#    type: table
+#    grid-item-border: false
+#    sort-ui: false
+#    filter-ui: false
+---

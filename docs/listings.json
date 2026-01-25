@@ -1,19 +1,19 @@
 [
   {
-    "listing": "/blog.html",
+    "listing": "/projects.html",
     "items": [
-      "/blog/hierarchical-bayesian-models/hierarchical-bayesian-models.html",
-      "/blog/proper-score-functions/proper-score-functions.html"
+      "/projects/chess-engine.html",
+      "/projects/master-thesis.html",
+      "/projects/bayesian-disease.html",
+      "/projects/cox-model.html",
+      "/projects/bachelor-thesis.html"
     ]
   },
   {
-    "listing": "/projects/index.html",
+    "listing": "/blog.html",
     "items": [
-      "/projects/chess-engine/chess-engine.html",
-      "/projects/master-thesis/master-thesis.html",
-      "/projects/bayesian-disease/bayesian-disease.html",
-      "/projects/cox-model/cox-model.html",
-      "/projects/bachelor-thesis/bachelor-thesis.html"
+      "/blog/hierarchical-bayesian-models.html",
+      "/blog/proper-score-functions.html"
     ]
   }
 ]
