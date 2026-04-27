@@ -17,8 +17,8 @@ Without further ado, let's get into it.
 
 > Yes, there are packages like stargazer out there. But none of them work reliably. Whenever I have to produce such a table, I more often than not find myself having to manually clean out some errors that these tables have. This is fine if you do that once, but this is not how science works. We run a regression dozens of times, and it is not feasible having to re-apply the same patches to the erroneous code just to get a proper LaTeX export.
 
-If you discover an issue with a package (that you use regularly), why wouldn't you try to reach out to the author? Or instead of using stargazer consider one of the more modern alternatives,
-which are more maintained, such as [modelsummary](https://cran.r-project.org/web/packages/modelsummary/index.html).
+If you discover an issue with a package (that you use regularly), why wouldn't you try to reach out to the author? Or instead of using [stargazer](https://CRAN.R-project.org/package=stargazer) consider one of the more modern alternatives,
+which are more maintained, such as [modelsummary](https://CRAN.R-project.org/package=modelsummary).
 
 # R is not Scalable
 
@@ -39,7 +39,7 @@ Has nothing to do with the language. I can name plenty of Python functions that 
 
 > Also, there are many tasks that require multi-processing because they’re CPU-bound. And with parallel, R even features a base package for that! Great! … is what I would say if it would actually work as expected. You know, multi-processing works by spawning a series of threads that run on different cores of your CPU. However, due to security considerations, each thread must have its own separate memory block. This means that all data that a thread needs to have access to must be copied for each thread.
 
-See e.g. the newly released package [mori](https://cran.r-project.org/web/packages/mori/index.html), which seems to be a very promising method for reducing memory when doing parallel processing in R (released after the author wrote the rant).
+See e.g. the newly released package [mori](https://CRAN.R-project.org/package=mori), which seems to be a very promising method for reducing memory when doing parallel processing in R (released after the author wrote the rant).
 
 # R cannot handle text
 
@@ -90,7 +90,7 @@ Exactly: It depends on the data type of the values it stores! Effectively, this 
 
 The meaning of primitives in R have a specific meaning, which has nothing to do with the above, from the [R documentation of primitives](https://cran.r-project.org/doc/manuals/r-devel/R-ints.html#g_t_002eInternal-vs-_002ePrimitive): "C code compiled into R at build time can be called directly in what are termed *primitives*".
 
-But anyway, for checking objects I can recommend the [checkmate](https://cran.r-project.org/web/packages/checkmate/index.html) package, which
+But anyway, for checking objects I can recommend the [checkmate](https://CRAN.R-project.org/package=checkmate) package, which
 provides a lot of useful functions for checking the type, the length, and so on.
 
 > Let me rephrase the section’s heading: The problem is less that everything is an Object in R, it is more that R is extremely sloppy with its data types. Do you have a list but need a vector? No problem: as.vector(list). Or do you need a matrix? Just do it. And if you don’t even care, R will care for you. This makes it extremely difficult to track down problems with your variables, because more often than not it does matter whether something is a vector or a list.
@@ -118,7 +118,7 @@ It's likely an issue with your IDE, RStudio, and not with R. It would probably g
 
 > This problem is even exacerbated by something that I deem a very big hindrance to a better efficiency of the language: R doesn’t know pointers. Specifically, you cannot pass-by-reference in R. This means when you have some big matrix x and you want to extract some chunk of it, calling y <- x[:10000], will copy that entire chunk.
 
-Just use e.g. [data.table](https://cran.r-project.org/web/packages/data.table/index.html) (or it's tidy-variant [tidytable](https://cran.r-project.org/web/packages/tidytable/index.html)) and
+Just use e.g. [data.table](https://CRAN.R-project.org/package=data.table) (or it's tidy-variant [tidytable](https://CRAN.R-project.org/package=tidytable)) and
 you won't have to worry about this.
 
 # R Scopes are a Joke
@@ -165,7 +165,7 @@ maybe the author should look into using e.g. [Positron](https://positron.posit.c
 [Relevant section of the author's rant](https://www.hendrik-erz.de/post/a-rant#h4-verbosity-where-no-verbosity-is-needed)
 
 Here the author complains about the R package
-[philentropy](https://cran.r-project.org/web/packages/philentropy/index.html),
+[philentropy](https://CRAN.R-project.org/package=philentropy),
 and the fact that the wrapper function `philentropy::KL()` prints a message with no way to
 turn it off, (while the main function `philentropy::distance()` does have a `mute.message` argument). Upon seeing this, the author writes:
 
@@ -197,7 +197,8 @@ asked the maintainer for the mute messages argument to be added it to the wrappe
 
 [Relevant section of the author's rant](https://www.hendrik-erz.de/post/a-rant#h4-implicit-type-conversions-will-screw-you)
 
-Now the author complains about the package [seededlda](https://cran.r-project.org/web/packages/seededlda/index.html), and that
+Now the author complains about the package      
+[seededlda](https://CRAN.R-project.org/package=seededlda), and that
 the documentation of the `batch_size` argument was weird/bad (was originally something else, but the author realized he was wrong, hence the non-matching title), since the author is used
 to seeing batch size as an integer, but the documentation used it as a proportion.
 
@@ -240,8 +241,8 @@ which says:
 > A final problem I have with R is the existence of reticulate. reticulate’s job is pretty easy to summarize: Offer a way to call Python code from within R.
 > Now, I understand that some functions are obviously only implemented in Python and not in R. Then, there are two options. The reasonable idea would be to just learn Python, write a few lines of code to accomplish what you want, and load the data back into R to continue where you left off. Or you can be completely unreasonable and develop a package to interface with Python.
 
-What? Does the author also think that packages like [Rcpp](https://cran.r-project.org/web/packages/Rcpp/index.html) to call C++, [JuliaCall](https://cran.r-project.org/web/packages/JuliaCall/index.html) to call Julia code, [rJava](https://cran.r-project.org/web/packages/rJava/index.html) to call Java code, [rextendr](https://cran.r-project.org/web/packages/rextendr/index.html) to call Rust code, and so on, also have no reason to exist? There are many valid reasons to want to call code from another language without switching completely to said language. So yes,
-[reticulate](https://cran.r-project.org/web/packages/reticulate/index.html)
+What? Does the author also think that packages like [Rcpp](https://CRAN.R-project.org/package=Rcpp) to call C++, [JuliaCall](https://CRAN.R-project.org/package=JuliaCall) to call Julia code, [rJava](https://CRAN.R-project.org/package=rJava) to call Java code, [rextendr](https://CRAN.R-project.org/package=rextendr) to call Rust code, and so on, also have no reason to exist? There are many valid reasons to want to call code from another language without switching completely to said language. So yes,
+[reticulate](https://CRAN.R-project.org/package=reticulate)
 has a reason to exist, and similar methods for calling other languages exists in all programming languages, and are not unique to R.
 
 # Conclusion
