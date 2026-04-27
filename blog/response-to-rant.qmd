@@ -116,7 +116,7 @@ It's likely an issue with your IDE, RStudio, and not with R. It would probably g
 
 > This problem is even exacerbated by something that I deem a very big hindrance to a better efficiency of the language: R doesn’t know pointers. Specifically, you cannot pass-by-reference in R. This means when you have some big matrix x and you want to extract some chunk of it, calling y <- x[:10000], will copy that entire chunk.
 
-Just use e.g. [data.table](https://CRAN.R-project.org/package=data.table) (or it's tidy-variant [tidytable](https://CRAN.R-project.org/package=tidytable)) and
+Just use e.g. [data.table](https://CRAN.R-project.org/package=data.table) (or its tidy-variant [tidytable](https://CRAN.R-project.org/package=tidytable)) and
 you won't have to worry about this.
 
 # R Scopes are a Joke
