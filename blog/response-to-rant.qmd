@@ -197,8 +197,7 @@ asked the maintainer for the mute messages argument to be added it to the wrappe
 
 [Relevant section of the author's rant](https://www.hendrik-erz.de/post/a-rant#h4-implicit-type-conversions-will-screw-you)
 
-Now the author complains about the package      
-[seededlda](https://CRAN.R-project.org/package=seededlda), and that
+Now the author complains about the package      [seededlda](https://CRAN.R-project.org/package=seededlda), and that
 the documentation of the `batch_size` argument was weird/bad (was originally something else, but the author realized he was wrong, hence the non-matching title), since the author is used
 to seeing batch size as an integer, but the documentation used it as a proportion.
 
