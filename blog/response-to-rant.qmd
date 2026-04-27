@@ -190,7 +190,7 @@ Alternatively, you can also always use the `suppressMessages(distance(...))` fun
 > Does this solve your issue?
 
 That doesn't align with what the author said above at all, and to me feels like the author is being disingenuous. And very likely if the author
-asked the maintainer for the mute messages argument to be added it to the wrapper functions such as `KL()` it likely would have been. And indeed, the current development version has an option to set it persistently, when calls to distance are being made, as seen here
+asked the maintainer for the mute messages argument to be added it to the wrapper functions such as `philentropy::KL()` it likely would have been. And indeed, the current development version has an option to set it persistently, when calls to `philentropy::distance()` are being made, as seen here
 <https://github.com/drostlab/philentropy/blob/master/R/distance.R#L224>.
 
 ## Implicit Type Conversions Will Screw You
@@ -204,7 +204,7 @@ to seeing batch size as an integer, but the documentation used it as a proportio
 > It is very unusual to define batch size parameters as "proportions of something". And this correctly made me suspicious. The reason they do this is because of a 2009 paper that they did not reference in the documentation, but rather somewhere in the source code.
 
 And links to the following
-(`.Rd` documentation)[https://github.com/koheiw/seededlda/blob/master/man/textmodel_seededlda.Rd]. The documentation of the `batch_size` argument is as follows:
+[`.Rd` documentation](https://github.com/koheiw/seededlda/blob/master/man/textmodel_seededlda.Rd). The documentation of the `batch_size` argument is as follows:
 
 > ```
 \item{batch_size}{split the corpus into the smaller batches (specified in
@@ -213,8 +213,8 @@ all the documents \code{batch_size = 1.0}. See details.}
 ```
 
 Since that `.Rd` doesn't have a details section, and seeing that the argument is inherited
-from (`textmodel_lda()`)[https://github.com/koheiw/seededlda/blob/master/R/seededlda.R#L7]
-(and the `textmodel_seededlda()` function is just a small wrapper around `textmodel_lda()`),
+from [`textmodel_lda()`](https://github.com/koheiw/seededlda/blob/master/R/seededlda.R#L7)
+(and that the `textmodel_seededlda()` function is just a small wrapper around `textmodel_lda()`),
 we check the documentation of that function, and indeed, there is a details section that
 explains the `batch_size` argument in more
 detail <https://github.com/koheiw/seededlda/blob/master/man/textmodel_lda.Rd#L86-L92>,
