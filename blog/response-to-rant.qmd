@@ -60,8 +60,7 @@ R has `sprintf()`:
 sprintf("Some text %s and other text %s", var1, var2)
 ```
 
-Another option is the `glue` package, where you can then write the above
-like this:
+Another option is the [glue](https://CRAN.R-project.org/package=glue), where you can then write the above like this:
 
 ```{r, eval=FALSE}
 glue::glue("Some text {var1} and other text {var2}")
