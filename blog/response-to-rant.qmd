@@ -218,7 +218,7 @@ explains the `batch_size` argument in more
 detail <https://github.com/koheiw/seededlda/blob/master/man/textmodel_lda.Rd#L86-L92>,
 and mentioning the paper (also at the time the author wrote the rant).
 
-This took me a minute to find. And once again, if you have an issue with a package, consider making an issue/PR on GitHub, instead of writing a rant about it. The maintainer of the package is likely to be very responsive and helpful, and will probably (try to) fix any issues you have.
+This took me a minute to find. And once again, if you have an issue with a package, consider making an issue/PR on GitHub. The maintainer of the package is likely to be very responsive and helpful, and will probably (try to) fix any issues you have.
 
 ## Painting Code With magrittR
 
