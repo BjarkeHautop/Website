@@ -12,6 +12,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/blog/response-to-rant.html",
       "/blog/hierarchical-bayesian-models.html",
       "/blog/proper-score-functions.html"
     ]
