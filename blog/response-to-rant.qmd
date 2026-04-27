@@ -34,7 +34,7 @@ is.matrix(df)
 
 > Moving between the various data types is often an implicit action because a function may expect a matrix, but happily accepts a data.frame and silently converts it without you knowing.
 
-Has nothing to do with the language. I can name plenty of Python functions that will happily convert to Numpy arrays or pandas DataFrames without you knowing.
+Has nothing to do with the language. I can name plenty of Python functions that will happily convert to NumPy arrays or pandas DataFrames without you knowing.
 
 > Also, there are many tasks that require multi-processing because they’re CPU-bound. And with parallel, R even features a base package for that! Great! … is what I would say if it would actually work as expected. You know, multi-processing works by spawning a series of threads that run on different cores of your CPU. However, due to security considerations, each thread must have its own separate memory block. This means that all data that a thread needs to have access to must be copied for each thread.
 
