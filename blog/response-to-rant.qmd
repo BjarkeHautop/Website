@@ -189,8 +189,7 @@ you will find a new argument `mute_message` that you can set to `TRUE`.
 Alternatively, you can also always use the `suppressMessages(distance(...))` function to suppress message calls.
 > Does this solve your issue?
 
-That doesn't align with what the author said above at all, and to me feels like the author is being disingenuous. And very likely if the author
-asked the maintainer for the mute messages argument to be added it to the wrapper functions such as `philentropy::KL()` it likely would have been. And indeed, the current development version has an option to set it persistently, when calls to `philentropy::distance()` are being made, as seen here
+That doesn't align with what the author said above at all to me, and it even feels like the author is being disingenuous. Additionally, if the author asked the maintainer for the mute messages argument to be added to the wrapper functions such as `philentropy::KL()` it likely would have been. And indeed, the current development version has an option to set it persistently, when calls to `philentropy::distance()` are being made, as seen here
 <https://github.com/drostlab/philentropy/blob/master/R/distance.R#L224>.
 
 ## Implicit Type Conversions Will Screw You
@@ -220,7 +219,7 @@ explains the `batch_size` argument in more
 detail <https://github.com/koheiw/seededlda/blob/master/man/textmodel_lda.Rd#L86-L92>,
 and mentioning the paper (also at the time the author wrote the rant).
 
-This took me 2 minutes to find. And once again, if you have an issue with a package, consider making an issue/PR on GitHub, instead of writing a rant about it. The maintainer of the package is likely to be very responsive and helpful, and will probably (try to) fix any issues you have.
+This took me a minute to find. And once again, if you have an issue with a package, consider making an issue/PR on GitHub, instead of writing a rant about it. The maintainer of the package is likely to be very responsive and helpful, and will probably (try to) fix any issues you have.
 
 ## Painting Code With magrittR
 
