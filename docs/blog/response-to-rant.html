@@ -219,7 +219,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>Recently, I stumbled across this blog post: <a href="https://www.hendrik-erz.de/post/a-rant">A Rant</a>. This rant is about all the things R is bad at according to the author, and I will comment on (some of) the points the author makes. In case the author changes the original rant here is a link to the Wayback Machine of the version I am responding to: <a href="http://web.archive.org/web/20260217152619/https://www.hendrik-erz.de/post/a-rant" class="uri">http://web.archive.org/web/20260217152619/https://www.hendrik-erz.de/post/a-rant</a>.</p>
+<p>Recently, I stumbled across this blog post: <a href="https://www.hendrik-erz.de/post/a-rant">A Rant</a>. This rant is about all the things R is bad at according to the author, and I will comment on (some of) the points the author makes. In case the original rant becomes unavailable/changed here is a link to the Wayback Machine of the version I am responding to: <a href="http://web.archive.org/web/20260217152619/https://www.hendrik-erz.de/post/a-rant" class="uri">http://web.archive.org/web/20260217152619/https://www.hendrik-erz.de/post/a-rant</a>.</p>
 <p>Each section will be the name of the section in the original rant, and I will quote the relevant part of the rant, and then provide my response to it. Without further ado, let’s get into it.</p>
 <section id="r-cannot-produce-flexible-descriptives-and-regression-tables" class="level1">
 <h1>R Cannot Produce flexible Descriptives and Regression Tables</h1>
@@ -267,7 +267,7 @@ Rust: println!("Some text {} and other text {}", var1, var2)</code></pre>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sprintf</span>(<span class="st">"Some text %s and other text %s"</span>, var1, var2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Another option is the <code>glue</code> package, which provides a very convenient way of doing string interpolation:</p>
+<p>Another option is the <code>glue</code> package, where you can then write the above like this:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"Some text {var1} and other text {var2}"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -360,7 +360,7 @@ typeof(c(2.3, 1.2))
 <blockquote class="blockquote">
 <p>So I was convinced this was a bug and went to their GitHub repository. And indeed, I found a discussion on this issue. It was closed and the dead-serious answer by the maintainer was “just use suppress.messages() and the message will go away”.</p>
 </blockquote>
-<p>Here is the actual GitHub issue: <a href="https://github.com/drostlab/philentropy/issues/25" class="uri">https://github.com/drostlab/philentropy/issues/25</a> and the relevant part of the maintainer’s response:</p>
+<p>Here is the actual GitHub issue: <a href="https://github.com/drostlab/philentropy/issues/25" class="uri">https://github.com/drostlab/philentropy/issues/25</a> and the relevant part of the maintainers response:</p>
 <blockquote class="blockquote">
 <p>When you install the developer version of <code>philentropy</code> directly from GitHub, then you will find a new argument <code>mute_message</code> that you can set to <code>TRUE</code>.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>philentropy<span class="sc">::</span><span class="fu">distance</span>(<span class="fu">rbind</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span> <span class="sc">/</span> <span class="fu">sum</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>), <span class="dv">20</span><span class="sc">:</span><span class="dv">29</span> <span class="sc">/</span> <span class="fu">sum</span>(<span class="dv">20</span><span class="sc">:</span><span class="dv">29</span>)),</span>
@@ -385,7 +385,7 @@ typeof(c(2.3, 1.2))
 proportion) for distributed computing; it is disabled when a batch include
 all the documents \code{batch_size = 1.0}. See details.}</code></pre>
 </blockquote>
-<p>Since that <code>.Rd</code> doesn’t have a details section, and seeing that the argument is inherited from (<code>textmodel_lda()</code>)[https://github.com/koheiw/seededlda/blob/master/R/seededlda.R#L7] (and the <code>textmodel_seededlda()</code> function is just a small wrapper around <code>textmodel_lda()</code>), we check the documentation of that function, and indeed, there is a details section that explains the <code>batch_size</code> argument in more detail <a href="https://github.com/koheiw/seededlda/blob/master/man/textmodel_lda.Rd#L86-L92" class="uri">https://github.com/koheiw/seededlda/blob/master/man/textmodel_lda.Rd#L86-L92</a>, and mentioning the paper.</p>
+<p>Since that <code>.Rd</code> doesn’t have a details section, and seeing that the argument is inherited from (<code>textmodel_lda()</code>)[https://github.com/koheiw/seededlda/blob/master/R/seededlda.R#L7] (and the <code>textmodel_seededlda()</code> function is just a small wrapper around <code>textmodel_lda()</code>), we check the documentation of that function, and indeed, there is a details section that explains the <code>batch_size</code> argument in more detail <a href="https://github.com/koheiw/seededlda/blob/master/man/textmodel_lda.Rd#L86-L92" class="uri">https://github.com/koheiw/seededlda/blob/master/man/textmodel_lda.Rd#L86-L92</a>, and mentioning the paper (also at the time the author wrote the rant).</p>
 <p>This took me 2 minutes to find. And once again, if you have an issue with a package, consider making an issue/PR on GitHub, instead of writing a rant about it. The maintainer of the package is likely to be very responsive and helpful, and will probably (try to) fix any issues you have.</p>
 </section>
 <section id="painting-code-with-magrittr" class="level2">
