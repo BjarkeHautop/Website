@@ -19,7 +19,7 @@ are preferred over accuracy and related metrics, such as
 [here]( https://stats.stackexchange.com/questions/312780/why-is-accuracy-not-the-best-measure-for-assessing-classification-models). 
 However, it being a proper
 score function is not sufficient for it to be a useful scoring rule, thus
-I will define other desirable properties of a score function. 
+I will define other desirable properties of a score function.
 
 # Desireable properties of a score function
 
@@ -79,9 +79,11 @@ score_function <- function(p) {
 p_values <- seq(0, 1, by = 0.01)
 scores <- sapply(p_values, score_function)
 
-plot(p_values, scores, type = "l", col = "blue", lwd = 2,
-     xlab = "Probability (p)", ylab = "Score",
-     main = "Custom Score Function")
+plot(
+  p_values, scores, type = "l", col = "blue", lwd = 2,
+  xlab = "Probability (p)", ylab = "Score",
+  main = "Custom Score Function"
+)
 ```
 
 This is a strictly proper score function for the true distribution being 
@@ -150,9 +152,7 @@ distance from the true probability grows.
 - Continuous
 
 A score function should ideally be *continuous*, meaning small changes in the 
-forecasted probabilities result in small changes in the score. This ensures 
-that the score does not behave erratically or disproportionately penalize small 
-prediction adjustments.
+forecasted probabilities result in small changes in the score.
 
 # Examples
 
@@ -285,14 +285,10 @@ We thus see that the Brier score satisfies all the desirable properties
 
 When comparing models, it is crucial to use metrics that accurately reflect 
 performance and align with the goals of the analysis. Accuracy and related 
-metrics, while intuitive and widely used, have significant limitations, 
-particularly in scenarios where the predicted probabilities themselves carry 
-valuable information.
+metrics, while intuitive and widely used, have significant limitations.
 
 Proper score functions that also satisfy the desirable properties defined in 
-this blog—such as the Brier score and log-loss—offer a more robust and nuanced 
-evaluation of model performance. These metrics reward accurate probability 
-forecasts and penalize deviations in a principled and meaningful way.
+this blog, such as the Brier score and log-loss are often a better alternative.
 
 # References
 

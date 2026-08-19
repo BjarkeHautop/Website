@@ -254,7 +254,12 @@ Hierarchical Bayesian multinomial models provide a principled way to address thi
 
 # Session Info
 
+<details>
+
+<summary>Click here to see the session info</summary>
+
 ```{r session info}
 sessionInfo()
 ```
 
+</details>

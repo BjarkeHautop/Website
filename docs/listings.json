@@ -5,13 +5,13 @@
       "/projects/chess-engine.html",
       "/projects/master-thesis.html",
       "/projects/bayesian-disease.html",
-      "/projects/cox-model.html",
       "/projects/bachelor-thesis.html"
     ]
   },
   {
     "listing": "/blog.html",
     "items": [
+      "/blog/data-wrangling-tour.html",
       "/blog/response-to-rant.html",
       "/blog/hierarchical-bayesian-models.html",
       "/blog/proper-score-functions.html"

@@ -12,16 +12,4 @@ listing:
     type: default
     categories: true
     sort: "date desc"
-
-#  - id: packages
-#    max-description-length: 80
-#    image-height: 250px
-#    fields: [title, description]
-#    contents: 
-#      - pkg_1
-#      - pkg_2
-#    type: table
-#    grid-item-border: false
-#    sort-ui: false
-#    filter-ui: false
 ---

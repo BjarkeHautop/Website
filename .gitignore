@@ -2,4 +2,8 @@
 .Rproj.user
 
 **/*.quarto_ipynb
+**/*.rmarkdown
 .positai
+.venv/
+.jupyter_cache
+**/*_cache/

@@ -1,0 +1,421 @@
+---
+title: "Data wrangling in R, Python, and Julia"
+categories: [R, Python, Julia]
+date: 08/18/2026
+date-format: "MMMM, YYYY"
+execute:
+  cache: false
+---
+
+```{r setup, message=FALSE, include=FALSE}
+library(reticulate)
+use_virtualenv(here::here(".venv"), required = TRUE)
+library(JuliaCall)
+julia_setup()
+```
+
+::: {.callout-note}
+This post is a replication of Rasmus Bååth's excellent
+[Why pandas feels clunky when coming from R](https://www.sumsar.net/blog/pandas-feels-clunky-when-coming-from-r/)
+(licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)),
+which compares tidyverse with pandas.
+
+I extend and redo the analysis with side-by-side comparisons across R (base), R ([tidyverse](https://tidyverse.org/)), Python ([pandas](https://pandas.pydata.org/)), Python ([polars](https://pola.rs/)), and Julia ([TidierData.jl](https://tidierorg.github.io/TidierData.jl/latest/)), using the newest versions of each at the time of writing.
+:::
+
+```{r versions-r, include=FALSE}
+r_version <- paste(R.version$major, R.version$minor, sep = ".")
+dplyr_version <- as.character(packageVersion("dplyr"))
+```
+
+```{python versions-python, include=FALSE}
+import sys
+import pandas
+import polars
+
+python_version = sys.version.split()[0]
+pandas_version = pandas.__version__
+polars_version = polars.__version__
+```
+
+```{julia versions-julia, include=FALSE}
+using TidierData, CSV
+
+julia_version = string(VERSION)
+tidierdata_version = string(pkgversion(TidierData))
+```
+
+Versions used in this post: R `r r_version`, dplyr (grammar backend for tidyverse) `r dplyr_version`; Python `r py$python_version`, pandas `r py$pandas_version`, polars `r py$polars_version`; Julia `r julia_eval("julia_version")`, TidierData.jl `r julia_eval("tidierdata_version")`.
+
+To showcase the difference between them we use a concrete example,
+where we have to make small changes throughout:
+
+::: {.callout-note}
+For pandas, we write our code using the fluent method chaining API rather than the more "imperative" style, which tends to repeat `df` over and over in statements like `df[df["this"] == "that"] = calc_some(df["other_thing"])`. We also keep all the data in the data frame proper rather than pushing it into the index, since data stored in the index tends to get in the way when processing it further or plotting it.
+:::
+
+## The task
+
+Say we have a CSV of purchases with a country, an amount, and a discount:
+
+::: {.panel-tabset group="language"}
+## R (base)
+
+```{r load-data-r-base}
+purchases <- read.csv("data-wrangling-tour/purchases.csv")
+purchases |> head()
+```
+
+## R (tidyverse)
+
+```{r load-data-r}
+suppressPackageStartupMessages(library(tidyverse))
+purchases <- read_csv("data-wrangling-tour/purchases.csv", show_col_types = FALSE)
+purchases |> head()
+```
+
+## Python (pandas)
+
+```{python load-data-python}
+import pandas as pd
+
+purchases = pd.read_csv("data-wrangling-tour/purchases.csv")
+purchases.head()
+```
+
+## Python (polars)
+
+```{python load-data-polars}
+import polars as pl
+
+purchases_pl = pl.read_csv("data-wrangling-tour/purchases.csv")
+print(purchases_pl.head())
+```
+
+## Julia (TidierData.jl)
+
+```{julia load-data-julia}
+using TidierData, CSV
+
+purchases_jl = CSV.read("data-wrangling-tour/purchases.csv", DataFrame);
+first(purchases_jl, 6)
+```
+:::
+
+Basically the same across all five. So far so good!
+
+Finance now wants to know: How much do we typically sell in each country?
+
+“How much do we sell..? Let’s take the total sum!”
+
+::: {.panel-tabset group="language"}
+## R (base)
+
+```{r step1-total-r-base}
+purchases$amount |> sum()
+```
+
+## R (tidyverse)
+
+```{r step1-total-r}
+purchases$amount |> sum()
+```
+
+## Python (pandas)
+
+```{python step1-total-python}
+purchases["amount"].sum()
+```
+
+(Note that this method, `pandas.Series.sum()`, is not the same as `pandas.DataFrame.sum()`, or `numpy.sum()`, or the built-in `sum` function, each of which has different arguments and behaviors.)
+
+## Python (polars)
+
+```{python step1-total-polars}
+purchases_pl["amount"].sum()
+```
+
+## Julia (TidierData.jl)
+
+```{julia step1-total-julia}
+sum(purchases_jl.amount)
+```
+:::
+
+At this point there is little to distinguish the APIs. The interesting differences emerge when we start composing these operations.
+
+“Ah, they wanted it by country...”
+
+::: {.panel-tabset group="language"}
+## R (base)
+
+`aggregate()` gets us most of the way there, but it leaves the sum column named after the original variable, so we have to rename it ourselves. The `_` placeholder lets us route `purchases` into the `data` argument:
+
+```{r step2-groupby-r-base}
+purchases |>
+  aggregate(amount ~ country, data = _, FUN = sum) |>
+  setNames(c("country", "total"))
+```
+
+## R (tidyverse)
+
+```{r step2-groupby-r}
+purchases |>
+  group_by(country) |>
+  summarize(total = sum(amount))
+```
+
+## Python (pandas)
+
+Okay, easy enough right?
+
+```{python step2-groupby-python}
+(purchases
+  .groupby("country")["amount"]
+  .sum()
+)
+```
+
+Oh no, what happened? The output has now turned into a `pandas.Series`, not a data frame, and country got moved to the index. We can solve this by using `.reset_index()`. Also, we’re not happy with the amount column name, but `.sum()` does not allow us to specify a different name. Instead of `.sum()` we can use the `.agg()` method to get around this. 
+
+Using `#👈/👆/👇` to mark lines that changed/moved:
+
+```{python step2-without-reset-index}
+(purchases
+  .groupby("country")
+  .agg(total=("amount", "sum")) #👈
+  .reset_index()                #👈
+)
+```
+
+## Python (polars)
+
+```{python step2-groupby-polars}
+print(purchases_pl
+  .group_by("country")
+  .agg(total=pl.col("amount").sum())
+)
+```
+
+The structure mirrors tidyverse/TidierData.jl closely, but each expression needs to wrap column references in `pl.col()` as a string, so not as nice as those.
+
+Note that polars doesn't preserve ordering. You need to explicitly set `maintain_order=True` in
+`.group_by()` for that.
+
+## Julia (TidierData.jl)
+
+```{julia step2-groupby-julia}
+@chain purchases_jl begin
+  @group_by(country)
+  @summarize(total = sum(amount))
+end
+```
+:::
+
+Already a bit annoying in pandas.
+
+“And I guess I should deduct the discount.” As mentioned in the Python (pandas) block above I will from now on use `#👈/👆/👇` to mark lines that changed/moved:
+
+::: {.panel-tabset group="language"}
+## R (base)
+
+```{r step3-discount-r-base}
+purchases |>
+  aggregate(amount - discount ~ country, data = _, FUN = sum) |> #👈
+  setNames(c("country", "total"))
+```
+
+## R (tidyverse)
+
+```{r step3-discount-r}
+purchases |>
+  group_by(country) |>
+  summarize(total = sum(amount - discount)) #👈
+```
+
+## Python (pandas)
+
+```{python step3-discount-python}
+(purchases
+  .assign(net=lambda df: df["amount"] - df["discount"])  #👈
+  .groupby("country")["net"]                             #👈
+  .sum()                                                 #👈
+  .reset_index(name="total")                             #👈
+)
+```
+
+## Python (polars)
+
+```{python step3-discount-polars}
+print(purchases_pl
+  .with_columns(net=pl.col("amount") - pl.col("discount")) #👈
+  .group_by("country")
+  .agg(total=pl.col("net").sum())                           #👈
+)
+```
+
+## Julia (TidierData.jl)
+
+```{julia step3-discount-julia}
+@chain purchases_jl begin
+  @group_by(country)
+  @summarize(total = sum(amount - discount)) #👈
+end
+```
+:::
+
+Notice how many changes pandas needed!
+
+“Oh, and Maria asked me to remove any outliers. Let’s remove everything 10x larger than the median.”
+
+::: {.panel-tabset group="language"}
+## R (base)
+
+```{r step4-outliers-r-base}
+purchases |>
+  subset(amount <= median(amount) * 10) |>                        #👈
+  aggregate(amount - discount ~ country, data = _, FUN = sum) |>
+  setNames(c("country", "total"))
+```
+
+## R (tidyverse)
+
+```{r step4-outliers-r}
+purchases |>
+  filter(amount <= median(amount) * 10) |> #👈
+  group_by(country) |>
+  summarize(total = sum(amount - discount))
+```
+
+## Python (pandas)
+
+```{python step4-outliers-python}
+(purchases
+  .query("amount <= amount.median() * 10") #👈
+  .assign(net=lambda df: df["amount"] - df["discount"])
+  .groupby("country")["net"]
+  .sum()
+  .reset_index(name="total")
+)
+```
+
+## Python (polars)
+
+```{python step4-outliers-polars}
+print(purchases_pl
+  .filter(pl.col("amount") <= pl.col("amount").median() * 10) #👈
+  .with_columns(net=pl.col("amount") - pl.col("discount"))
+  .group_by("country")
+  .agg(total=pl.col("net").sum())
+)
+```
+
+## Julia (TidierData.jl)
+
+```{julia step4-outliers-julia}
+@chain purchases_jl begin
+  @filter(amount <= median(amount) * 10) #👈
+  @group_by(country)
+  @summarize(total = sum(amount - discount))
+end
+```
+:::
+
+This was fairly easy for all five versions.
+
+“I probably should use the median within each country. Prices are quite different across the globe...”
+
+::: {.panel-tabset group="language"}
+## R (base)
+
+There's no built-in way to filter by a per-group threshold in one step, but `transform()` plus `ave()` replicates this:
+
+```{r step5-median-r-base}
+purchases |>
+  transform(country_median = ave(amount, country, FUN = median)) |> #👈
+  subset(amount <= country_median * 10) |>
+  aggregate(amount - discount ~ country, data = _, FUN = sum) |>
+  setNames(c("country", "total"))
+```
+
+## R (tidyverse)
+
+```{r step5-median-r}
+purchases |>
+  group_by(country) |>                     #👆
+  filter(amount <= median(amount) * 10) |>
+  summarize(total = sum(amount - discount))
+```
+
+## Python (pandas)
+
+Following the naive approach you end up with something ugly like this, since a
+`DataFrameGroupBy` object doesn't have a `.query()` or boolean-indexing shortcut of its own, so filtering within groups needs `.apply()` again, and the surrounding pipeline has to be rebuilt around it:
+
+```{python step5-median-python-apply}
+(purchases
+  .groupby("country")                                               #👈
+  .apply(lambda df: df[df["amount"] <= df["amount"].median() * 10]) #👈
+  .reset_index(level=0)                                             #👈 pandas now drops "country" here, so it has to be pulled back out of the index
+  .reset_index(drop=True)                                           #👈
+  .assign(net=lambda df: df["amount"] - df["discount"])
+  .groupby("country")["net"]
+  .sum()
+  .reset_index(name="total")
+)
+```
+
+A more pandas idiomatic solution is the following:
+
+```{python step5-median-python-transform}
+(purchases
+  .assign(country_median=lambda df:                         #👈
+      df.groupby("country")["amount"].transform("median")   #👈
+  )
+  .query("amount <= country_median * 10")                   #👈
+  .assign(net=lambda df: df["amount"] - df["discount"])
+  .groupby("country")["net"]
+  .sum()
+  .reset_index(name="total")
+)
+```
+
+Even then, several changes were needed (and very verbose).
+
+## Python (polars)
+
+```{python step5-median-polars}
+print(purchases_pl
+  .filter(pl.col("amount") <= pl.col("amount").median().over("country") * 10) #👈
+  .with_columns(net=pl.col("amount") - pl.col("discount"))
+  .group_by("country")
+  .agg(total=pl.col("net").sum())
+)
+```
+
+## Julia (TidierData.jl)
+
+```{julia step5-median-julia}
+@chain purchases_jl begin
+  @group_by(country)                     #👆
+  @filter(amount <= median(amount) * 10)
+  @summarize(total = sum(amount - discount))
+end
+```
+:::
+
+## Conclusion
+
+As we add grouping, transformations, filtering, and group-wise calculations, I want to be able to make a small change without having to restructure the rest of the pipeline. For this particular analysis my ranking would be, as I tried to highlight above:
+
+1. tidyverse and TidierData.jl. They make small changes in the analysis trivial to implement, and
+no need for strings when referencing columns.
+2. base R and polars. They require a few more changes, but are still very reasonable.
+3. pandas. Last by a large margin. None of the individual pandas lines are unreasonable in isolation, but stringing together this analysis is far less smooth than in any of the alternatives.
+
+::: {.callout-tip}
+> But polars is much faster than dplyr!
+
+Not what this blogpost is about, but you can find a tidy-syntax interface to most backends, e.g.
+[tidytable](https://markfairbanks.github.io/tidytable/) for [data.table](https://r-datatable.com/) backend.
+:::
