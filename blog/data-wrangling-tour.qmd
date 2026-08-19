@@ -406,7 +406,7 @@ end
 
 ## Conclusion
 
-As we add grouping, transformations, filtering, and group-wise calculations, I want to be able to make a small change without having to restructure the rest of the pipeline. For this particular analysis my ranking would be, as I tried to highlight above:
+As we add grouping, transformations, filtering, and group-wise calculations, I want to be able to make a small change without having to restructure the rest of the pipeline. For this particular kind of analysis my ranking would be, as I tried to highlight above:
 
 1. tidyverse and TidierData.jl. They make small changes in the analysis trivial to implement, and
 no need for strings when referencing columns.
