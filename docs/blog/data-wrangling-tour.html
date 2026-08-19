@@ -464,10 +464,10 @@ Name: amount, dtype: float64</code></pre>
 │ ---     ┆ ---     │
 │ str     ┆ f64     │
 ╞═════════╪═════════╡
+│ Sweden  ┆ 2626.99 │
 │ Germany ┆ 1435.82 │
 │ France  ┆ 1477.51 │
 │ USA     ┆ 5241.99 │
-│ Sweden  ┆ 2626.99 │
 └─────────┴─────────┘</code></pre>
 </div>
 </div>
@@ -551,7 +551,7 @@ Name: amount, dtype: float64</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(purchases_pl</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  .with_columns(net<span class="op">=</span>pl.col(<span class="st">"amount"</span>) <span class="op">-</span> pl.col(<span class="st">"discount"</span>)) <span class="co">#👈</span></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  .group_by(<span class="st">"country"</span>)</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  .agg(total<span class="op">=</span>pl.col(<span class="st">"net"</span>).<span class="bu">sum</span>())                           <span class="co">#👈</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  .agg(total<span class="op">=</span>pl.col(<span class="st">"net"</span>).<span class="bu">sum</span>())                          <span class="co">#👈</span></span>
 <span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>shape: (4, 2)
@@ -560,10 +560,10 @@ Name: amount, dtype: float64</code></pre>
 │ ---     ┆ ---     │
 │ str     ┆ f64     │
 ╞═════════╪═════════╡
-│ France  ┆ 1403.63 │
 │ USA     ┆ 4979.91 │
-│ Sweden  ┆ 2495.63 │
 │ Germany ┆ 1364.02 │
+│ France  ┆ 1403.63 │
+│ Sweden  ┆ 2495.63 │
 └─────────┴─────────┘</code></pre>
 </div>
 </div>
@@ -659,8 +659,8 @@ Name: amount, dtype: float64</code></pre>
 │ str     ┆ f64     │
 ╞═════════╪═════════╡
 │ Sweden  ┆ 975.63  │
-│ USA     ┆ 2889.91 │
 │ Germany ┆ 1364.02 │
+│ USA     ┆ 2889.91 │
 │ France  ┆ 1403.63 │
 └─────────┴─────────┘</code></pre>
 </div>
@@ -784,9 +784,9 @@ Name: amount, dtype: float64</code></pre>
 │ ---     ┆ ---     │
 │ str     ┆ f64     │
 ╞═════════╪═════════╡
-│ France  ┆ 1403.63 │
-│ Sweden  ┆ 975.63  │
 │ USA     ┆ 4979.91 │
+│ Sweden  ┆ 975.63  │
+│ France  ┆ 1403.63 │
 │ Germany ┆ 1364.02 │
 └─────────┴─────────┘</code></pre>
 </div>

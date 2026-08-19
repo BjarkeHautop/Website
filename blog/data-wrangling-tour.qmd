@@ -250,7 +250,7 @@ purchases |>
 print(purchases_pl
   .with_columns(net=pl.col("amount") - pl.col("discount")) #👈
   .group_by("country")
-  .agg(total=pl.col("net").sum())                           #👈
+  .agg(total=pl.col("net").sum())                          #👈
 )
 ```
 
