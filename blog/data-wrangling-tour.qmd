@@ -142,7 +142,7 @@ sum(purchases_jl.amount)
 ```
 :::
 
-At this point there is little to distinguish the APIs. The interesting differences emerge when we start composing these operations.
+At this point there is little to distinguish the APIs.
 
 “Ah, they wanted it by country...”
 
