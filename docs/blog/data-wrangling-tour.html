@@ -195,6 +195,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#the-task" id="toc-the-task" class="nav-link active" data-scroll-target="#the-task">The task</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#versions-used" id="toc-versions-used" class="nav-link" data-scroll-target="#versions-used">Versions used</a></li>
   </ul>
 </nav>
     </div>
@@ -219,8 +220,7 @@ Note
 <p>I extend and redo the analysis with side-by-side comparisons across R (base), R (<a href="https://tidyverse.org/">tidyverse</a>), Python (<a href="https://pandas.pydata.org/">pandas</a>), Python (<a href="https://pola.rs/">polars</a>), and Julia (<a href="https://tidierorg.github.io/TidierData.jl/latest/">TidierData.jl</a>), using the newest versions of each at the time of writing.</p>
 </div>
 </div>
-<p>Versions used in this post: R 4.6.1, dplyr (grammar backend for tidyverse) 1.2.1; Python 3.12.3, pandas 3.0.5, polars 1.43.2; Julia 1.12.7, TidierData.jl 0.17.2.</p>
-<p>To showcase the difference between them we use a concrete example, where we have to make small changes throughout:</p>
+<p>To showcase the difference between them we use a concrete example, where we have to make small changes throughout.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -382,7 +382,7 @@ Note
 </div>
 </div>
 </div>
-<p>At this point there is little to distinguish the APIs. The interesting differences emerge when we start composing these operations.</p>
+<p>At this point there is little to distinguish the APIs.</p>
 <p>“Ah, they wanted it by country…”</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">R (base)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">R (tidyverse)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false" href="">Python (pandas)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-4" role="tab" aria-controls="tabset-3-4" aria-selected="false" href="">Python (polars)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-5" role="tab" aria-controls="tabset-3-5" aria-selected="false" href="">Julia (TidierData.jl)</a></li></ul>
@@ -464,10 +464,10 @@ Name: amount, dtype: float64</code></pre>
 │ ---     ┆ ---     │
 │ str     ┆ f64     │
 ╞═════════╪═════════╡
-│ USA     ┆ 5241.99 │
 │ Germany ┆ 1435.82 │
-│ Sweden  ┆ 2626.99 │
 │ France  ┆ 1477.51 │
+│ Sweden  ┆ 2626.99 │
+│ USA     ┆ 5241.99 │
 └─────────┴─────────┘</code></pre>
 </div>
 </div>
@@ -561,9 +561,9 @@ Name: amount, dtype: float64</code></pre>
 │ str     ┆ f64     │
 ╞═════════╪═════════╡
 │ Germany ┆ 1364.02 │
-│ France  ┆ 1403.63 │
-│ Sweden  ┆ 2495.63 │
 │ USA     ┆ 4979.91 │
+│ Sweden  ┆ 2495.63 │
+│ France  ┆ 1403.63 │
 └─────────┴─────────┘</code></pre>
 </div>
 </div>
@@ -658,10 +658,10 @@ Name: amount, dtype: float64</code></pre>
 │ ---     ┆ ---     │
 │ str     ┆ f64     │
 ╞═════════╪═════════╡
-│ USA     ┆ 2889.91 │
-│ Germany ┆ 1364.02 │
 │ Sweden  ┆ 975.63  │
+│ Germany ┆ 1364.02 │
 │ France  ┆ 1403.63 │
+│ USA     ┆ 2889.91 │
 └─────────┴─────────┘</code></pre>
 </div>
 </div>
@@ -784,9 +784,9 @@ Name: amount, dtype: float64</code></pre>
 │ ---     ┆ ---     │
 │ str     ┆ f64     │
 ╞═════════╪═════════╡
+│ USA     ┆ 4979.91 │
 │ Sweden  ┆ 975.63  │
 │ France  ┆ 1403.63 │
-│ USA     ┆ 4979.91 │
 │ Germany ┆ 1364.02 │
 └─────────┴─────────┘</code></pre>
 </div>
@@ -838,6 +838,10 @@ Tip
 <p>Not what this blogpost is about, but you can find a tidy-syntax interface to most backends, e.g. <a href="https://markfairbanks.github.io/tidytable/">tidytable</a> for <a href="https://r-datatable.com/">data.table</a> backend.</p>
 </div>
 </div>
+</section>
+<section id="versions-used" class="level2">
+<h2 class="anchored" data-anchor-id="versions-used">Versions used</h2>
+<p>Versions used in this post: R 4.6.1, dplyr (grammar backend for tidyverse) 1.2.1; Python 3.12.3, pandas 3.0.5, polars 1.43.2; Julia 1.12.7, TidierData.jl 0.17.2.</p>
 
 
 </section>

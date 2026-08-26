@@ -23,32 +23,8 @@ which compares tidyverse with pandas.
 I extend and redo the analysis with side-by-side comparisons across R (base), R ([tidyverse](https://tidyverse.org/)), Python ([pandas](https://pandas.pydata.org/)), Python ([polars](https://pola.rs/)), and Julia ([TidierData.jl](https://tidierorg.github.io/TidierData.jl/latest/)), using the newest versions of each at the time of writing.
 :::
 
-```{r versions-r, include=FALSE}
-r_version <- paste(R.version$major, R.version$minor, sep = ".")
-dplyr_version <- as.character(packageVersion("dplyr"))
-```
-
-```{python versions-python, include=FALSE}
-import sys
-import pandas
-import polars
-
-python_version = sys.version.split()[0]
-pandas_version = pandas.__version__
-polars_version = polars.__version__
-```
-
-```{julia versions-julia, include=FALSE}
-using TidierData, CSV
-
-julia_version = string(VERSION)
-tidierdata_version = string(pkgversion(TidierData))
-```
-
-Versions used in this post: R `r r_version`, dplyr (grammar backend for tidyverse) `r dplyr_version`; Python `r py$python_version`, pandas `r py$pandas_version`, polars `r py$polars_version`; Julia `r julia_eval("julia_version")`, TidierData.jl `r julia_eval("tidierdata_version")`.
-
 To showcase the difference between them we use a concrete example,
-where we have to make small changes throughout:
+where we have to make small changes throughout.
 
 ::: {.callout-note}
 For pandas, we write our code using the fluent method chaining API rather than the more "imperative" style, which tends to repeat `df` over and over in statements like `df[df["this"] == "that"] = calc_some(df["other_thing"])`. We also keep all the data in the data frame proper rather than pushing it into the index, since data stored in the index tends to get in the way when processing it further or plotting it.
@@ -419,3 +395,29 @@ no need for strings when referencing columns.
 Not what this blogpost is about, but you can find a tidy-syntax interface to most backends, e.g.
 [tidytable](https://markfairbanks.github.io/tidytable/) for [data.table](https://r-datatable.com/) backend.
 :::
+
+## Versions used
+
+```{r versions-r, include=FALSE}
+r_version <- paste(R.version$major, R.version$minor, sep = ".")
+dplyr_version <- as.character(packageVersion("dplyr"))
+```
+
+```{python versions-python, include=FALSE}
+import sys
+import pandas
+import polars
+
+python_version = sys.version.split()[0]
+pandas_version = pandas.__version__
+polars_version = polars.__version__
+```
+
+```{julia versions-julia, include=FALSE}
+using TidierData, CSV
+
+julia_version = string(VERSION)
+tidierdata_version = string(pkgversion(TidierData))
+```
+
+Versions used in this post: R `r r_version`, dplyr (grammar backend for tidyverse) `r dplyr_version`; Python `r py$python_version`, pandas `r py$pandas_version`, polars `r py$polars_version`; Julia `r julia_eval("julia_version")`, TidierData.jl `r julia_eval("tidierdata_version")`.
