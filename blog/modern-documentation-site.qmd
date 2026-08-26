@@ -1,0 +1,91 @@
+---
+title: "A new, modern documentation site for R packages"
+categories: [R, Packages]
+date: 08/27/2026
+date-format: "MMMM, YYYY"
+---
+
+pkgdown is the default way to build a documentation site for an R package,
+and it's a great tool. But the support for [Quarto](https://quarto.org/) is lacking. It does support `.qmd` vignettes (see
+[`vignette("quarto")`](https://pkgdown.r-lib.org/dev/articles/quarto.html)),
+but the way it's implemented is hard to maintain and lags behind in
+features. In practice this means things like [callout blocks](https://quarto.org/docs/authoring/callouts.html) get flattened into plain blockquotes, and the table of contents for `.qmd` articles disappears.  What personally motivated me to look for an alternative was that I wanted callout blocks, since I’ve grown quite fond of them.
+
+Fixing this properly means patching pkgdown to merge two competing asset systems, which is more involved than it sounds. So instead I went looking at [altdoc](https://altdoc.etiennebacher.com/), which takes an alternative approach and supports quarto websites natively. Great, I can use callout blocks now!
+
+However, I quite liked the default look of pkgdown, (and additionally, altdoc doesn't support custom references page, see [#326](https://github.com/etiennebacher/altdoc/issues/326)) so I wanted to replicate that look in altdoc. So I made altdown:
+
+## altdown: a pkgdown-styled altdoc site
+
+[altdown](https://github.com/BjarkeHautop/altdown)
+([site](https://bjarkehautop.github.io/altdown/)) is a package that adds
+a theme to mimic the look of Bootstrap 5 pkgdown, while still
+keeping the nice features a native Quarto website supports, via altdoc.
+
+::: {.callout-note}
+It's called "altdown" because it's an alternative to pkgdown, built on
+altdoc.
+:::
+
+To reuse it for your own package, run `altdown::use_altdown()` from the
+package root. It copies the `altdoc/` template in and writes a starter
+`reference.yml` from your existing `man/*.Rd` files. Then adjust the
+navbar links/vignettes in `quarto_website_static.yml`, group
+`reference.yml` the way you want, and run:
+
+``` r
+source("altdoc/build-site.R")
+build_site()
+```
+
+Great, now I can use callout blocks for my documentation sites, and otherwise
+it still looks like pkgdown!
+
+Recently [DocumenterCodeBlocks.jl](https://fredrikekre.github.io/DocumenterCodeBlocks.jl/dev/) was
+added to the Julia documentation ecosystem, adding hover previews and links
+to function documentation. This is quite nice, and I wanted the same
+features for my altdoc sites. So I made reftip:
+
+## reftip: preview on hover
+
+altdoc's `quarto_website` backend already turns function names in R code
+chunks into links, via Quarto's `code-link` and the
+[downlit](https://downlit.r-lib.org/) package. But downlit only links to a published package, so it can't resolve a local dev version of a package, an unpublished package, or a S3 method name like
+`print.animal()`.
+
+[reftip](https://github.com/BjarkeHautop/reftip)
+([demo](https://bjarkehautop.github.io/reftip/vignettes/demo.html)) is a
+small post-processing step that fixes that, and adds hover on preview, inspired by DocumenterCodeBlocks.jl. To use it simply just call
+`reftip::add_tooltips()` after you render docs:
+
+``` r
+altdoc::render_docs()
+reftip::add_tooltips()
+```
+
+Anything it can't resolve to one of the package's own topics, such as base R or another package is left exactly as Quarto/downlit rendered it.
+
+::: {.callout-warning}
+## Known limitations
+- A generic call like `print(x)` can't be resolved, since that needs
+  knowing `x`'s class at runtime, and reftip only reads `man/*.Rd`.
+- Same reason `obj$method()` (R6) isn't resolved.
+- An Rd page documenting several aliases under one `\usage{}` block (an S3
+  generic plus its methods) shows the whole block in the tooltip, not just
+  the line for the one alias that was linked.
+:::
+
+It's also currently only implemented for the `quarto_website` backend specifically;
+altdoc's other three (mkdocs, docsify, docute) haven't been tried (it might work/it might not).
+
+If you are interested to see how the two packages work together I made [alttip](https://github.com/BjarkeHautop/alttip)
+([site](https://bjarkehautop.github.io/alttip/)), which is just a toy package that uses them both.
+
+Please let me know what you think!
+
+::: {.callout-tip}
+## How I generated the sites for altdown and reftip
+
+Again I got inspired by DocumenterCodeBlocks.jl, which injects functions
+doing the website build for showcase, that aren't actually exported. Both packages have a `build_site()` function, which doing build adds some toy functions, installs the package with these toy functions, and then renders the site.
+:::

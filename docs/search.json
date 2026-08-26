@@ -108,6 +108,27 @@
     "text": "Painting Code With magrittR\nRelevant section of the author’s rant\n\nThe last problem is more meta and concerns the naming practices. R users like to give their packages fancy names as opposed to names that convey what they’re doing.\n\nYes, this is true, but hardly unique to R. Here I like e.g. Julia’s package name guidelines, which says:\n\nPackage names should be sensible to most Julia users, even to those who are not domain experts. The following rules apply to the General registry but may be useful for other package registries as well."
   },
   {
+    "objectID": "blog/modern-documentation-site.html",
+    "href": "blog/modern-documentation-site.html",
+    "title": "A new, modern documentation site for R packages",
+    "section": "",
+    "text": "pkgdown is the default way to build a documentation site for an R package, and it’s a great tool. But the support for Quarto is lacking. It does support .qmd vignettes (see vignette(\"quarto\")), but the way it’s implemented is hard to maintain and lags behind in features. In practice this means things like callout blocks get flattened into plain blockquotes, and the table of contents for .qmd articles disappears. What personally motivated me to look for an alternative was that I wanted callout blocks, since I’ve grown quite fond of them.\nFixing this properly means patching pkgdown to merge two competing asset systems, which is more involved than it sounds. So instead I went looking at altdoc, which takes an alternative approach and supports quarto websites natively. Great, I can use callout blocks now!\nHowever, I quite liked the default look of pkgdown, (and additionally, altdoc doesn’t support custom references page, see #326) so I wanted to replicate that look in altdoc. So I made altdown:"
+  },
+  {
+    "objectID": "blog/modern-documentation-site.html#altdown-a-pkgdown-styled-altdoc-site",
+    "href": "blog/modern-documentation-site.html#altdown-a-pkgdown-styled-altdoc-site",
+    "title": "A new, modern documentation site for R packages",
+    "section": "altdown: a pkgdown-styled altdoc site",
+    "text": "altdown: a pkgdown-styled altdoc site\naltdown (site) is a package that adds a theme to mimic the look of Bootstrap 5 pkgdown, while still keeping the nice features a native Quarto website supports, via altdoc.\n\n\n\n\n\n\nNote\n\n\n\nIt’s called “altdown” because it’s an alternative to pkgdown, built on altdoc.\n\n\nTo reuse it for your own package, run altdown::use_altdown() from the package root. It copies the altdoc/ template in and writes a starter reference.yml from your existing man/*.Rd files. Then adjust the navbar links/vignettes in quarto_website_static.yml, group reference.yml the way you want, and run:\nsource(\"altdoc/build-site.R\")\nbuild_site()\nGreat, now I can use callout blocks for my documentation sites, and otherwise it still looks like pkgdown!\nRecently DocumenterCodeBlocks.jl was added to the Julia documentation ecosystem, adding hover previews and links to function documentation. This is quite nice, and I wanted the same features for my altdoc sites. So I made reftip:"
+  },
+  {
+    "objectID": "blog/modern-documentation-site.html#reftip-preview-on-hover",
+    "href": "blog/modern-documentation-site.html#reftip-preview-on-hover",
+    "title": "A new, modern documentation site for R packages",
+    "section": "reftip: preview on hover",
+    "text": "reftip: preview on hover\naltdoc’s quarto_website backend already turns function names in R code chunks into links, via Quarto’s code-link and the downlit package. But downlit only links to a published package, so it can’t resolve a local dev version of a package, an unpublished package, or a S3 method name like print.animal().\nreftip (demo) is a small post-processing step that fixes that, and adds hover on preview, inspired by DocumenterCodeBlocks.jl. To use it simply just call reftip::add_tooltips() after you render docs:\naltdoc::render_docs()\nreftip::add_tooltips()\nAnything it can’t resolve to one of the package’s own topics, such as base R or another package is left exactly as Quarto/downlit rendered it.\n\n\n\n\n\n\nWarningKnown limitations\n\n\n\n\nA generic call like print(x) can’t be resolved, since that needs knowing x’s class at runtime, and reftip only reads man/*.Rd.\nSame reason obj$method() (R6) isn’t resolved.\nAn Rd page documenting several aliases under one \\usage{} block (an S3 generic plus its methods) shows the whole block in the tooltip, not just the line for the one alias that was linked.\n\n\n\nIt’s also currently only implemented for the quarto_website backend specifically; altdoc’s other three (mkdocs, docsify, docute) haven’t been tried (it might work/it might not).\nIf you are interested to see how the two packages work together I made alttip (site), which is just a toy package that uses them both.\nPlease let me know what you think!\n\n\n\n\n\n\nTipHow I generated the sites for altdown and reftip\n\n\n\nAgain I got inspired by DocumenterCodeBlocks.jl, which injects functions doing the website build for showcase, that aren’t actually exported. Both packages have a build_site() function, which doing build adds some toy functions, installs the package with these toy functions, and then renders the site."
+  },
+  {
     "objectID": "blog/data-wrangling-tour.html",
     "href": "blog/data-wrangling-tour.html",
     "title": "Data wrangling in R, Python, and Julia",
@@ -189,7 +210,7 @@
     "href": "blog.html",
     "title": "Blog",
     "section": "",
-    "text": "Data wrangling in R, Python, and Julia\n\n\n\n\n\n\n\n\nAugust, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nA response to: A Rant (about R)\n\n\n\n\n\n\n\n\nApril, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nHierarchical Bayesian Multinomial Models for Partial Pooling\n\n\n\n\n\n\n\n\nJanuary, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nMetrics for comparing models\n\n\n\n\n\n\n\n\nJanuary, 2025\n\n\n\n\n\nNo matching items",
+    "text": "A new, modern documentation site for R packages\n\n\n\n\n\n\n\n\nAugust, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nData wrangling in R, Python, and Julia\n\n\n\n\n\n\n\n\nAugust, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nA response to: A Rant (about R)\n\n\n\n\n\n\n\n\nApril, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nHierarchical Bayesian Multinomial Models for Partial Pooling\n\n\n\n\n\n\n\n\nJanuary, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nMetrics for comparing models\n\n\n\n\n\n\n\n\nJanuary, 2025\n\n\n\n\n\nNo matching items",
     "crumbs": [
       "Blog"
     ]
