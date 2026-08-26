@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>A new, modern documentation site for R packages</title>
+<title>A new take on documentation sites for R packages</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -118,7 +118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">A new, modern documentation site for R packages</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">A new take on documentation sites for R packages</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -131,7 +131,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">A new, modern documentation site for R packages</h1>
+      <h1 class="title">A new take on documentation sites for R packages</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">R</div>
                 <div class="quarto-category">Packages</div>
@@ -204,7 +204,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>pkgdown is the default way to build a documentation site for an R package, and it’s a great tool. But the support for <a href="https://quarto.org/">Quarto</a> is lacking. It does support <code>.qmd</code> vignettes (see <a href="https://pkgdown.r-lib.org/dev/articles/quarto.html"><code>vignette("quarto")</code></a>), but the way it’s implemented is hard to maintain and lags behind in features. In practice this means things like <a href="https://quarto.org/docs/authoring/callouts.html">callout blocks</a> get flattened into plain blockquotes, and the table of contents for <code>.qmd</code> articles disappears. What personally motivated me to look for an alternative was that I wanted callout blocks, since I’ve grown quite fond of them.</p>
+<p><a href="https://github.com/r-lib/pkgdown">pkgdown</a> is the default way to build a documentation site for an R package, and it’s a great tool. But the support for <a href="https://quarto.org/">Quarto</a> is lacking. It does support <code>.qmd</code> vignettes (see <a href="https://pkgdown.r-lib.org/dev/articles/quarto.html"><code>vignette("quarto")</code></a>), but the way it’s implemented is hard to maintain and lags behind in features. In practice this means things like <a href="https://quarto.org/docs/authoring/callouts.html">callout blocks</a> get flattened into plain blockquotes, and the table of contents for <code>.qmd</code> articles disappears. What personally motivated me to look for an alternative was that I wanted callout blocks, since I’ve grown quite fond of them.</p>
 <p>Fixing this properly means patching pkgdown to merge two competing asset systems, which is more involved than it sounds. So instead I went looking at <a href="https://altdoc.etiennebacher.com/">altdoc</a>, which takes an alternative approach and supports quarto websites natively. Great, I can use callout blocks now!</p>
 <p>However, I quite liked the default look of pkgdown, (and additionally, altdoc doesn’t support custom references page, see <a href="https://github.com/etiennebacher/altdoc/issues/326">#326</a>) so I wanted to replicate that look in altdoc. So I made altdown:</p>
 <section id="altdown-a-pkgdown-styled-altdoc-site" class="level2">
