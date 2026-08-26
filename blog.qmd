@@ -12,4 +12,5 @@ listing:
   date-format: "MMMM, YYYY"
   feed:
     categories: [R]
+    type: metadata
 ---
