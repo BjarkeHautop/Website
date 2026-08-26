@@ -5,6 +5,8 @@ execute:
   cache: true
 
 website:
+  title: "Bjarke Hautop Kristensen"
+  site-url: "https://bjarkehautop.github.io/Website"
   page-navigation: true
 
   page-footer:

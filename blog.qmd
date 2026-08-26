@@ -10,4 +10,6 @@ listing:
   sort-ui: false
   filter-ui: false
   date-format: "MMMM, YYYY"
+  feed:
+    categories: [R]
 ---
