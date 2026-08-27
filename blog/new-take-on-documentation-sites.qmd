@@ -9,11 +9,11 @@ date-format: "MMMM, YYYY"
 and it's a great tool. But the support for [Quarto](https://quarto.org/) is lacking. It does support `.qmd` vignettes (see
 [`vignette("quarto")`](https://pkgdown.r-lib.org/dev/articles/quarto.html)),
 but the way it's implemented is hard to maintain and lags behind in
-features. In practice this means things like [callout blocks](https://quarto.org/docs/authoring/callouts.html) get flattened into plain blockquotes, and the table of contents for `.qmd` articles disappears.  What personally motivated me to look for an alternative was that I wanted callout blocks, since I’ve grown quite fond of them.
+features. In practice this means things like [callout blocks](https://quarto.org/docs/authoring/callouts.html) get flattened into plain blockquotes. I wanted callout blocks, since I’ve grown quite fond of them (maybe too much?), so I looked into alternatives.
 
-Fixing this properly means patching pkgdown to merge two competing asset systems, which is more involved than it sounds. So instead I went looking at [altdoc](https://altdoc.etiennebacher.com/), which takes an alternative approach and supports quarto websites natively. Great, I can use callout blocks now!
+The main alternative is [altdoc](https://altdoc.etiennebacher.com/), which takes an alternative approach and supports quarto websites natively. Great, I can use callout blocks now!
 
-However, I quite liked the default look of pkgdown, (and additionally, altdoc doesn't support custom references page, see [#326](https://github.com/etiennebacher/altdoc/issues/326)) so I wanted to replicate that look in altdoc. So I made altdown:
+However, I quite liked the default look of pkgdown, (and additionally, altdoc doesn't currently doesn't support custom references page, see [#326](https://github.com/etiennebacher/altdoc/issues/326)) so I wanted to replicate that look in altdoc. So I made altdown:
 
 ## altdown: a pkgdown-styled altdoc site
 
